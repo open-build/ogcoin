@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGCoin Development Roadmap - Transparent Progress Tracking</title>
+    <meta name="description" content="Follow OGCoin's development journey from token launch to global open source funding ecosystem. Transparent roadmap with community involvement.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#1e40af',
+                        accent: '#06b6d4'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        .card-hover {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .progress-bar {
+            transition: stroke-dasharray 0.5s ease-in-out;
+        }
+    </style>
+    
+    <!-- ForgeWeb Head JavaScript -->
+    <script src="js/buildly-head.js"></script>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">OGCoin</a>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="index.html#about" class="text-gray-700 hover:text-primary transition-colors">About</a>
+                    <a href="index.html#features" class="text-gray-700 hover:text-primary transition-colors">Features</a>
+                    <a href="index.html#environmental" class="text-gray-700 hover:text-primary transition-colors">Green</a>
+                    <a href="index.html#impact" class="text-gray-700 hover:text-primary transition-colors">Impact</a>
+                    <a href="roadmap.html" class="text-primary font-medium">Roadmap</a>
+                    <a href="index.html#get-started" class="text-gray-700 hover:text-primary transition-colors">Get Started</a>
+                    <a href="index.html#contact" class="text-gray-700 hover:text-primary transition-colors">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Home</a>
+                <a href="index.html#about" class="block py-2 text-gray-700 hover:text-primary transition-colors">About</a>
+                <a href="index.html#features" class="block py-2 text-gray-700 hover:text-primary transition-colors">Features</a>
+                <a href="index.html#environmental" class="block py-2 text-gray-700 hover:text-primary transition-colors">Green</a>
+                <a href="index.html#impact" class="block py-2 text-gray-700 hover:text-primary transition-colors">Impact</a>
+                <a href="roadmap.html" class="block py-2 text-primary font-medium">Roadmap</a>
+                <a href="index.html#get-started" class="block py-2 text-gray-700 hover:text-primary transition-colors">Get Started</a>
+                <a href="index.html#contact" class="block py-2 text-gray-700 hover:text-primary transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 bg-gradient-to-br from-primary to-secondary text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-bold mb-6">OGC & Open Build Roadmap</h1>
+            <p class="text-xl mb-8 text-blue-100 max-w-4xl mx-auto">
+                Our transparent development journey from cryptocurrency token to global open source funding ecosystem. 
+                Track our progress, see what's next, and join the mission to support developers worldwide.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://github.com/open-build/ogcoin/projects" target="_blank" class="bg-white text-primary px-8 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors">
+                    📋 View Live Backlog
+                </a>
+                <a href="https://github.com/open-build/ogcoin" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-primary transition-colors">
+                    Contribute on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Status -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Current Status - October 2025</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We've successfully launched OGCoin with a strong foundation. Here's where we stand today.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Token Launched</h3>
+                    <p class="text-gray-600">1M OGC tokens issued on Stellar network</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Tools Ready</h3>
+                    <p class="text-gray-600">Python CLI, bulk payments, and fund management</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Fund Active</h3>
+                    <p class="text-gray-600">0.1% transaction fees supporting open source</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Phases -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Development Phases</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Our journey is divided into four strategic phases, each building upon the previous to create lasting impact.
+                </p>
+            </div>
+            
+            <!-- Phase 1 - Foundation -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-6">
+                        <span class="text-white font-bold text-lg">1</span>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold text-gray-900">Phase 1: Foundation</h3>
+                        <p class="text-lg text-gray-600">October 2025 - December 2025 (Current Phase)</p>
+                        <div class="flex items-center mt-2">
+                            <div class="w-full bg-gray-200 rounded-full h-2 mr-4">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                            <span class="text-sm font-medium text-green-600">95% Complete</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-2xl">
+                        <h4 class="text-xl font-bold text-gray-900 mb-4">✅ Completed</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-green-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                OGC token creation and deployment
+                            </li>
+                            <li class="flex items-center text-green-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Python management toolkit
+                            </li>
+                            <li class="flex items-center text-green-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Open Build Fund system (0.1% fees)
+                            </li>
+                            <li class="flex items-center text-green-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Website and documentation
+                            </li>
+                            <li class="flex items-center text-green-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Bulk payment system
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-6 rounded-2xl">
+                        <h4 class="text-xl font-bold text-gray-900 mb-4">🚀 In Progress</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-blue-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                Community outreach and adoption
+                            </li>
+                            <li class="flex items-center text-blue-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                First pilot project funding
+                            </li>
+                            <li class="flex items-center text-blue-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                Transparency reporting dashboard
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phase 2 - Community Governance -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-6">
+                        <span class="text-white font-bold text-lg">2</span>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold text-gray-900">Phase 2: Community Governance</h3>
+                        <p class="text-lg text-gray-600">Q1 2026 - Q2 2026</p>
+                        <div class="flex items-center mt-2">
+                            <div class="w-full bg-gray-200 rounded-full h-2 mr-4">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <span class="text-sm font-medium text-gray-600">Planning Phase</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-2xl">
+                        <h4 class="text-xl font-bold text-gray-900 mb-4">🎯 Key Objectives</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                </svg>
+                                On-chain voting system for OGC holders
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                </svg>
+                                Project application and review portal
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                </svg>
+                                Community moderator program
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                </svg>
+                                Impact measurement framework
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-6 rounded-2xl">
+                        <h4 class="text-xl font-bold text-gray-900 mb-4">📊 Success Metrics</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-blue-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                100+ active community voters
+                            </li>
+                            <li class="flex items-center text-blue-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                50+ project applications reviewed
+                            </li>
+                            <li class="flex items-center text-blue-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                10+ projects funded
+                            </li>
+                            <li class="flex items-center text-blue-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                Transparent fund allocation reports
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phase 3 - Ecosystem Expansion -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-6">
+                        <span class="text-white font-bold text-lg">3</span>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold text-gray-900">Phase 3: Ecosystem Expansion</h3>
+                        <p class="text-lg text-gray-600">Q2 2026 - Q3 2026</p>
+                        <div class="flex items-center mt-2">
+                            <div class="w-full bg-gray-200 rounded-full h-2 mr-4">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <span class="text-sm font-medium text-gray-600">Future Planning</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-2xl">
+                        <h4 class="text-xl font-bold text-gray-900 mb-4">🌟 Expansion Goals</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                                Developer training bootcamp program
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                                Corporate partnership program
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                                OGC certification system
+                            </li>
+                            <li class="flex items-center text-gray-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                                International expansion
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-purple-50 p-6 rounded-2xl">
+                        <h4 class="text-xl font-bold text-gray-900 mb-4">🎓 Training Program</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-purple-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                                </svg>
+                                1,000+ developers trained
+                            </li>
+                            <li class="flex items-center text-purple-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                                </svg>
+                                50+ corporate partnerships
+                            </li>
+                            <li class="flex items-center text-purple-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                                </svg>
+                                Job placement rate >80%
+                            </li>
+                            <li class="flex items-center text-purple-700">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                                </svg>
+                                Global developer network
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phase 4 - Global Impact -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mr-6">
+                        <span class="text-white font-bold text-lg">4</span>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold text-gray-900">Phase 4: Global Impact</h3>
+                        <p class="text-lg text-gray-600">Q4 2026 and Beyond</p>
+                        <div class="flex items-center mt-2">
+                            <div class="w-full bg-gray-200 rounded-full h-2 mr-4">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <span class="text-sm font-medium text-gray-600">Vision Phase</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-6 text-center">🌍 Long-term Vision</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-2xl font-bold text-green-600">10K+</span>
+                            </div>
+                            <h5 class="text-lg font-bold text-gray-900 mb-2">Funded Projects</h5>
+                            <p class="text-gray-600">Supporting over 10,000 open source projects worldwide</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-2xl font-bold text-green-600">100K+</span>
+                            </div>
+                            <h5 class="text-lg font-bold text-gray-900 mb-2">Trained Developers</h5>
+                            <p class="text-gray-600">Educated and placed 100,000+ developers in tech careers</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-2xl font-bold text-green-600">$1B+</span>
+                            </div>
+                            <h5 class="text-lg font-bold text-gray-900 mb-2">Economic Impact</h5>
+                            <p class="text-gray-600">Generated over $1 billion in economic value through OSS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fund Allocation -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Transparent Fund Allocation</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Every 0.1% transaction fee is distributed according to community-voted allocation
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="relative w-32 h-32 mx-auto mb-6">
+                        <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"/>
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#3b82f6" stroke-width="10" 
+                                    stroke-dasharray="141.3" stroke-dashoffset="70.65" stroke-linecap="round"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-primary">50%</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-2">Open Source Projects</h4>
+                    <p class="text-gray-600">Direct funding to critical infrastructure and innovative projects</p>
+                </div>
+                <div class="text-center">
+                    <div class="relative w-32 h-32 mx-auto mb-6">
+                        <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"/>
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#10b981" stroke-width="10" 
+                                    stroke-dasharray="141.3" stroke-dashoffset="98.91" stroke-linecap="round"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-green-600">30%</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-2">Developer Training</h4>
+                    <p class="text-gray-600">Bootcamps, mentorship, and educational resources</p>
+                </div>
+                <div class="text-center">
+                    <div class="relative w-32 h-32 mx-auto mb-6">
+                        <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"/>
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#8b5cf6" stroke-width="10" 
+                                    stroke-dasharray="141.3" stroke-dashoffset="113.04" stroke-linecap="round"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-purple-600">20%</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-2">Operations</h4>
+                    <p class="text-gray-600">Platform maintenance, governance, and community management</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Involvement -->
+    <section class="py-16 bg-gradient-to-r from-primary to-secondary text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6">Join Our Mission</h2>
+            <p class="text-xl mb-8 text-blue-100 max-w-4xl mx-auto">
+                This roadmap evolves with community input. Every OGC holder has a voice in shaping our future.
+                Whether you're a developer, organization, or supporter, there's a place for you in this journey.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://github.com/open-build/ogcoin/projects" target="_blank" class="bg-white text-primary px-8 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors">
+                    📋 View Live Development Backlog
+                </a>
+                <a href="https://github.com/open-build/ogcoin" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-primary transition-colors">
+                    Contribute on GitHub
+                </a>
+                <a href="index.html#contact" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-primary transition-colors">
+                    Join the Discussion
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">OGCoin</h3>
+                    <p class="text-gray-400">
+                        Funding the future of open source development through sustainable cryptocurrency.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="index.html#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="roadmap.html" class="text-gray-400 hover:text-white transition-colors">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Development</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://github.com/open-build/ogcoin" target="_blank" class="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
+                        <li><a href="https://github.com/open-build/ogcoin/projects" target="_blank" class="text-gray-400 hover:text-white transition-colors">Backlog</a></li>
+                        <li><a href="https://github.com/open-build/ogcoin/issues" target="_blank" class="text-gray-400 hover:text-white transition-colors">Issues</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#contact" class="text-gray-400 hover:text-white transition-colors">Get Involved</a></li>
+                        <li><a href="https://stellar.org" target="_blank" class="text-gray-400 hover:text-white transition-colors">Stellar Network</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 OGCoin. Built on Stellar. Supporting open source worldwide.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for mobile menu -->
+    <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

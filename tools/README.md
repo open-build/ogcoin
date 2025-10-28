@@ -21,12 +21,14 @@ This toolkit provides Python scripts and utilities for:
 - **`token_issuer.py`** - Issue and manage OGC tokens
 - **`transaction_monitor.py`** - Monitor and report on transactions
 - **`transparency_reporter.py`** - Generate reports for website integration
+- **`open_build_fund.py`** - Open Build fund management and transaction fees
 
 ### Utility Scripts
 
 - **`config.py`** - Configuration management
 - **`validators.py`** - Input validation utilities
 - **`formatters.py`** - Output formatting helpers
+- **`test_fund.py`** - Test and demonstrate Open Build fund functionality
 
 ## Setup
 
@@ -142,6 +144,67 @@ The toolkit includes built-in transparency features:
 - Real-time balance tracking  
 - Public API endpoints for community verification
 - Integration with website for public display
+
+## Open Build Fund System
+
+### Overview
+
+OGCoin implements an innovative funding mechanism where a small portion (0.1%) of every transaction contributes to the Open Build fund. This fund supports:
+
+- **Open Source Projects** (50%) - Direct funding for critical infrastructure and innovative projects
+- **Developer Training** (30%) - Bootcamps, mentorship programs, and educational resources  
+- **Operations** (20%) - Platform maintenance, governance, and community management
+
+### How It Works
+
+1. **Transaction Fee Collection**: Every OGC transaction automatically contributes 0.1% to the fund
+2. **Community Governance**: OGC holders vote on fund distribution proposals
+3. **Transparent Distribution**: All allocations are publicly tracked and reported
+
+### Fund Commands
+
+```bash
+# Check current fund balance and allocations
+python cli.py fund balance
+
+# Calculate fund contribution for a transaction
+python cli.py fund calculate --amount 100
+
+# Send transaction with automatic fund contribution
+python cli.py fund send --source-secret SXXXXX... --destination GXXXXX... --amount 50
+
+# Generate comprehensive fund report
+python cli.py fund report
+
+# View community proposal system
+python cli.py fund proposal
+```
+
+### Testing the Fund System
+
+```bash
+# Run comprehensive fund system tests
+python test_fund.py
+
+# Test different transaction scenarios
+python cli.py fund calculate --amount 10
+python cli.py fund calculate --amount 1000
+```
+
+### Impact Projections
+
+With moderate adoption (1,000 daily transactions averaging 25 OGC):
+- **Daily Fund Collection**: 25 OGC
+- **Annual Impact**: 9,125 OGC allocated to open source support
+- **Projects Funded**: Estimated 10-20 critical projects per year
+- **Developers Trained**: 50-100 developers through funded programs
+
+### Transparency Features
+
+- All fund transactions are publicly visible on Stellar
+- Monthly allocation reports published automatically
+- Community voting records maintained on-chain
+- Real-time fund balance available via API
 
 ## Support
 

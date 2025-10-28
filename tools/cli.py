@@ -17,6 +17,7 @@ from stellar_manager import StellarManager
 from bulk_payments import BulkPaymentProcessor, quick_validate_csv, create_payment_template
 from transparency_reporter import TransparencyReporter, generate_current_stats, generate_report_for_month
 from formatters import format_account_info, format_transaction_result, format_table
+from open_build_fund import OpenBuildFund, calculate_transaction_with_fund_fee
 
 def setup_config_command(args):
     """Handle config setup command"""
@@ -242,6 +243,118 @@ def report_command(args):
             prev_month = now.month - 1
         generate_report_for_month(prev_year, prev_month)
 
+def fund_command(args):
+    """Handle Open Build fund operations"""
+    config = OGCConfig()
+    fund = OpenBuildFund(config)
+    
+    if args.action == "balance":
+        print("🏦 Open Build Fund Balance")
+        print("=" * 30)
+        balance_info = fund.get_fund_balance()
+        
+        if 'error' in balance_info:
+            print(f"❌ Error: {balance_info['error']}")
+            return
+        
+        print(f"Fund Account: {balance_info['fund_account']}")
+        print(f"OGC Balance: {balance_info['ogc_balance']}")
+        print(f"Last Updated: {balance_info['last_updated']}")
+        
+        # Show allocation breakdown
+        allocations = fund.calculate_allocation_amounts(balance_info['ogc_balance'])
+        print("\n📊 Allocation Breakdown:")
+        print(f"  Open Source Projects (50%): {allocations['open_source_projects']} OGC")
+        print(f"  Developer Training (30%):   {allocations['developer_training']} OGC")
+        print(f"  Operations (20%):          {allocations['operations']} OGC")
+    
+    elif args.action == "calculate":
+        if not args.amount:
+            print("❌ Amount required for calculation")
+            return
+        
+        print("💰 Transaction Fee Calculation")
+        print("=" * 35)
+        amounts = fund.calculate_fund_contribution(args.amount)
+        
+        print(f"Original Amount:       {args.amount} OGC")
+        print(f"Fund Contribution:     {amounts['fund_amount']} OGC")
+        print(f"Recipient Receives:    {amounts['remaining_amount']} OGC")
+        print(f"Fee Rate:             {amounts['fee_rate']} ({float(amounts['fee_rate']) * 100}%)")
+    
+    elif args.action == "send":
+        if not all([args.source_secret, args.destination, args.amount]):
+            print("❌ source-secret, destination, and amount required for fund transactions")
+            return
+        
+        print("💸 Sending Transaction with Fund Contribution")
+        print("=" * 48)
+        
+        # Calculate amounts first
+        amounts = fund.calculate_fund_contribution(args.amount)
+        print(f"Original Amount:       {args.amount} OGC")
+        print(f"Fund Contribution:     {amounts['fund_amount']} OGC")
+        print(f"Recipient Receives:    {amounts['remaining_amount']} OGC")
+        
+        # Confirm transaction
+        confirm = input("\nProceed with transaction? (y/N): ").strip().lower()
+        if confirm != 'y':
+            print("❌ Transaction cancelled")
+            return
+        
+        # Execute transaction
+        result = fund.create_fund_transaction(
+            args.source_secret, 
+            args.destination, 
+            args.amount, 
+            args.memo or ""
+        )
+        
+        if result['success']:
+            print("✅ Transaction successful!")
+            print(f"Transaction Hash: {result['transaction_hash']}")
+            print(f"Recipient Amount: {result['recipient_amount']} OGC")
+            print(f"Fund Contribution: {result['fund_contribution']} OGC")
+        else:
+            print(f"❌ Transaction failed: {result['error']}")
+    
+    elif args.action == "report":
+        print("📊 Open Build Fund Report")
+        print("=" * 30)
+        report = fund.generate_fund_report()
+        
+        if 'error' in report:
+            print(f"❌ Error: {report['error']}")
+            return
+        
+        # Fund balance
+        balance = report['fund_balance']
+        print(f"Fund Account: {balance['fund_account']}")
+        print(f"Current Balance: {balance['ogc_balance']} OGC")
+        
+        # Allocations
+        allocations = report['allocations']
+        print("\n📊 Current Allocations:")
+        print(f"  Open Source Projects: {allocations['open_source_projects']} OGC")
+        print(f"  Developer Training:   {allocations['developer_training']} OGC")
+        print(f"  Operations:          {allocations['operations']} OGC")
+        print(f"  Total:               {allocations['total']} OGC")
+        
+        print(f"\n🔧 Configuration:")
+        print(f"  Transaction Fee Rate: {report['fee_rate']} ({float(report['fee_rate']) * 100}%)")
+        print(f"  Report Generated:     {report['generated_at']}")
+    
+    elif args.action == "proposal":
+        print("📝 Fund Distribution Proposal System")
+        print("=" * 40)
+        print("This feature allows the community to propose and vote on fund distributions.")
+        print("\nExample proposals would include:")
+        print("  • Funding for critical open source projects")
+        print("  • Developer bootcamp scholarships")
+        print("  • Security audits for popular libraries")
+        print("  • Infrastructure support for key projects")
+        print("\n🗳️  Community voting mechanism coming soon!")
+
 def main():
     """Main CLI entry point"""
     parser = argparse.ArgumentParser(
@@ -278,6 +391,18 @@ Examples:
 
   # Get current stats
   python cli.py report stats
+
+  # Check Open Build fund balance
+  python cli.py fund balance
+
+  # Calculate transaction fee for 100 OGC
+  python cli.py fund calculate --amount 100
+
+  # Send transaction with fund contribution
+  python cli.py fund send --source-secret SXXXXX... --destination GXXXXX... --amount 50
+
+  # Generate fund report
+  python cli.py fund report
         """
     )
     
@@ -333,6 +458,15 @@ Examples:
     report_parser.add_argument('--year', type=int, help='Report year')
     report_parser.add_argument('--month', type=int, help='Report month')
     report_parser.set_defaults(func=report_command)
+    
+    # Fund command
+    fund_parser = subparsers.add_parser('fund', help='Open Build fund operations')
+    fund_parser.add_argument('action', choices=['balance', 'calculate', 'send', 'report', 'proposal'], help='Fund action')
+    fund_parser.add_argument('--amount', help='Amount for calculations or transactions')
+    fund_parser.add_argument('--source-secret', help='Source account secret key for fund transactions')
+    fund_parser.add_argument('--destination', help='Destination address for fund transactions')
+    fund_parser.add_argument('--memo', help='Transaction memo')
+    fund_parser.set_defaults(func=fund_command)
     
     # Parse arguments
     args = parser.parse_args()

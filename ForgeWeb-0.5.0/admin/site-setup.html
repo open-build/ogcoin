@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeWeb Setup - Create New Site</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'buildly-primary': '#1b5fa3',
+                        'buildly-secondary': '#144a84',
+                        'buildly-accent': '#f9943b',
+                        'buildly-dark': '#1F2937'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .setup-step {
+            display: none !important;
+        }
+        .setup-step.active {
+            display: block !important;
+        }
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        .step-indicator.active {
+            background-color: #1b5fa3;
+            color: white;
+        }
+        .step-indicator.completed {
+            background-color: #10b981;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-4xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-buildly-primary rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">FW</span>
+                    </div>
+                    <h1 class="text-xl font-bold text-buildly-dark">ForgeWeb Setup</h1>
+                </div>
+                <a href="index.html" class="text-gray-500 hover:text-gray-700">
+                    ← Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Indicator -->
+    <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center">
+                <div class="step-indicator active w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium bg-gray-200 text-gray-600" data-step="1">1</div>
+                <div class="w-16 h-0.5 bg-gray-200 mx-2"></div>
+                <div class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium bg-gray-200 text-gray-600" data-step="2">2</div>
+                <div class="w-16 h-0.5 bg-gray-200 mx-2"></div>
+                <div class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium bg-gray-200 text-gray-600" data-step="3">3</div>
+                <div class="w-16 h-0.5 bg-gray-200 mx-2"></div>
+                <div class="step-indicator w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium bg-gray-200 text-gray-600" data-step="4">4</div>
+            </div>
+            <div class="text-sm text-gray-500">
+                Step <span id="current-step">1</span> of 4
+            </div>
+        </div>
+
+        <!-- Setup Form -->
+        <div class="bg-white rounded-lg shadow-sm border p-8">
+            <!-- Step 1: Site Information -->
+            <div class="setup-step active" data-step="1">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-buildly-dark mb-2">Site Information</h2>
+                    <p class="text-gray-600">Let's start by setting up basic information about your website.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <label for="site-name" class="block text-sm font-medium text-gray-700 mb-2">Site Name</label>
+                        <input type="text" id="site-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-buildly-primary" 
+                               placeholder="My Awesome Website" required>
+                        <p class="text-sm text-gray-500 mt-1">This will appear in your site title and branding</p>
+                    </div>
+
+                    <div>
+                        <label for="site-description" class="block text-sm font-medium text-gray-700 mb-2">Site Description</label>
+                        <textarea id="site-description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-buildly-primary" 
+                                  placeholder="A brief description of your website..."></textarea>
+                        <p class="text-sm text-gray-500 mt-1">Used for SEO and social media previews</p>
+                    </div>
+
+                    <div>
+                        <label for="site-author" class="block text-sm font-medium text-gray-700 mb-2">Author/Organization</label>
+                        <input type="text" id="site-author" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-buildly-primary" 
+                               placeholder="Your Name or Company">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Site Type</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="site-type" value="blog" class="mr-3" checked>
+                                <div>
+                                    <div class="font-medium">Blog/Personal Site</div>
+                                    <div class="text-sm text-gray-500">Articles, personal content, portfolio</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="site-type" value="business" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Business Website</div>
+                                    <div class="text-sm text-gray-500">Company site, services, products</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="site-type" value="portfolio" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Portfolio</div>
+                                    <div class="text-sm text-gray-500">Showcase work, projects, case studies</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="site-type" value="documentation" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Documentation</div>
+                                    <div class="text-sm text-gray-500">Guides, tutorials, knowledge base</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: GitHub Integration -->
+            <div class="setup-step" data-step="2">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-buildly-dark mb-2">GitHub Repository</h2>
+                    <p class="text-gray-600">Set up GitHub repository for hosting and version control.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-blue-800">GitHub Pages Hosting</h3>
+                                <p class="text-sm text-blue-700 mt-1">Your site will be automatically deployed to GitHub Pages and accessible at username.github.io/repository-name</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="github-username" class="block text-sm font-medium text-gray-700 mb-2">GitHub Username</label>
+                        <input type="text" id="github-username" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-buildly-primary" 
+                               placeholder="your-github-username" required>
+                    </div>
+
+                    <div>
+                        <label for="github-repo" class="block text-sm font-medium text-gray-700 mb-2">Repository Name</label>
+                        <input type="text" id="github-repo" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-buildly-primary" 
+                               placeholder="my-website" required>
+                        <p class="text-sm text-gray-500 mt-1">Repository will be created if it doesn't exist</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-medium text-gray-900">Site URL Preview</div>
+                                <div id="site-url-preview" class="text-sm text-gray-600 mt-1">https://username.github.io/repository</div>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    Free Hosting
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="github-token" class="block text-sm font-medium text-gray-700 mb-2">
+                            GitHub Personal Access Token 
+                            <span class="text-xs text-gray-500">(Optional - for automatic repository creation)</span>
+                        </label>
+                        <input type="password" id="github-token" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-buildly-primary" 
+                               placeholder="ghp_xxxxxxxxxxxx">
+                        <p class="text-sm text-gray-500 mt-1">
+                            <a href="https://github.com/settings/tokens" target="_blank" class="text-buildly-primary hover:underline">
+                                Create a token →
+                            </a> 
+                            with 'repo' permissions to automatically create repository
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Site Structure -->
+            <div class="setup-step" data-step="3">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-buildly-dark mb-2">Site Structure</h2>
+                    <p class="text-gray-600">Choose which pages to include in your initial site.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Essential Pages</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-3" checked disabled>
+                                <div class="flex-1">
+                                    <div class="font-medium">Home Page (index.html)</div>
+                                    <div class="text-sm text-gray-500">Main landing page - always included</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="include-about" class="mr-3" checked>
+                                <div class="flex-1">
+                                    <div class="font-medium">About Page</div>
+                                    <div class="text-sm text-gray-500">Information about you or your organization</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="include-contact" class="mr-3" checked>
+                                <div class="flex-1">
+                                    <div class="font-medium">Contact Page</div>
+                                    <div class="text-sm text-gray-500">Contact form and information</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Content Pages</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="include-blog" class="mr-3" checked>
+                                <div class="flex-1">
+                                    <div class="font-medium">Blog/Articles Section</div>
+                                    <div class="text-sm text-gray-500">Articles listing page and sample posts</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="include-portfolio" class="mr-3">
+                                <div class="flex-1">
+                                    <div class="font-medium">Portfolio/Projects</div>
+                                    <div class="text-sm text-gray-500">Showcase your work and projects</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="include-services" class="mr-3">
+                                <div class="flex-1">
+                                    <div class="font-medium">Services Page</div>
+                                    <div class="text-sm text-gray-500">Business services or offerings</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Sample Content</h3>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="include-sample-content" class="mr-3" checked>
+                                <div class="flex-1">
+                                    <div class="font-medium">Generate Sample Content</div>
+                                    <div class="text-sm text-gray-500">Include placeholder content and sample articles to get started quickly</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Review and Create -->
+            <div class="setup-step" data-step="4">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-buildly-dark mb-2">Review & Create</h2>
+                    <p class="text-gray-600">Review your configuration and create your new website.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Site Configuration</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="font-medium text-gray-700">Site Name:</span>
+                                <span id="review-site-name" class="ml-2 text-gray-900"></span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-gray-700">Site Type:</span>
+                                <span id="review-site-type" class="ml-2 text-gray-900"></span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-gray-700">GitHub Repository:</span>
+                                <span id="review-github-repo" class="ml-2 text-gray-900"></span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-gray-700">Site URL:</span>
+                                <span id="review-site-url" class="ml-2 text-blue-600"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Pages to Create</h3>
+                        <div id="review-pages" class="text-sm text-gray-900">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-green-800">Ready to Create</h3>
+                                <p class="text-sm text-green-700 mt-1">ForgeWeb will generate your site files and set up the GitHub repository for deployment.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="creation-progress" class="hidden">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                            <div class="flex items-center">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-buildly-primary"></div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-medium text-blue-800">Creating Your Website...</h3>
+                                    <p id="progress-message" class="text-sm text-blue-700 mt-1">Initializing...</p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="bg-blue-200 rounded-full h-2">
+                                    <div id="progress-bar" class="bg-buildly-primary h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+                <div class="flex justify-between mt-8">
+                <button type="button" id="prev-btn" class="px-4 py-2 text-gray-600 hover:text-gray-800 hidden" onclick="previousStep()">
+                    ← Previous
+                </button>
+                <div class="flex space-x-4">
+                    <button type="button" id="next-btn" class="px-6 py-2 bg-buildly-primary text-white rounded-md hover:bg-blue-700" onclick="nextStep()">
+                        Next →
+                    </button>
+                    <button type="button" id="create-btn" class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 hidden" onclick="createSite()">
+                        Create Site
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function updateStepIndicator() {
+            document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+                const stepNumber = index + 1;
+                indicator.classList.remove('active', 'completed');
+                
+                if (stepNumber < currentStep) {
+                    indicator.classList.add('completed');
+                } else if (stepNumber === currentStep) {
+                    indicator.classList.add('active');
+                }
+            });
+            
+            document.getElementById('current-step').textContent = currentStep;
+        }
+
+        function showStep(step) {
+            // Remove active from all steps
+            document.querySelectorAll('.setup-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Add active to target step  
+            const stepElement = document.querySelector(`.setup-step[data-step="${step}"]`);
+            if (stepElement) {
+                stepElement.classList.add('active');
+            }
+            
+            // Update navigation buttons
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const createBtn = document.getElementById('create-btn');
+            
+            if (step === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+            
+            if (step === totalSteps) {
+                nextBtn.classList.add('hidden');
+                createBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                createBtn.classList.add('hidden');
+            }
+        }
+
+        function nextStep() {
+            if (validateCurrentStep() && currentStep < totalSteps) {
+                currentStep++;
+                if (currentStep === totalSteps) {
+                    updateReviewStep();
+                }
+                showStep(currentStep);
+                updateStepIndicator();
+                updateSiteUrlPreview();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                updateStepIndicator();
+            }
+        }
+
+        function validateCurrentStep() {
+            if (currentStep === 1) {
+                const siteName = document.getElementById('site-name').value.trim();
+                if (!siteName) {
+                    alert('Please enter a site name');
+                    return false;
+                }
+            } else if (currentStep === 2) {
+                const githubUsername = document.getElementById('github-username').value.trim();
+                const githubRepo = document.getElementById('github-repo').value.trim();
+                if (!githubUsername || !githubRepo) {
+                    alert('Please enter GitHub username and repository name');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateSiteUrlPreview() {
+            const username = document.getElementById('github-username').value.trim();
+            const repo = document.getElementById('github-repo').value.trim();
+            
+            if (username && repo) {
+                document.getElementById('site-url-preview').textContent = 
+                    `https://${username}.github.io/${repo}`;
+            }
+        }
+
+        function updateReviewStep() {
+            // Update review information
+            document.getElementById('review-site-name').textContent = 
+                document.getElementById('site-name').value;
+            
+            const siteType = document.querySelector('input[name="site-type"]:checked').value;
+            document.getElementById('review-site-type').textContent = 
+                siteType.charAt(0).toUpperCase() + siteType.slice(1);
+                
+            const username = document.getElementById('github-username').value;
+            const repo = document.getElementById('github-repo').value;
+            document.getElementById('review-github-repo').textContent = `${username}/${repo}`;
+            document.getElementById('review-site-url').textContent = `https://${username}.github.io/${repo}`;
+            
+            // Update pages list
+            const pages = [];
+            pages.push('Home Page (index.html)');
+            
+            if (document.getElementById('include-about').checked) pages.push('About Page');
+            if (document.getElementById('include-contact').checked) pages.push('Contact Page');
+            if (document.getElementById('include-blog').checked) pages.push('Blog/Articles Section');
+            if (document.getElementById('include-portfolio').checked) pages.push('Portfolio Page');
+            if (document.getElementById('include-services').checked) pages.push('Services Page');
+            
+            document.getElementById('review-pages').innerHTML = 
+                pages.map(page => `<span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2 mb-2">${page}</span>`).join('');
+        }
+
+        async function createSite() {
+            const createBtn = document.getElementById('create-btn');
+            const progressDiv = document.getElementById('creation-progress');
+            
+            createBtn.disabled = true;
+            createBtn.textContent = 'Creating...';
+            progressDiv.classList.remove('hidden');
+            
+            try {
+                // Gather all form data
+                const siteData = {
+                    siteName: document.getElementById('site-name').value,
+                    siteDescription: document.getElementById('site-description').value,
+                    siteAuthor: document.getElementById('site-author').value,
+                    siteType: document.querySelector('input[name="site-type"]:checked').value,
+                    githubUsername: document.getElementById('github-username').value,
+                    githubRepo: document.getElementById('github-repo').value,
+                    githubToken: document.getElementById('github-token').value,
+                    includeAbout: document.getElementById('include-about').checked,
+                    includeContact: document.getElementById('include-contact').checked,
+                    includeBlog: document.getElementById('include-blog').checked,
+                    includePortfolio: document.getElementById('include-portfolio').checked,
+                    includeServices: document.getElementById('include-services').checked,
+                    includeSampleContent: document.getElementById('include-sample-content').checked
+                };
+                
+                await performSiteCreation(siteData);
+                
+            } catch (error) {
+                console.error('Site creation failed:', error);
+                alert('Site creation failed: ' + error.message);
+                createBtn.disabled = false;
+                createBtn.textContent = 'Create Website';
+                progressDiv.classList.add('hidden');
+            }
+        }
+
+        async function performSiteCreation(siteData) {
+            const progressBar = document.getElementById('progress-bar');
+            const progressMessage = document.getElementById('progress-message');
+            
+            // Step 1: Update site configuration
+            progressMessage.textContent = 'Updating site configuration...';
+            progressBar.style.width = '20%';
+            
+            const response1 = await fetch('/api/setup-site', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'update-config', data: siteData })
+            });
+            
+            if (!response1.ok) throw new Error('Failed to update site configuration');
+            
+            // Step 2: Generate site structure
+            progressMessage.textContent = 'Generating site structure and pages...';
+            progressBar.style.width = '50%';
+            
+            const response2 = await fetch('/api/setup-site', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'generate-site', data: siteData })
+            });
+            
+            if (!response2.ok) throw new Error('Failed to generate site structure');
+            
+            // Step 3: Create GitHub repository (if token provided)
+            if (siteData.githubToken) {
+                progressMessage.textContent = 'Creating GitHub repository...';
+                progressBar.style.width = '75%';
+                
+                const response3 = await fetch('/api/setup-site', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'create-github-repo', data: siteData })
+                });
+                
+                if (!response3.ok) {
+                    console.warn('GitHub repository creation failed, but site was generated locally');
+                }
+            }
+            
+            // Step 4: Complete setup
+            progressMessage.textContent = 'Finalizing setup...';
+            progressBar.style.width = '100%';
+            
+            setTimeout(() => {
+                alert('Website created successfully! Redirecting to dashboard...');
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+
+        // Event listeners
+        document.getElementById('github-username').addEventListener('input', updateSiteUrlPreview);
+        document.getElementById('github-repo').addEventListener('input', updateSiteUrlPreview);
+        
+        // Auto-generate repo name from site name
+        document.getElementById('site-name').addEventListener('input', function() {
+            const siteName = this.value.toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '');
+            
+            if (siteName && !document.getElementById('github-repo').value) {
+                document.getElementById('github-repo').value = siteName;
+                updateSiteUrlPreview();
+            }
+        });
+
+        // Initialize
+        showStep(currentStep);
+        updateStepIndicator();
+        updateSiteUrlPreview();
+    </script>
+</body>
+</html>

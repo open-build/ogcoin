@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/buildly-head.js"></script>
+    <title>Navigation Manager - Buildly Admin</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100" data-page="navigation-manager">
+    <div class="flex h-screen">
+        <!-- Navigation Sidebar -->
+        <div id="admin-nav" class="h-full"></div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- Header -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">Navigation Manager</h1>
+                            <p class="text-sm text-gray-600 mt-1">Manage your website's main navigation menu</p>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button id="previewNav" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors">
+                                👀 Preview
+                            </button>
+                            <button id="saveNavigation" class="bg-buildly-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-buildly-secondary transition-colors">
+                                💾 Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="p-6">
+                <!-- Navigation Configuration -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Navigation Items Editor -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="p-6 border-b border-gray-200">
+                            <h2 class="text-lg font-semibold text-gray-900 flex items-center">
+                                <span class="mr-2">📝</span>
+                                Navigation Items
+                            </h2>
+                            <p class="text-sm text-gray-600 mt-1">Manage the main navigation menu items</p>
+                        </div>
+                        <div class="p-6">
+                            <div id="navigationItems" class="space-y-4">
+                                <!-- Navigation items will be loaded here -->
+                            </div>
+                            <button id="addNavItem" class="mt-4 w-full border-2 border-dashed border-gray-300 rounded-lg p-4 text-gray-500 hover:border-buildly-primary hover:text-buildly-primary transition-colors">
+                                <span class="text-lg">+</span> Add Navigation Item
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Preview -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="p-6 border-b border-gray-200">
+                            <h2 class="text-lg font-semibold text-gray-900 flex items-center">
+                                <span class="mr-2">👀</span>
+                                Live Preview
+                            </h2>
+                            <p class="text-sm text-gray-600 mt-1">See how your navigation will look</p>
+                        </div>
+                        <div class="p-6">
+                            <!-- Desktop Preview -->
+                            <div class="mb-6">
+                                <h3 class="text-sm font-medium text-gray-700 mb-3">Desktop Navigation</h3>
+                                <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <img src="../media/buildly-logo.svg" alt="Buildly" class="h-8 w-auto" style="filter: brightness(0) saturate(100%) invert(21%) sepia(47%) saturate(1765%) hue-rotate(198deg) brightness(97%) contrast(93%);">
+                                        </div>
+                                        <div class="flex items-center space-x-4" id="desktopNavPreview">
+                                            <!-- Desktop nav items will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mobile Preview -->
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-700 mb-3">Mobile Navigation</h3>
+                                <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm max-w-sm">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <img src="../media/buildly-logo.svg" alt="Buildly" class="h-8 w-auto" style="filter: brightness(0) saturate(100%) invert(21%) sepia(47%) saturate(1765%) hue-rotate(198deg) brightness(97%) contrast(93%);">
+                                        <div class="text-gray-500">
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2" id="mobileNavPreview">
+                                        <!-- Mobile nav items will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Navigation Status -->
+                <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <div class="text-blue-600 mr-3">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-blue-800">Navigation Status</h3>
+                            <p class="text-sm text-blue-700 mt-1" id="navStatus">Ready to edit navigation items</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class NavigationManager {
+            constructor() {
+                this.navigationItems = [];
+                this.init();
+            }
+
+            async init() {
+                try {
+                    await this.loadCurrentNavigation();
+                    this.bindEvents();
+                } catch (error) {
+                    console.error('NavigationManager initialization failed:', error);
+                }
+            }
+
+            async loadCurrentNavigation() {
+                try {
+                    // Try to load existing navigation configuration
+                    const response = await fetch('/admin/get-navigation');
+                    if (response.ok) {
+                        this.navigationItems = await response.json();
+                    } else {
+                        // Load default navigation from index.html
+                        this.loadDefaultNavigation();
+                    }
+                } catch (error) {
+                    console.log('Loading default navigation...');
+                    this.loadDefaultNavigation();
+                }
+                this.renderNavigationItems();
+                this.updatePreview();
+            }
+
+            loadDefaultNavigation() {
+                this.navigationItems = [
+                    {
+                        id: 1,
+                        label: 'Product',
+                        href: '#product',
+                        type: 'internal',
+                        order: 1,
+                        showInDesktop: true,
+                        showInMobile: true
+                    },
+                    {
+                        id: 2,
+                        label: 'Labs',
+                        href: 'https://labs.buildly.io',
+                        type: 'external',
+                        order: 2,
+                        showInDesktop: true,
+                        showInMobile: true
+                    },
+                    {
+                        id: 3,
+                        label: 'Use Cases',
+                        href: 'use-cases.html',
+                        type: 'internal',
+                        order: 3,
+                        showInDesktop: true,
+                        showInMobile: true
+                    },
+                    {
+                        id: 4,
+                        label: 'Pricing',
+                        href: 'pricing.html',
+                        type: 'internal',
+                        order: 4,
+                        showInDesktop: true,
+                        showInMobile: true
+                    },
+                    {
+                        id: 5,
+                        label: 'Docs',
+                        href: 'https://docs.buildly.io/',
+                        type: 'external',
+                        order: 5,
+                        showInDesktop: true,
+                        showInMobile: false
+                    },
+                    {
+                        id: 6,
+                        label: 'Articles',
+                        href: 'articles.html',
+                        type: 'internal',
+                        order: 6,
+                        showInDesktop: true,
+                        showInMobile: false
+                    },
+                    {
+                        id: 7,
+                        label: 'Try for Free',
+                        href: 'https://labs.buildly.io',
+                        type: 'cta',
+                        order: 7,
+                        showInDesktop: true,
+                        showInMobile: false
+                    }
+                ];
+            }
+
+            renderNavigationItems() {
+                const container = document.getElementById('navigationItems');
+                container.innerHTML = '';
+
+                // Sort items by order
+                const sortedItems = [...this.navigationItems].sort((a, b) => a.order - b.order);
+
+                sortedItems.forEach(item => {
+                    const itemHtml = this.createNavigationItemHTML(item);
+                    container.appendChild(itemHtml);
+                });
+            }
+
+            createNavigationItemHTML(item) {
+                const div = document.createElement('div');
+                div.className = 'border border-gray-200 rounded-lg p-4 bg-gray-50';
+                div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="drag-handle cursor-move text-gray-400">⋮⋮</span>
+                            <span class="text-sm font-medium text-gray-900">Item #${item.order}</span>
+                            <span class="px-2 py-1 text-xs rounded-full ${this.getTypeColor(item.type)}">${item.type.toUpperCase()}</span>
+                        </div>
+                        <button class="delete-item text-red-500 hover:text-red-700" data-id="${item.id}">
+                            🗑️
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Label</label>
+                            <input type="text" class="nav-label w-full px-3 py-2 border border-gray-300 rounded-md text-sm" 
+                                   value="${item.label}" data-id="${item.id}">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">URL</label>
+                            <input type="text" class="nav-href w-full px-3 py-2 border border-gray-300 rounded-md text-sm" 
+                                   value="${item.href}" data-id="${item.id}">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                            <select class="nav-type w-full px-3 py-2 border border-gray-300 rounded-md text-sm" data-id="${item.id}">
+                                <option value="internal" ${item.type === 'internal' ? 'selected' : ''}>Internal Link</option>
+                                <option value="external" ${item.type === 'external' ? 'selected' : ''}>External Link</option>
+                                <option value="cta" ${item.type === 'cta' ? 'selected' : ''}>Call to Action</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Order</label>
+                            <input type="number" class="nav-order w-full px-3 py-2 border border-gray-300 rounded-md text-sm" 
+                                   value="${item.order}" data-id="${item.id}" min="1">
+                        </div>
+                    </div>
+                    <div class="mt-3 flex items-center space-x-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="nav-desktop mr-2" data-id="${item.id}" ${item.showInDesktop ? 'checked' : ''}>
+                            <span class="text-sm text-gray-700">Show in Desktop</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="nav-mobile mr-2" data-id="${item.id}" ${item.showInMobile ? 'checked' : ''}>
+                            <span class="text-sm text-gray-700">Show in Mobile</span>
+                        </label>
+                    </div>
+                `;
+
+                // Bind events for this item
+                this.bindItemEvents(div);
+                return div;
+            }
+
+            getTypeColor(type) {
+                switch (type) {
+                    case 'internal': return 'bg-blue-100 text-blue-800';
+                    case 'external': return 'bg-green-100 text-green-800';
+                    case 'cta': return 'bg-orange-100 text-orange-800';
+                    default: return 'bg-gray-100 text-gray-800';
+                }
+            }
+
+            bindItemEvents(itemElement) {
+                const id = parseInt(itemElement.querySelector('.delete-item').dataset.id);
+
+                // Delete button
+                itemElement.querySelector('.delete-item').addEventListener('click', () => {
+                    this.deleteNavigationItem(id);
+                });
+
+                // Input changes
+                itemElement.querySelectorAll('input, select').forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        this.updateNavigationItem(id, e.target);
+                    });
+                });
+            }
+
+            updateNavigationItem(id, element) {
+                const item = this.navigationItems.find(item => item.id === id);
+                if (!item) return;
+
+                const field = element.className.split(' ')[0].replace('nav-', '');
+                
+                switch (field) {
+                    case 'label':
+                        item.label = element.value;
+                        break;
+                    case 'href':
+                        item.href = element.value;
+                        break;
+                    case 'type':
+                        item.type = element.value;
+                        break;
+                    case 'order':
+                        item.order = parseInt(element.value);
+                        break;
+                    case 'desktop':
+                        item.showInDesktop = element.checked;
+                        break;
+                    case 'mobile':
+                        item.showInMobile = element.checked;
+                        break;
+                }
+
+                this.updatePreview();
+            }
+
+            deleteNavigationItem(id) {
+                if (confirm('Are you sure you want to delete this navigation item?')) {
+                    this.navigationItems = this.navigationItems.filter(item => item.id !== id);
+                    this.renderNavigationItems();
+                    this.updatePreview();
+                }
+            }
+
+            addNavigationItem() {
+                const maxId = Math.max(...this.navigationItems.map(item => item.id), 0);
+                const maxOrder = Math.max(...this.navigationItems.map(item => item.order), 0);
+                
+                const newItem = {
+                    id: maxId + 1,
+                    label: 'New Item',
+                    href: '#',
+                    type: 'internal',
+                    order: maxOrder + 1,
+                    showInDesktop: true,
+                    showInMobile: true
+                };
+
+                this.navigationItems.push(newItem);
+                this.renderNavigationItems();
+                this.updatePreview();
+            }
+
+            updatePreview() {
+                this.updateDesktopPreview();
+                this.updateMobilePreview();
+            }
+
+            updateDesktopPreview() {
+                const container = document.getElementById('desktopNavPreview');
+                const desktopItems = this.navigationItems
+                    .filter(item => item.showInDesktop)
+                    .sort((a, b) => a.order - b.order);
+
+                container.innerHTML = desktopItems.map(item => {
+                    const baseClasses = 'px-3 py-2 rounded-md text-sm font-medium transition-colors';
+                    const classes = item.type === 'cta' 
+                        ? `${baseClasses} bg-buildly-primary text-white hover:bg-buildly-secondary`
+                        : `${baseClasses} text-gray-700 hover:text-buildly-primary`;
+                    
+                    return `<a href="${item.href}" class="${classes}">${item.label}</a>`;
+                }).join('');
+            }
+
+            updateMobilePreview() {
+                const container = document.getElementById('mobileNavPreview');
+                const mobileItems = this.navigationItems
+                    .filter(item => item.showInMobile)
+                    .sort((a, b) => a.order - b.order);
+
+                container.innerHTML = mobileItems.map(item => {
+                    return `<a href="${item.href}" class="text-gray-700 hover:text-buildly-primary block px-3 py-2 rounded-md text-base font-medium">${item.label}</a>`;
+                }).join('');
+            }
+
+            async saveNavigation() {
+                try {
+                    const response = await fetch('/admin/save-navigation', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ navigation: this.navigationItems })
+                    });
+
+                    if (response.ok) {
+                        this.showNotification('Navigation saved successfully!', 'success');
+                        this.updateStatus('Navigation saved successfully');
+                    } else {
+                        throw new Error('Failed to save navigation');
+                    }
+                } catch (error) {
+                    console.error('Error saving navigation:', error);
+                    this.showNotification('Error saving navigation', 'error');
+                    this.updateStatus('Error saving navigation');
+                }
+            }
+
+            previewNavigation() {
+                // Open main website in new tab to preview navigation
+                window.open('../index.html', '_blank');
+            }
+
+            bindEvents() {
+                try {
+                    const addBtn = document.getElementById('addNavItem');
+                    const saveBtn = document.getElementById('saveNavigation');
+                    const previewBtn = document.getElementById('previewNav');
+
+                    if (addBtn) {
+                        addBtn.addEventListener('click', () => {
+                            this.addNavigationItem();
+                        });
+                    }
+
+                    if (saveBtn) {
+                        saveBtn.addEventListener('click', () => {
+                            this.saveNavigation();
+                        });
+                    }
+
+                    if (previewBtn) {
+                        previewBtn.addEventListener('click', () => {
+                            this.previewNavigation();
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error binding events:', error);
+                }
+            }
+
+            updateStatus(message) {
+                document.getElementById('navStatus').textContent = message;
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 px-4 py-2 rounded-md z-50 ${
+                    type === 'success' ? 'bg-green-500' : 
+                    type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+                } text-white`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+        }
+
+        // Load navigation and initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Load admin navigation
+                const navElement = document.getElementById('admin-nav');
+                if (navElement) {
+                    const response = await fetch('includes/nav.html');
+                    if (response.ok) {
+                        const navHtml = await response.text();
+                        navElement.innerHTML = navHtml;
+                    }
+                }
+
+                // Wait a bit for DOM to be fully ready, then initialize
+                setTimeout(() => {
+                    try {
+                        new NavigationManager();
+                    } catch (error) {
+                        console.error('Navigation Manager initialization error:', error);
+                    }
+                }, 100);
+                
+            } catch (error) {
+                console.error('Failed to load navigation:', error);
+            }
+        });
+    </script>
+</body>
+</html>

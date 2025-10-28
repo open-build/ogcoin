@@ -1,0 +1,73 @@
+<!-- Admin Navigation Sidebar -->
+<div class="text-white" style="background: linear-gradient(to bottom, #1b5fa3, #144a84);">
+    <div class="p-4">
+        <div class="mb-4">
+            <h2 class="text-lg font-bold text-white">Admin</h2>
+        </div>
+        <nav class="space-y-2">
+            <a href="index.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="dashboard" style="color: white;">
+                <span>🏠</span>
+                <span class="ml-3">Dashboard</span>
+            </a>
+            <a href="site-setup.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="site-setup" style="color: white;">
+                <span>🚀</span>
+                <span class="ml-3">Site Setup</span>
+            </a>
+            <a href="index.html#files" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="files" style="color: white;">
+                <span>📁</span>
+                <span class="ml-3">File Browser</span>
+            </a>
+            <a href="editor.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="article-editor" style="color: white;">
+                <span>✏️</span>
+                <span class="ml-3">Article Editor</span>
+            </a>
+            <a href="page-editor.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="page-editor" style="color: white;">
+                <span>📄</span>
+                <span class="ml-3">Page Editor</span>
+            </a>
+            <a href="articles-manager.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="articles-manager" style="color: white;">
+                <span>📚</span>
+                <span class="ml-3">Articles Manager</span>
+            </a>
+            <a href="social.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="social" style="color: white;">
+                <span>📱</span>
+                <span class="ml-3">Social Media</span>
+            </a>
+            <a href="navigation-manager.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="navigation-manager" style="color: white;">
+                <span>🧭</span>
+                <span class="ml-3">Navigation</span>
+            </a>
+            <a href="branding-manager.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="branding" style="color: white;">
+                <span>🎨</span>
+                <span class="ml-3">Branding</span>
+            </a>
+            <a href="html-import.html" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-15 transition-colors nav-item" data-page="html-import" style="color: white;">
+                <span>📥</span>
+                <span class="ml-3">HTML Import</span>
+            </a>
+        </nav>
+        
+        <div class="mt-8 pt-6 border-t border-white border-opacity-20">
+            <div class="text-sm" style="color: rgba(255, 255, 255, 0.7);">
+                <div class="mb-2">Buildly Admin v1.0</div>
+                <div class="text-xs">AI-Powered Content Management</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Highlight current page in navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = document.body.getAttribute('data-page');
+    if (currentPage) {
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            if (item.getAttribute('data-page') === currentPage) {
+                item.classList.remove('text-white', 'text-opacity-90', 'hover:bg-white', 'hover:bg-opacity-15');
+                item.classList.add('bg-white', 'bg-opacity-15', 'text-white');
+            }
+        });
+    }
+});
+</script>

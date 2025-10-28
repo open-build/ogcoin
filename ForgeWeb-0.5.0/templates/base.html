@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{SITE_NAME}}</title>
+    <meta name="description" content="{{SITE_DESCRIPTION}}">
+    <meta name="author" content="{{SITE_AUTHOR}}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{SITE_URL}}">
+    <meta property="og:title" content="{{SITE_NAME}}">
+    <meta property="og:description" content="{{SITE_DESCRIPTION}}">
+    <meta property="og:image" content="{{SITE_URL}}/assets/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{SITE_URL}}">
+    <meta property="twitter:title" content="{{SITE_NAME}}">
+    <meta property="twitter:description" content="{{SITE_DESCRIPTION}}">
+    <meta property="twitter:image" content="{{SITE_URL}}/assets/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Tailwind CSS -->
+    <script src="{{TAILWIND_CDN_URL}}"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '{{BRAND_PRIMARY_COLOR}}',
+                        'secondary': '{{BRAND_SECONDARY_COLOR}}',
+                        'accent': '{{BRAND_ACCENT_COLOR}}'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{CUSTOM_CSS_PATH}}">
+    
+    <!-- Custom Styles -->
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1b5fa3 0%, #144a84 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #1b5fa3, #f9943b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 flex items-center space-x-3">
+                        {{#LOGO_PATH}}
+                        <img src="{{LOGO_PATH}}" alt="{{SITE_NAME}}" class="h-8 w-auto">
+                        {{/LOGO_PATH}}
+                        <h1 class="text-xl font-bold text-primary">{{SITE_NAME}}</h1>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-primary hover:text-secondary px-3 py-2 rounded-md text-sm font-medium border-b-2 border-primary">Home</a>
+                        {{NAV_LINKS}}
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-400 hover:text-gray-600" onclick="toggleMobileMenu()">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="index.html" class="text-primary hover:text-secondary block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                {{MOBILE_NAV_LINKS}}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                    Welcome to <span class="text-accent">{{SITE_NAME}}</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                    {{SITE_DESCRIPTION}}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    {{CTA_BUTTONS}}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="py-16">
+        {{MAIN_CONTENT}}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4">{{SITE_NAME}}</h3>
+                    <p class="text-gray-300 mb-4">{{SITE_DESCRIPTION}}</p>
+                    <p class="text-gray-400 text-sm">
+                        Created with <a href="https://buildly.io/forgeweb" class="text-accent hover:underline">ForgeWeb</a> 
+                        by <a href="https://buildly.io" class="text-accent hover:underline">Buildly</a>
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        {{FOOTER_LINKS}}
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <div class="text-gray-300 space-y-2">
+                        <p>{{SITE_AUTHOR}}</p>
+                        <p><a href="mailto:contact@{{GITHUB_REPO}}.com" class="hover:text-accent">Get in Touch</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; {{CURRENT_YEAR}} {{SITE_AUTHOR}}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Load common elements -->
+    <script src="/js/buildly-head.js"></script>
+    
+    <title>Social Media Manager - Buildly AI Content Manager</title>
+    <meta name="description" content="Generate and manage social media posts from your content.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Admin-specific styles -->
+    <link rel="stylesheet" href="css/admin.css">
+    
+    <style>
+        .admin-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            height: 100vh;
+            background: #f8fafc;
+        }
+        
+        .sidebar {
+            background: linear-gradient(135deg, #1b5fa3 0%, #144a84 100%);
+            color: white;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .sidebar h1 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+        
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .content-selector {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .selector-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .file-select {
+            padding: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .content-preview {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .social-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .platform-card {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .platform-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: between;
+        }
+        
+        .platform-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+        
+        .platform-content {
+            padding: 1.5rem;
+        }
+        
+        .post-text {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            min-height: 100px;
+            resize: vertical;
+            width: 100%;
+            font-family: inherit;
+        }
+        
+        .hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hashtag {
+            background: #e0f2fe;
+            color: #0277bd;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+        
+        .character-count {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .count-valid {
+            color: #10b981;
+        }
+        
+        .count-invalid {
+            color: #ef4444;
+        }
+        
+        .platform-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .btn-primary {
+            background: #1b5fa3;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #144a84;
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .btn-accent {
+            background: #f9943b;
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background: #f97316;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+        
+        .error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #16a34a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-bar {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1b5fa3;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h1>Social Media Manager</h1>
+            
+            <nav>
+                <a href="index.html" class="nav-item">
+                    <span>Dashboard</span>
+                </a>
+                <a href="index.html#files" class="nav-item">
+                    <span>File Browser</span>
+                </a>
+                <a href="editor.html" class="nav-item">
+                    <span>Article Editor</span>
+                </a>
+                <a href="page-editor.html" class="nav-item">
+                    <span>Page Editor</span>
+                </a>
+                <a href="articles-manager.html" class="nav-item">
+                    <span>Articles Manager</span>
+                </a>
+                <a href="#" class="nav-item" style="background: rgba(255,255,255,0.15);">
+                    <span>Social Media</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h2 class="text-2xl font-bold text-buildly-dark">Social Media Manager</h2>
+                    <p class="text-gray-600">Generate social media posts from your content</p>
+                </div>
+            </div>
+            
+            <!-- Content Selector -->
+            <div class="content-selector">
+                <div class="selector-header">
+                    <h3 class="text-lg font-semibold">Select Content</h3>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <select id="file-select" class="file-select">
+                        <option value="">Select a file to generate social posts...</option>
+                    </select>
+                    
+                    <div id="content-preview" class="content-preview" style="display: none;">
+                        <h4 class="font-semibold mb-2">Content Preview:</h4>
+                        <div id="preview-content"></div>
+                    </div>
+                    
+                    <div class="flex gap-2 mt-4">
+                        <button id="generate-posts" class="btn btn-primary" disabled>
+                            Generate Social Posts
+                        </button>
+                        <button id="clear-selection" class="btn btn-secondary">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loading" class="loading">
+                <div>Generating social media posts...</div>
+                <div style="margin-top: 0.5rem; font-size: 0.875rem;">This may take a few moments</div>
+            </div>
+            
+            <!-- Stats Bar -->
+            <div id="stats-bar" class="stats-bar" style="display: none;">
+                <h3 class="text-lg font-semibold mb-4">Generation Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div id="stat-platforms" class="stat-value">0</div>
+                        <div class="stat-label">Platforms</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="stat-characters" class="stat-value">0</div>
+                        <div class="stat-label">Total Characters</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="stat-hashtags" class="stat-value">0</div>
+                        <div class="stat-label">Hashtags</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="stat-valid" class="stat-value">0</div>
+                        <div class="stat-label">Valid Posts</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Social Media Accounts Configuration (moved to top) -->
+            <div class="social-accounts-config" style="background: white; border-radius: 0.5rem; margin-bottom: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div class="platform-header">
+                    <h3 class="text-lg font-semibold">Social Media Accounts</h3>
+                    <button id="save-accounts" class="btn btn-primary" style="margin-left: auto;">Save Accounts</button>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <div class="accounts-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem;">
+                        <!-- LinkedIn Account -->
+                        <div class="account-card" style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                <div style="font-size: 1.5rem; margin-right: 0.75rem; color: #0077b5;">📘</div>
+                                <h4 class="font-semibold">LinkedIn</h4>
+                            </div>
+                            <div style="space-y: 0.75rem;">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Company Page</label>
+                                    <input type="text" id="linkedin-company" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="buildly-io">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Personal Account</label>
+                                    <input type="text" id="linkedin-personal" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="greg-lind-buildly">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Sharing Template</label>
+                                    <textarea id="linkedin-template" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" rows="3" placeholder="Check out this article from @buildly-io: {title} {url} #AI #ProductDevelopment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BlueSky Account -->
+                        <div class="account-card" style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                <div style="font-size: 1.5rem; margin-right: 0.75rem; color: #00a8e6;">🦋</div>
+                                <h4 class="font-semibold">BlueSky</h4>
+                            </div>
+                            <div style="space-y: 0.75rem;">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Handle</label>
+                                    <input type="text" id="bluesky-handle" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="buildly.bsky.social">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Display Name</label>
+                                    <input type="text" id="bluesky-display" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="Buildly">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Sharing Template</label>
+                                    <textarea id="bluesky-template" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" rows="3" placeholder="New from Buildly: {title} {url} #AI #ProductDevelopment #StartupTech"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mastodon Account -->
+                        <div class="account-card" style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem;">
+                            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                <div style="font-size: 1.5rem; margin-right: 0.75rem; color: #6364ff;">🐘</div>
+                                <h4 class="font-semibold">Mastodon</h4>
+                            </div>
+                            <div style="space-y: 0.75rem;">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Instance</label>
+                                    <input type="text" id="mastodon-instance" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="mastodon.social">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                                    <input type="text" id="mastodon-username" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="buildly">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Sharing Template</label>
+                                    <textarea id="mastodon-template" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" rows="3" placeholder="Fresh insights from @buildly@mastodon.social: {title} {url} #AI #ProductDevelopment #OpenSource"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Social Posts -->
+            <div id="social-posts" class="social-posts">
+                <!-- Posts will be generated here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/ai-service.js"></script>
+    <script src="js/file-manager.js"></script>
+    <script src="js/social-service.js"></script>
+    
+    <script>
+        let currentFile = null;
+        let currentContent = null;
+        let currentPosts = null;
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadFileOptions();
+            await loadSocialAccounts();
+            setupEventListeners();
+            
+            // Check if file is specified in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const fileParam = urlParams.get('file');
+            if (fileParam) {
+                await selectFile(fileParam);
+            }
+        });
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            document.getElementById('file-select').addEventListener('change', handleFileSelection);
+            document.getElementById('generate-posts').addEventListener('click', generatePosts);
+            document.getElementById('clear-selection').addEventListener('click', clearSelection);
+            document.getElementById('save-accounts').addEventListener('click', saveSocialAccounts);
+        }
+
+        // Social Media Account Management
+        async function loadSocialAccounts() {
+            try {
+                const response = await fetch('/api/social-accounts');
+                if (response.ok) {
+                    const accounts = await response.json();
+                    
+                    // LinkedIn
+                    if (accounts.linkedin) {
+                        document.getElementById('linkedin-company').value = accounts.linkedin.company || '';
+                        document.getElementById('linkedin-personal').value = accounts.linkedin.personal || '';
+                        document.getElementById('linkedin-template').value = accounts.linkedin.template || '';
+                    }
+                    
+                    // BlueSky
+                    if (accounts.bluesky) {
+                        document.getElementById('bluesky-handle').value = accounts.bluesky.handle || '';
+                        document.getElementById('bluesky-display').value = accounts.bluesky.display || '';
+                        document.getElementById('bluesky-template').value = accounts.bluesky.template || '';
+                    }
+                    
+                    // Mastodon
+                    if (accounts.mastodon) {
+                        document.getElementById('mastodon-instance').value = accounts.mastodon.instance || '';
+                        document.getElementById('mastodon-username').value = accounts.mastodon.username || '';
+                        document.getElementById('mastodon-template').value = accounts.mastodon.template || '';
+                    }
+                }
+            } catch (error) {
+                console.log('No existing social accounts found, using defaults');
+            }
+        }
+
+        async function saveSocialAccounts() {
+            const accounts = {
+                linkedin: {
+                    company: document.getElementById('linkedin-company').value,
+                    personal: document.getElementById('linkedin-personal').value,
+                    template: document.getElementById('linkedin-template').value
+                },
+                bluesky: {
+                    handle: document.getElementById('bluesky-handle').value,
+                    display: document.getElementById('bluesky-display').value,
+                    template: document.getElementById('bluesky-template').value
+                },
+                mastodon: {
+                    instance: document.getElementById('mastodon-instance').value,
+                    username: document.getElementById('mastodon-username').value,
+                    template: document.getElementById('mastodon-template').value
+                }
+            };
+            
+            try {
+                const response = await fetch('/api/social-accounts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(accounts)
+                });
+                
+                if (response.ok) {
+                    showNotification('Social media accounts saved successfully!', 'success');
+                } else {
+                    throw new Error('Failed to save accounts');
+                }
+            } catch (error) {
+                console.error('Error saving social accounts:', error);
+                showNotification('Failed to save social media accounts', 'error');
+            }
+        }
+
+        // Get social accounts for sharing
+        function getSocialAccounts() {
+            return {
+                linkedin: {
+                    company: document.getElementById('linkedin-company').value,
+                    personal: document.getElementById('linkedin-personal').value,
+                    template: document.getElementById('linkedin-template').value
+                },
+                bluesky: {
+                    handle: document.getElementById('bluesky-handle').value,
+                    display: document.getElementById('bluesky-display').value,
+                    template: document.getElementById('bluesky-template').value
+                },
+                mastodon: {
+                    instance: document.getElementById('mastodon-instance').value,
+                    username: document.getElementById('mastodon-username').value,
+                    template: document.getElementById('mastodon-template').value
+                }
+            };
+        }
+        
+        // Load file options into select
+        async function loadFileOptions() {
+            try {
+                const files = await fileManager.getFileList();
+                const select = document.getElementById('file-select');
+                
+                // Clear existing options (except first)
+                while (select.children.length > 1) {
+                    select.removeChild(select.lastChild);
+                }
+                
+                // Add file options
+                files.forEach(file => {
+                    const option = document.createElement('option');
+                    option.value = file.path;
+                    option.textContent = `${file.name} (${file.stats.words} words)`;
+                    select.appendChild(option);
+                });
+                
+            } catch (error) {
+                console.error('Error loading files:', error);
+                showNotification('Failed to load files', 'error');
+            }
+        }
+        
+        // Handle file selection
+        async function handleFileSelection(event) {
+            const filePath = event.target.value;
+            if (filePath) {
+                await selectFile(filePath);
+            } else {
+                clearSelection();
+            }
+        }
+        
+        // Select and preview file
+        async function selectFile(filePath) {
+            try {
+                currentFile = filePath;
+                currentContent = await fileManager.readFile(filePath);
+                
+                // Update UI
+                document.getElementById('file-select').value = filePath;
+                showContentPreview(currentContent);
+                document.getElementById('generate-posts').disabled = false;
+                
+            } catch (error) {
+                console.error('Error loading file:', error);
+                showNotification('Failed to load file content', 'error');
+                clearSelection();
+            }
+        }
+        
+        // Show content preview
+        function showContentPreview(content) {
+            const preview = document.getElementById('content-preview');
+            const previewContent = document.getElementById('preview-content');
+            
+            // Extract title and description for preview
+            const metadata = fileManager.extractMetadata(content);
+            const stats = fileManager.getFileStats(content);
+            
+            previewContent.innerHTML = `
+                <div class="mb-2">
+                    <strong>Title:</strong> ${metadata.title || 'Untitled'}
+                </div>
+                <div class="mb-2">
+                    <strong>Description:</strong> ${metadata.description || 'No description'}
+                </div>
+                <div class="text-sm text-gray-600">
+                    ${stats.words} words - ${stats.readingTime} min read
+                </div>
+            `;
+            
+            preview.style.display = 'block';
+        }
+        
+        // Clear selection
+        function clearSelection() {
+            currentFile = null;
+            currentContent = null;
+            currentPosts = null;
+            
+            document.getElementById('file-select').value = '';
+            document.getElementById('content-preview').style.display = 'none';
+            document.getElementById('generate-posts').disabled = true;
+            document.getElementById('stats-bar').style.display = 'none';
+            document.getElementById('social-posts').innerHTML = '';
+        }
+        
+        // Generate social media posts
+        async function generatePosts() {
+            if (!currentContent) return;
+            
+            try {
+                // Show loading
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('social-posts').innerHTML = '';
+                document.getElementById('stats-bar').style.display = 'none';
+                
+                // Extract metadata
+                const metadata = fileManager.extractMetadata(currentContent);
+                
+                // Generate posts
+                currentPosts = await socialMediaService.generateAllPosts(currentContent, metadata);
+                
+                // Display results
+                displayPosts(currentPosts);
+                displayStats(currentPosts);
+                
+                showNotification('Social media posts generated successfully!', 'success');
+                
+            } catch (error) {
+                console.error('Error generating posts:', error);
+                showNotification('Failed to generate social media posts', 'error');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+        
+        // Display generated posts
+        function displayPosts(posts) {
+            const container = document.getElementById('social-posts');
+            container.innerHTML = '';
+            
+            for (const [platform, post] of Object.entries(posts)) {
+                if (post.error) {
+                    container.appendChild(createErrorCard(platform, post));
+                } else {
+                    container.appendChild(createPostCard(platform, post));
+                }
+            }
+        }
+        
+        // Create post card for platform
+        function createPostCard(platform, post) {
+            const platformConfig = socialMediaService.platforms[platform];
+            const card = document.createElement('div');
+            card.className = 'platform-card';
+            
+            card.innerHTML = `
+                <div class="platform-header" style="border-left: 4px solid ${platformConfig.color};">
+                    <div class="flex items-center">
+                        <span class="platform-icon">${platformConfig.icon}</span>
+                        <h3 class="font-semibold">${platformConfig.name}</h3>
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        ${post.characterCount}/${platformConfig.maxLength} chars
+                    </div>
+                </div>
+                
+                <div class="platform-content">
+                    <textarea class="post-text" id="post-${platform}" rows="4">${post.content}</textarea>
+                    
+                    <div class="hashtags">
+                        ${post.hashtags.map(tag => `<span class="hashtag">${tag}</span>`).join('')}
+                    </div>
+                    
+                    <div class="character-count">
+                        <span>Character count:</span>
+                        <span class="${post.isValid ? 'count-valid' : 'count-invalid'}">
+                            ${post.characterCount}/${platformConfig.maxLength}
+                        </span>
+                    </div>
+                    
+                    <div class="platform-actions">
+                        <button class="btn btn-secondary" onclick="copyPost('${platform}')">
+                            Copy
+                        </button>
+                        <a href="${post.url}" target="_blank" class="btn btn-primary">
+                            Share on ${platformConfig.name}
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Add real-time character counting
+            const textarea = card.querySelector(`#post-${platform}`);
+            textarea.addEventListener('input', function() {
+                updateCharacterCount(platform, this.value);
+            });
+            
+            return card;
+        }
+        
+        // Create error card
+        function createErrorCard(platform, post) {
+            const platformConfig = socialMediaService.platforms[platform];
+            const card = document.createElement('div');
+            card.className = 'platform-card';
+            
+            card.innerHTML = `
+                <div class="platform-header" style="border-left: 4px solid #ef4444;">
+                    <div class="flex items-center">
+                        <span class="platform-icon">ERROR</span>
+                        <h3 class="font-semibold">${platformConfig.name}</h3>
+                    </div>
+                </div>
+                
+                <div class="platform-content">
+                    <div class="error">
+                        <strong>Generation Failed:</strong> ${post.error}
+                    </div>
+                    
+                    ${post.fallback ? `
+                        <div class="mb-4">
+                            <h4 class="font-semibold mb-2">Fallback Content:</h4>
+                            <textarea class="post-text" rows="4">${post.fallback.text}</textarea>
+                            
+                            <div class="hashtags">
+                                ${post.fallback.hashtags.map(tag => `<span class="hashtag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="platform-actions">
+                        <button class="btn btn-secondary" onclick="retryGeneration('${platform}')">
+                            Retry
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // Display generation stats
+        function displayStats(posts) {
+            const stats = socialMediaService.getSharingStats(posts);
+            
+            document.getElementById('stat-platforms').textContent = stats.totalPosts;
+            document.getElementById('stat-characters').textContent = stats.totalCharacters;
+            document.getElementById('stat-hashtags').textContent = stats.totalHashtags;
+            document.getElementById('stat-valid').textContent = stats.validPosts;
+            
+            document.getElementById('stats-bar').style.display = 'block';
+        }
+        
+        // Update character count for a platform
+        function updateCharacterCount(platform, text) {
+            const platformConfig = socialMediaService.platforms[platform];
+            const count = text.length;
+            const isValid = count <= platformConfig.maxLength;
+            
+            const card = document.querySelector(`#post-${platform}`).closest('.platform-card');
+            const countElement = card.querySelector('.character-count span:last-child');
+            const headerCount = card.querySelector('.platform-header .text-sm');
+            
+            countElement.textContent = `${count}/${platformConfig.maxLength}`;
+            countElement.className = isValid ? 'count-valid' : 'count-invalid';
+            
+            headerCount.textContent = `${count}/${platformConfig.maxLength} chars`;
+        }
+        
+        // Copy post content to clipboard
+        async function copyPost(platform) {
+            try {
+                const textarea = document.getElementById(`post-${platform}`);
+                await navigator.clipboard.writeText(textarea.value);
+                showNotification(`${socialMediaService.platforms[platform].name} post copied to clipboard!`, 'success');
+            } catch (error) {
+                console.error('Failed to copy:', error);
+                showNotification('Failed to copy to clipboard', 'error');
+            }
+        }
+        
+        // Retry generation for a specific platform
+        async function retryGeneration(platform) {
+            if (!currentContent) return;
+            
+            try {
+                showNotification(`Retrying ${socialMediaService.platforms[platform].name} generation...`, 'info');
+                
+                const metadata = fileManager.extractMetadata(currentContent);
+                const post = await socialMediaService.generatePost(currentContent, platform, metadata);
+                
+                // Update current posts
+                currentPosts[platform] = post;
+                
+                // Refresh display
+                displayPosts(currentPosts);
+                displayStats(currentPosts);
+                
+                showNotification(`${socialMediaService.platforms[platform].name} post regenerated!`, 'success');
+                
+            } catch (error) {
+                console.error('Retry failed:', error);
+                showNotification(`Failed to regenerate ${socialMediaService.platforms[platform].name} post`, 'error');
+            }
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'info') {
+            // Simple notification system
+            const notification = document.createElement('div');
+            notification.className = `${type} fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+/* OGCoin Custom Styles - Compatible with ForgeWeb */
+/* This file extends Tailwind CSS with custom styling */
+
+:root {
+    /* Brand colors matching ForgeWeb configuration */
+    --brand-primary: #1b5fa3;
+    --brand-secondary: #144a84;
+    --brand-accent: #f9943b;
+    
+    /* Additional brand variables */
+    --brand-text: #1f2937;
+    --brand-bg: #f9fafb;
+    --brand-border: #e5e7eb;
+}
+
+/* Global styles */
+* {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Custom utility classes */
+.hero-gradient {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Card hover effects */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styles */
+.btn-brand {
+    background-color: var(--brand-primary);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-brand:hover {
+    background-color: var(--brand-secondary);
+    transform: translateY(-1px);
+}
+
+.btn-brand-outline {
+    border: 2px solid var(--brand-primary);
+    color: var(--brand-primary);
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: inline-block;
+    text-decoration: none;
+    background: transparent;
+}
+
+.btn-brand-outline:hover {
+    background-color: var(--brand-primary);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Navigation styles */
+nav {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+nav a {
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+nav a:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--brand-accent);
+    border-radius: 1px;
+}
+
+/* Section spacing */
+section {
+    position: relative;
+}
+
+/* Hero section enhancements */
+.hero-gradient {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
+}
+
+/* Feature cards */
+.feature-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(27, 95, 163, 0.1);
+}
+
+.feature-card:hover {
+    box-shadow: 0 20px 40px rgba(27, 95, 163, 0.1);
+    transform: translateY(-5px);
+    border-color: var(--brand-accent);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Responsive design enhancements */
+@media (max-width: 768px) {
+    .hero-gradient h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+    
+    .hero-gradient p {
+        font-size: 1.125rem;
+    }
+    
+    section {
+        padding: 3rem 0;
+    }
+}
+
+/* Focus states for accessibility */
+a:focus,
+button:focus {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 2px;
+}
+
+/* Mobile menu animation */
+#mobile-menu {
+    transition: all 0.3s ease;
+}
+
+#mobile-menu.show {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer styling */
+footer {
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--brand-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-secondary);
+}
+
+/* Print styles */
+@media print {
+    .hero-gradient {
+        background: var(--brand-primary) !important;
+        color: white !important;
+    }
+    
+    nav, footer {
+        display: none;
+    }
+}

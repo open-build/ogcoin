@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Load common elements -->
+    <script src="/js/buildly-head.js"></script>
+    
+    <title>Settings - Buildly AI Content Manager</title>
+    <meta name="description" content="Configure your AI providers and content management preferences.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Admin-specific styles -->
+    <link rel="stylesheet" href="css/admin.css">
+    
+    <style>
+        .admin-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            height: 100vh;
+            background: #f8fafc;
+        }
+        
+        .sidebar {
+            background: linear-gradient(135deg, #1b5fa3 0%, #144a84 100%);
+            color: white;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .sidebar h1 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+        
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .settings-section {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .section-content {
+            padding: 1.5rem;
+        }
+        
+        .provider-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .provider-header {
+            padding: 1rem;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        
+        .provider-content {
+            padding: 1rem;
+            display: none;
+        }
+        
+        .provider-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #1b5fa3;
+            box-shadow: 0 0 0 3px rgba(27, 95, 163, 0.1);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background: white;
+        }
+        
+        .form-checkbox {
+            margin-right: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #1b5fa3;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #144a84;
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        
+        .status-online { background: #10b981; }
+        .status-offline { background: #ef4444; }
+        .status-testing { background: #f59e0b; animation: pulse 2s infinite; }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #1b5fa3;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h1>Settings</h1>
+            
+            <nav>
+                <a href="index.html" class="nav-item">
+                    <span>Dashboard</span>
+                </a>
+                <a href="index.html#files" class="nav-item">
+                    <span>File Browser</span>
+                </a>
+                <a href="editor.html" class="nav-item">
+                    <span>Content Editor</span>
+                </a>
+                <a href="social.html" class="nav-item">
+                    <span>Social Media</span>
+                </a>
+                <a href="#" class="nav-item" style="background: rgba(255,255,255,0.15);">
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h2 class="text-2xl font-bold text-buildly-dark">Settings</h2>
+                    <p class="text-gray-600">Configure your AI providers and content management preferences</p>
+                </div>
+            </div>
+            
+            <!-- AI Providers Section -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <h3 class="text-lg font-semibold">AI Providers</h3>
+                    <p class="text-gray-600">Configure your AI service providers</p>
+                </div>
+                <div class="section-content">
+                    <!-- Ollama Provider -->
+                    <div class="provider-card">
+                        <div class="provider-header" onclick="toggleProvider('ollama')">
+                            <div class="flex items-center">
+                                <span class="status-indicator status-offline" id="ollama-indicator"></span>
+                                <h4 class="font-semibold">Ollama (Local AI)</h4>
+                            </div>
+                            <div class="flex items-center">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="ollama-enabled">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="ml-2">v</span>
+                            </div>
+                        </div>
+                        <div class="provider-content" id="ollama-content">
+                            <div class="form-group">
+                                <label class="form-label">Endpoint URL</label>
+                                <input type="url" class="form-input" id="ollama-endpoint" placeholder="http://localhost:11434">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Default Model</label>
+                                <select class="form-select" id="ollama-model">
+                                    <option value="">Loading models...</option>
+                                </select>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="btn btn-secondary" onclick="testConnection('ollama')">Test Connection</button>
+                                <button class="btn btn-primary" onclick="saveProvider('ollama')">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- OpenAI Provider -->
+                    <div class="provider-card">
+                        <div class="provider-header" onclick="toggleProvider('openai')">
+                            <div class="flex items-center">
+                                <span class="status-indicator status-offline" id="openai-indicator"></span>
+                                <h4 class="font-semibold">OpenAI</h4>
+                            </div>
+                            <div class="flex items-center">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="openai-enabled">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="ml-2">v</span>
+                            </div>
+                        </div>
+                        <div class="provider-content" id="openai-content">
+                            <div class="form-group">
+                                <label class="form-label">API Key</label>
+                                <input type="password" class="form-input" id="openai-apikey" placeholder="sk-...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Default Model</label>
+                                <select class="form-select" id="openai-model">
+                                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                                    <option value="gpt-4">GPT-4</option>
+                                    <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                                </select>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="btn btn-secondary" onclick="testConnection('openai')">Test Connection</button>
+                                <button class="btn btn-primary" onclick="saveProvider('openai')">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Google Gemini Provider -->
+                    <div class="provider-card">
+                        <div class="provider-header" onclick="toggleProvider('gemini')">
+                            <div class="flex items-center">
+                                <span class="status-indicator status-offline" id="gemini-indicator"></span>
+                                <h4 class="font-semibold">Google Gemini</h4>
+                            </div>
+                            <div class="flex items-center">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="gemini-enabled">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="ml-2">v</span>
+                            </div>
+                        </div>
+                        <div class="provider-content" id="gemini-content">
+                            <div class="form-group">
+                                <label class="form-label">API Key</label>
+                                <input type="password" class="form-input" id="gemini-apikey" placeholder="AIza...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Default Model</label>
+                                <select class="form-select" id="gemini-model">
+                                    <option value="gemini-pro">Gemini Pro</option>
+                                    <option value="gemini-pro-vision">Gemini Pro Vision</option>
+                                </select>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="btn btn-secondary" onclick="testConnection('gemini')">Test Connection</button>
+                                <button class="btn btn-primary" onclick="saveProvider('gemini')">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content Settings Section -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <h3 class="text-lg font-semibold">Content Settings</h3>
+                    <p class="text-gray-600">Configure content creation and editing preferences</p>
+                </div>
+                <div class="section-content">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" class="form-checkbox" id="auto-save">
+                            Enable auto-save
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Auto-save interval (seconds)</label>
+                        <input type="number" class="form-input" id="auto-save-interval" min="5" max="300" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Default template</label>
+                        <select class="form-select" id="default-template">
+                            <option value="article">Article</option>
+                            <option value="page">Page</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Social Media Settings Section -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <h3 class="text-lg font-semibold">Social Media Settings</h3>
+                    <p class="text-gray-600">Configure social media post generation</p>
+                </div>
+                <div class="section-content">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" class="form-checkbox" id="auto-generate-social">
+                            Auto-generate social posts
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Maximum hashtags per post</label>
+                        <input type="number" class="form-input" id="max-hashtags" min="1" max="10" value="5">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Enabled platforms</label>
+                        <div class="space-y-2 mt-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" id="platform-twitter" checked>
+                                Twitter/X
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" id="platform-linkedin" checked>
+                                LinkedIn
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" id="platform-facebook" checked>
+                                Facebook
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="settings-section">
+                <div class="section-header">
+                    <h3 class="text-lg font-semibold">Actions</h3>
+                    <p class="text-gray-600">Manage your configuration</p>
+                </div>
+                <div class="section-content">
+                    <div class="flex gap-2 flex-wrap">
+                        <button class="btn btn-primary" onclick="saveAllSettings()">Save All Settings</button>
+                        <button class="btn btn-secondary" onclick="exportSettings()">Export Configuration</button>
+                        <button class="btn btn-secondary" onclick="importSettings()">Import Configuration</button>
+                        <button class="btn btn-danger" onclick="resetSettings()">Reset to Defaults</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/ai-service.js"></script>
+    
+    <script>
+        // Initialize settings page
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadSettings();
+            checkProviderStatus();
+        });
+        
+        // Populate Ollama model dropdown with discovered models
+        async function populateOllamaModels() {
+            const modelSelect = document.getElementById('ollama-model');
+            
+            try {
+                // Discover models
+                const models = await configManager.discoverOllamaModels();
+                
+                // Clear existing options
+                modelSelect.innerHTML = '';
+                
+                if (models.length === 0) {
+                    modelSelect.innerHTML = '<option value="">No models found</option>';
+                    return;
+                }
+                
+                // Add discovered models as options
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+                
+                console.log(`✅ Populated ${models.length} Ollama models in settings`);
+                
+            } catch (error) {
+                console.error('Error populating Ollama models:', error);
+                modelSelect.innerHTML = '<option value="">Error loading models</option>';
+            }
+        }
+
+        // Load current settings
+        async function loadSettings() {
+            const config = configManager.load();
+            
+            // First populate Ollama models, then load settings
+            await populateOllamaModels();
+            
+            // Load AI provider settings
+            for (const [provider, settings] of Object.entries(config.aiProviders)) {
+                document.getElementById(`${provider}-enabled`).checked = settings.enabled;
+                
+                if (provider === 'ollama') {
+                    document.getElementById('ollama-endpoint').value = settings.endpoint;
+                    document.getElementById('ollama-model').value = settings.defaultModel;
+                } else {
+                    document.getElementById(`${provider}-apikey`).value = configManager.decryptApiKey(settings.apiKey);
+                    document.getElementById(`${provider}-model`).value = settings.defaultModel;
+                }
+            }
+            
+            // Load content settings
+            document.getElementById('auto-save').checked = config.content.autoSave;
+            document.getElementById('auto-save-interval').value = config.content.autoSaveInterval / 1000;
+            document.getElementById('default-template').value = config.content.defaultTemplate;
+            
+            // Load social media settings
+            document.getElementById('auto-generate-social').checked = config.social.autoGenerate;
+            document.getElementById('max-hashtags').value = config.social.maxHashtags;
+            
+            // Load platform settings
+            const platforms = config.social.platforms;
+            document.getElementById('platform-twitter').checked = platforms.includes('twitter');
+            document.getElementById('platform-linkedin').checked = platforms.includes('linkedin');
+            document.getElementById('platform-facebook').checked = platforms.includes('facebook');
+        }
+        
+        // Check provider status
+        async function checkProviderStatus() {
+            try {
+                const status = await aiService.checkAllProviders();
+                
+                for (const [provider, providerStatus] of Object.entries(status)) {
+                    const indicator = document.getElementById(`${provider}-indicator`);
+                    if (indicator) {
+                        indicator.className = `status-indicator ${providerStatus.available ? 'status-online' : 'status-offline'}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking provider status:', error);
+            }
+        }
+        
+        // Toggle provider section
+        function toggleProvider(provider) {
+            const content = document.getElementById(`${provider}-content`);
+            const isActive = content.classList.contains('active');
+            
+            // Close all provider sections
+            document.querySelectorAll('.provider-content').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Open clicked section if it wasn't active
+            if (!isActive) {
+                content.classList.add('active');
+            }
+        }
+        
+        // Test connection to provider
+        async function testConnection(provider) {
+            const indicator = document.getElementById(`${provider}-indicator`);
+            indicator.className = 'status-indicator status-testing';
+            
+            try {
+                // Save current settings temporarily
+                await saveProvider(provider, false);
+                
+                // Test connection
+                const status = await aiService.checkAllProviders();
+                const providerStatus = status[provider];
+                
+                if (providerStatus && providerStatus.available) {
+                    indicator.className = 'status-indicator status-online';
+                    showNotification(`${provider} connection successful!`, 'success');
+                } else {
+                    indicator.className = 'status-indicator status-offline';
+                    showNotification(`${provider} connection failed: ${providerStatus?.error || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                indicator.className = 'status-indicator status-offline';
+                showNotification(`${provider} connection failed: ${error.message}`, 'error');
+            }
+        }
+        
+        // Save provider settings
+        async function saveProvider(provider, showNotif = true) {
+            try {
+                const config = configManager.load();
+                
+                // Update provider settings
+                config.aiProviders[provider].enabled = document.getElementById(`${provider}-enabled`).checked;
+                
+                if (provider === 'ollama') {
+                    config.aiProviders[provider].endpoint = document.getElementById('ollama-endpoint').value;
+                    config.aiProviders[provider].defaultModel = document.getElementById('ollama-model').value;
+                } else {
+                    config.aiProviders[provider].apiKey = document.getElementById(`${provider}-apikey`).value;
+                    config.aiProviders[provider].defaultModel = document.getElementById(`${provider}-model`).value;
+                }
+                
+                configManager.save(config);
+                
+                if (showNotif) {
+                    showNotification(`${provider} settings saved!`, 'success');
+                }
+            } catch (error) {
+                showNotification(`Failed to save ${provider} settings: ${error.message}`, 'error');
+            }
+        }
+        
+        // Save all settings
+        function saveAllSettings() {
+            try {
+                const config = configManager.load();
+                
+                // Save AI providers
+                for (const provider of ['ollama', 'openai', 'gemini']) {
+                    config.aiProviders[provider].enabled = document.getElementById(`${provider}-enabled`).checked;
+                    
+                    if (provider === 'ollama') {
+                        config.aiProviders[provider].endpoint = document.getElementById('ollama-endpoint').value;
+                        config.aiProviders[provider].defaultModel = document.getElementById('ollama-model').value;
+                    } else {
+                        config.aiProviders[provider].apiKey = document.getElementById(`${provider}-apikey`).value;
+                        config.aiProviders[provider].defaultModel = document.getElementById(`${provider}-model`).value;
+                    }
+                }
+                
+                // Save content settings
+                config.content.autoSave = document.getElementById('auto-save').checked;
+                config.content.autoSaveInterval = parseInt(document.getElementById('auto-save-interval').value) * 1000;
+                config.content.defaultTemplate = document.getElementById('default-template').value;
+                
+                // Save social media settings
+                config.social.autoGenerate = document.getElementById('auto-generate-social').checked;
+                config.social.maxHashtags = parseInt(document.getElementById('max-hashtags').value);
+                
+                // Save platform settings
+                const platforms = [];
+                if (document.getElementById('platform-twitter').checked) platforms.push('twitter');
+                if (document.getElementById('platform-linkedin').checked) platforms.push('linkedin');
+                if (document.getElementById('platform-facebook').checked) platforms.push('facebook');
+                config.social.platforms = platforms;
+                
+                configManager.save(config);
+                showNotification('All settings saved successfully!', 'success');
+                
+            } catch (error) {
+                showNotification(`Failed to save settings: ${error.message}`, 'error');
+            }
+        }
+        
+        // Export settings
+        function exportSettings() {
+            try {
+                const config = configManager.export();
+                const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `buildly-ai-config-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('Configuration exported successfully!', 'success');
+            } catch (error) {
+                showNotification(`Failed to export configuration: ${error.message}`, 'error');
+            }
+        }
+        
+        // Import settings
+        function importSettings() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    try {
+                        const config = JSON.parse(e.target.result);
+                        
+                        if (configManager.import(config)) {
+                            await loadSettings();
+                            showNotification('Configuration imported successfully!', 'success');
+                        } else {
+                            showNotification('Failed to import configuration', 'error');
+                        }
+                    } catch (error) {
+                        showNotification(`Invalid configuration file: ${error.message}`, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+        
+        // Reset settings
+        async function resetSettings() {
+            if (confirm('Are you sure you want to reset all settings to defaults? This cannot be undone.')) {
+                configManager.reset();
+                await loadSettings();
+                showNotification('Settings reset to defaults', 'success');
+            }
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const colors = {
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'warning': 'bg-yellow-500',
+                'info': 'bg-blue-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `${colors[type]} text-white px-4 py-3 rounded-lg shadow-lg fixed top-4 right-4 z-50 max-w-sm`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

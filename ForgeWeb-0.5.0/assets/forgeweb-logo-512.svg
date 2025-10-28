@@ -1,0 +1,41 @@
+<!-- ForgeWeb Logo Placeholder -->
+<!-- This is a placeholder for the 512x512 ForgeWeb logo -->
+<!-- 
+Requirements:
+- 512x512 pixels
+- PNG format with transparency
+- Buildly brand colors (#1b5fa3, #f9943b)
+- Professional, modern design
+- Recognizable at small sizes
+-->
+
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="#1b5fa3" stroke="#144a84" stroke-width="8"/>
+  
+  <!-- Forge/Hammer icon -->
+  <g transform="translate(180, 180)">
+    <!-- Hammer handle -->
+    <rect x="60" y="40" width="12" height="80" fill="#f9943b" rx="6"/>
+    
+    <!-- Hammer head -->
+    <rect x="40" y="35" width="40" height="20" fill="#f9943b" rx="4"/>
+    
+    <!-- Spark/forge elements -->
+    <circle cx="90" cy="30" r="3" fill="#ffffff"/>
+    <circle cx="95" cy="45" r="2" fill="#ffffff"/>
+    <circle cx="85" cy="50" r="2" fill="#ffffff"/>
+  </g>
+  
+  <!-- Web/Code elements -->
+  <g transform="translate(160, 300)">
+    <!-- Code brackets -->
+    <path d="M20,20 L10,30 L20,40 M180,20 L190,30 L180,40" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round"/>
+    
+    <!-- HTML-like tag -->
+    <text x="100" y="35" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="24" font-weight="bold">WEB</text>
+  </g>
+  
+  <!-- Text -->
+  <text x="256" y="450" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="48" font-weight="bold">ForgeWeb</text>
+</svg>

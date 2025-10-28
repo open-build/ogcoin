@@ -1,0 +1,178 @@
+/* ForgeWeb Custom Styles */
+/* This file is loaded after TailwindCSS and can be customized via the admin interface */
+
+:root {
+    /* Brand colors - these will be replaced by the branding system */
+    --brand-primary: #1b5fa3;
+    --brand-secondary: #144a84;
+    --brand-accent: #f9943b;
+    
+    /* Additional brand variables */
+    --brand-text: #1f2937;
+    --brand-bg: #f9fafb;
+    --brand-border: #e5e7eb;
+}
+
+/* Global styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Custom button styles */
+.btn-brand {
+    @apply bg-primary text-white px-6 py-2 rounded-lg font-medium;
+    @apply hover:bg-secondary transition-colors duration-200;
+}
+
+.btn-brand-outline {
+    @apply border-2 border-primary text-primary px-6 py-2 rounded-lg font-medium;
+    @apply hover:bg-primary hover:text-white transition-colors duration-200;
+}
+
+/* Hero section styles */
+.hero-gradient {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Card hover effects */
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* Logo styles */
+.logo-container img {
+    max-height: 40px;
+    width: auto;
+}
+
+/* Navigation enhancements */
+.nav-link {
+    @apply text-gray-700 hover:text-primary transition-colors duration-200;
+    position: relative;
+}
+
+.nav-link.active {
+    @apply text-primary;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--brand-primary);
+}
+
+/* Mobile menu */
+.mobile-menu {
+    @apply bg-white border-t border-gray-200;
+}
+
+/* Footer enhancements */
+.footer-link {
+    @apply text-gray-400 hover:text-white transition-colors duration-200;
+}
+
+/* Form styles */
+.form-input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg;
+    @apply focus:ring-2 focus:ring-primary focus:border-transparent;
+    @apply transition-colors duration-200;
+}
+
+.form-textarea {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg;
+    @apply focus:ring-2 focus:ring-primary focus:border-transparent;
+    @apply transition-colors duration-200;
+    min-height: 120px;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+/* Responsive images */
+.responsive-img {
+    @apply w-full h-auto rounded-lg shadow-md;
+}
+
+/* Content sections */
+.content-section {
+    @apply py-16 px-4;
+}
+
+.content-container {
+    @apply max-w-6xl mx-auto;
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --brand-primary: #000080;
+        --brand-secondary: #000060;
+        --brand-accent: #ff6600;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    .dark-mode-support {
+        --brand-bg: #1f2937;
+        --brand-text: #f9fafb;
+        --brand-border: #374151;
+    }
+}

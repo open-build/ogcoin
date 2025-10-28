@@ -1,0 +1,17 @@
+{
+  "colors": {
+    "primary": "#059669",
+    "secondary": "#10b981",
+    "accent": "#34d399",
+    "dark": "#064e3b",
+    "light": "#ecfdf5"
+  },
+  "typography": {
+    "headingFont": "Inter",
+    "bodyFont": "Inter"
+  },
+  "theme": {
+    "name": "Green Finance",
+    "description": "Environmental cryptocurrency branding with green color palette"
+  }
+}

@@ -1,0 +1,176 @@
+name: ForgeWeb
+slug: forgeweb
+version: 0.5.0
+summary: AI-powered static site generator with local admin interface and GitHub Pages deployment.
+description: |
+  ForgeWeb is a complete static site management solution that combines AI-assisted content creation 
+  with a powerful local admin interface. Generate professional websites, manage articles and pages, 
+  and deploy seamlessly to GitHub Pages. Features include AI content assistance, social media post 
+  generation, SEO optimization, and responsive Tailwind CSS templates.
+license: BSL-1.1 (changes to Apache-2.0 on 2027-10-20)
+categories: 
+  - web
+  - marketing
+  - static-sites
+  - ai
+  - content-management
+tags:
+  - github-pages
+  - ai-assistant
+  - tailwindcss
+  - seo
+  - static-site-generator
+  - cms
+  - content-management
+  - blog
+  - website-builder
+
+# Deployment targets and templates
+targets:
+  - type: github-pages
+    template_repo: buildlyio/forgeweb-template
+    actions_workflow: .github/workflows/deploy.yml
+    description: Deploy to GitHub Pages with automated CI/CD
+    requirements:
+      - GitHub repository with Pages enabled
+      - Actions workflow for automated deployment
+  - type: docker
+    image: ghcr.io/buildlyio/forgeweb:latest
+    description: Run ForgeWeb in a containerized environment
+    ports:
+      - "8000:8000"
+  - type: desktop
+    installers: [macos, windows, linux]
+    description: Local desktop application for site management
+    app_name: ForgeWeb Admin
+
+# System requirements
+requirements:
+  cpu: "1+"
+  ram: "1GB+"
+  storage: "500MB+"
+  deps: 
+    - git
+    - python>=3.8
+    - node>=16
+  optional_deps:
+    - docker (for containerized deployment)
+
+# AI & LLM Integration
+ai:
+  supported_providers:
+    - openai
+    - anthropic
+    - local-llm
+    - custom-endpoint
+  features:
+    - content_generation
+    - seo_optimization
+    - social_media_posts
+    - article_enhancement
+    - meta_tag_generation
+
+# Features and capabilities
+features:
+  core:
+    - ai_assisted_content_creation
+    - drag_drop_page_builder
+    - seo_optimization
+    - responsive_templates
+    - social_media_integration
+    - github_pages_deployment
+    - local_file_management
+  content:
+    - markdown_support
+    - html_editing
+    - image_management
+    - article_categorization
+    - featured_content
+    - tag_management
+  technical:
+    - tailwindcss_framework
+    - mobile_responsive
+    - fast_static_output
+    - version_control_ready
+    - custom_domains
+
+# Support & SLA configuration
+support:
+  tier: paid-30d
+  chat: labs
+  docs: https://docs.buildly.io/forgeweb
+  community: https://github.com/buildlyio/forgeweb/discussions
+  escalation:
+    button_text: "Request Partner Help"
+    url: "https://collab.buildly.io/marketplace"
+    description: "Connect with verified ForgeWeb specialists"
+
+# SLA details
+sla:
+  first_response: "< 1 business day"
+  resolution_target: "3 business days (best effort)"
+  scope: |
+    - Initial installation and configuration
+    - First successful GitHub Pages deployment
+    - Basic feature setup and usage
+    - Integration with supported AI providers
+  excluded: |
+    - Custom feature development
+    - Third-party integrations beyond documented scope
+    - Website content creation
+    - Advanced customization requests
+
+# Marketplace information
+marketplace:
+  price_model: freemium
+  pricing:
+    free:
+      - Basic site generation
+      - Local admin interface
+      - GitHub Pages deployment
+      - Community support
+    paid:
+      - Priority support (30-day SLA)
+      - Advanced AI features
+      - Premium templates
+      - Direct chat support
+  screenshots:
+    - assets/screenshot-admin-dashboard.png
+    - assets/screenshot-article-editor.png
+    - assets/screenshot-generated-site.png
+  logo: assets/forgeweb-logo-512.png
+
+# Technical metadata
+repository:
+  url: https://github.com/buildlyio/forgeweb
+  branch: main
+  documentation: README.md
+  installation: INSTALL.md
+  license: LICENSE.md
+
+# Build and deployment configuration
+build:
+  output_dir: "dist/"
+  static_files: true
+  requires_build: false
+  
+deployment:
+  github_pages:
+    supported: true
+    branch: "gh-pages"
+    workflow: ".github/workflows/deploy.yml"
+  netlify:
+    supported: true
+    build_command: "echo 'No build required - static files'"
+  vercel:
+    supported: true
+    framework: "other"
+
+# Analytics and tracking
+analytics:
+  supported_providers:
+    - google_analytics
+    - plausible
+    - custom
+  privacy_compliant: true
+  gdpr_ready: true

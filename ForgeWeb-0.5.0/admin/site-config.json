@@ -1,0 +1,88 @@
+{
+  "site": {
+    "name": "OGCoin - Open Green Coin",
+    "url": "https://open-build.github.io/ogcoin",
+    "description": "OGCoin (Open Green Coin) - A transparent Stellar-based cryptocurrency for environmental initiatives",
+    "author": "OGCoin Project",
+    "generator": "ForgeWeb v0.5.0",
+    "support_url": "https://docs.buildly.io/forgeweb"
+  },
+  "content": {
+    "site_type": "blog",
+    "include_about": true,
+    "include_contact": true,
+    "include_blog": true,
+    "include_portfolio": false,
+    "include_services": false,
+    "include_sample_content": true
+  },
+  "branding": {
+    "primaryColor": "#1b5fa3",
+    "secondaryColor": "#144a84",
+    "accentColor": "#f9943b",
+    "darkColor": "#1F2937",
+    "lightColor": "#F3F4F6",
+    "font": "Inter"
+  },
+  "social": {
+    "defaultHashtags": [
+      "#ForgeWeb",
+      "#BuildlyAI",
+      "#StaticSiteGenerator",
+      "#AIWriting"
+    ],
+    "platforms": {
+      "twitter": {
+        "enabled": true,
+        "characterLimit": 280,
+        "template": "New article: \"{title}\"\n\n{description}\n\n{hashtags}"
+      },
+      "linkedin": {
+        "enabled": true,
+        "characterLimit": 3000,
+        "template": "Just published: \"{title}\"\n\n{description}\n\nWhat are your thoughts on this topic?\n\n{hashtags}"
+      },
+      "facebook": {
+        "enabled": true,
+        "characterLimit": 63206,
+        "template": "Check out our latest article: \"{title}\"\n\n{description}\n\nWhat's your experience with this? Share your thoughts below!\n\n{hashtags}"
+      }
+    }
+  },
+  "features": {
+    "aiEnabled": true,
+    "socialEnabled": true,
+    "fileEditing": true,
+    "autoSave": true,
+    "indexUpdating": true,
+    "githubPages": true,
+    "seoOptimization": true,
+    "responsiveDesign": true
+  },
+  "support": {
+    "documentation": "https://docs.buildly.io/forgeweb",
+    "community": "https://github.com/buildlyio/forgeweb/discussions",
+    "labs_chat": "https://labs.buildly.io/chat",
+    "collab_hub": "https://collab.buildly.io/marketplace",
+    "tier": "community"
+  },
+  "buildly": {
+    "product": "ForgeWeb",
+    "version": "1.0.0",
+    "license": "BSL-1.1",
+    "company": "Buildly Inc.",
+    "website": "https://buildly.io",
+    "forge_family": true
+  },
+  "development": {
+    "serverPort": 8000,
+    "saveEndpoint": "/save-file",
+    "corsEnabled": true,
+    "debugMode": false
+  },
+  "github": {
+    "username": "open-build",
+    "repository": "ogcoin",
+    "pages_enabled": true
+  }
+}

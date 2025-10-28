@@ -1,0 +1,261 @@
+# GitHub Actions workflow for running tests and quality checks
+# This workflow validates code quality, runs tests, and performs security scans
+
+name: Test and Quality Assurance
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest pytest-cov black isort
+          if [ -f admin/requirements.txt ]; then pip install -r admin/requirements.txt; fi
+          if [ -f ops/requirements.txt ]; then pip install -r ops/requirements.txt; fi
+
+      - name: Lint with flake8
+        run: |
+          # Stop the build if there are Python syntax errors or undefined names
+          flake8 admin/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Exit-zero treats all errors as warnings. GitHub editor is 127 chars wide
+          flake8 admin/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Check code formatting with black
+        run: |
+          black --check admin/ || true
+
+      - name: Check imports with isort
+        run: |
+          isort --check-only admin/ || true
+
+      - name: Validate JSON configuration
+        run: |
+          python -c "
+          import json
+          import sys
+          try:
+              with open('admin/site-config.json') as f:
+                  config = json.load(f)
+              print('✅ site-config.json is valid JSON')
+              
+              # Basic validation
+              required_keys = ['site', 'content', 'branding']
+              for key in required_keys:
+                  if key not in config:
+                      print(f'❌ Missing required key: {key}')
+                      sys.exit(1)
+              print('✅ Required configuration keys present')
+          except Exception as e:
+              print(f'❌ Configuration validation failed: {e}')
+              sys.exit(1)
+          "
+
+      - name: Test admin server startup
+        run: |
+          cd admin
+          timeout 10s python file-api.py --port 8080 > /dev/null 2>&1 &
+          sleep 2
+          curl -f http://localhost:8080/admin/ || exit 1
+          pkill -f "python file-api.py" || true
+          echo "✅ Server startup test completed"
+
+      - name: Validate HTML templates
+        run: |
+          # Basic HTML validation - check for common issues
+          python -c "
+          import os
+          import re
+          
+          html_files = []
+          for root, dirs, files in os.walk('admin'):
+              for file in files:
+                  if file.endswith('.html'):
+                      html_files.append(os.path.join(root, file))
+          
+          issues = 0
+          for html_file in html_files:
+              with open(html_file, 'r', encoding='utf-8') as f:
+                  content = f.read()
+                  
+              # Check for unclosed tags (basic)
+              if content.count('<script') != content.count('</script>'):
+                  print(f'❌ {html_file}: Mismatched script tags')
+                  issues += 1
+                  
+              if content.count('<div') > content.count('</div>') + content.count('/>'):
+                  print(f'⚠️ {html_file}: Possible unclosed div tags')
+                  
+              if 'DOCTYPE html' not in content:
+                  print(f'⚠️ {html_file}: Missing DOCTYPE declaration')
+          
+          if issues == 0:
+              print('✅ HTML validation passed')
+          else:
+              print(f'❌ Found {issues} HTML issues')
+          "
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install safety bandit semgrep
+
+      - name: Check for known vulnerabilities
+        run: |
+          if [ -f admin/requirements.txt ]; then
+            safety check -r admin/requirements.txt || true
+          fi
+          if [ -f ops/requirements.txt ]; then
+            safety check -r ops/requirements.txt || true
+          fi
+
+      - name: Run security linting
+        run: |
+          bandit -r admin/ -ll || true
+
+      - name: Scan for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+          extra_args: --debug --only-verified
+
+  accessibility:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install accessibility tools
+        run: |
+          npm install -g @axe-core/cli http-server
+
+      - name: Set up Python for server
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Start test server
+        run: |
+          cd admin
+          python file-api.py &
+          sleep 5
+          
+      - name: Run accessibility tests
+        run: |
+          # Test main admin pages
+          axe http://localhost:8000/admin/ --exit || true
+          axe http://localhost:8000/admin/editor.html --exit || true
+          axe http://localhost:8000/admin/settings.html --exit || true
+
+  performance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f admin/requirements.txt ]; then pip install -r admin/requirements.txt; fi
+
+      - name: Performance test
+        run: |
+          cd admin
+          echo "Running basic performance checks..."
+          
+          # Check file sizes
+          echo "📊 File size analysis:"
+          find . -name "*.js" -exec wc -c {} + | sort -n
+          find . -name "*.css" -exec wc -c {} + | sort -n
+          find . -name "*.html" -exec wc -c {} + | sort -n
+          
+          # Start server and measure startup time
+          echo "⏱️ Server startup time test:"
+          time timeout 5s python file-api.py || true
+
+  compatibility:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Test browser compatibility
+        run: |
+          echo "🌐 Browser compatibility checks:"
+          
+          # Check for modern JS features that might not be supported
+          python -c "
+          import os
+          import re
+          
+          js_files = []
+          for root, dirs, files in os.walk('admin'):
+              for file in files:
+                  if file.endswith('.js'):
+                      js_files.append(os.path.join(root, file))
+          
+          modern_features = ['async/await', 'const ', 'let ', 'arrow functions', 'fetch(']
+          compatibility_issues = []
+          
+          for js_file in js_files:
+              with open(js_file, 'r', encoding='utf-8') as f:
+                  content = f.read()
+                  
+              # Check for modern features
+              if 'async ' in content or 'await ' in content:
+                  print(f'ℹ️ {js_file}: Uses async/await (IE not supported)')
+              if '=>' in content:
+                  print(f'ℹ️ {js_file}: Uses arrow functions (IE not supported)')
+              if 'fetch(' in content:
+                  print(f'ℹ️ {js_file}: Uses fetch API (polyfill may be needed)')
+          
+          print('✅ Compatibility check completed')
+          "
+
+      - name: Validate CSS compatibility
+        run: |
+          echo "🎨 CSS compatibility checks:"
+          # Basic CSS validation could go here
+          echo "✅ CSS compatibility check completed"

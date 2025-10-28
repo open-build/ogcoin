@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles Manager - Buildly Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'admin': {
+                            primary: '#1b5fa3',
+                            secondary: '#144a84',
+                            accent: '#f9943b',
+                            success: '#10b981',
+                            error: '#ef4444',
+                            warning: '#f59e0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 16px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            max-width: 400px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .notification.success { background-color: #10b981; }
+        .notification.error { background-color: #ef4444; }
+        .notification.info { background-color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-gray-100" data-page="articles-manager">
+    <div class="flex h-screen">
+        <!-- Navigation Sidebar -->
+        <div id="admin-nav" class="h-full"></div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- Header -->
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center h-16">
+                        <div class="flex items-center">
+                            <h1 class="text-xl font-bold text-admin-primary">📑 Articles Manager</h1>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <a href="../articles.html" target="_blank" class="bg-admin-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-admin-secondary">
+                                👁️ View Articles Page
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Featured Article Section -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                ⭐ Featured Article Management
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Current Featured Article -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Current Featured Article</h3>
+                    <div id="current-featured" class="bg-gradient-to-r from-admin-primary to-admin-secondary rounded-lg p-4 text-white">
+                        <p class="text-sm opacity-90 mb-2">Product Management • Featured</p>
+                        <h4 class="font-bold mb-2" id="featured-title">From MVP to Market Leader: Navigating the Product Lifecycle</h4>
+                        <p class="text-sm opacity-90 mb-3" id="featured-description">This article examines every phase of the product lifecycle offering best practices to achieve market leadership and sustainable growth.</p>
+                        <p class="text-xs opacity-75" id="featured-link">articles/product-lifecycle.html</p>
+                    </div>
+                </div>
+
+                <!-- Change Featured Article -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Set New Featured Article</h3>
+                    <select id="featured-selector" class="w-full p-3 border border-gray-300 rounded-lg mb-4">
+                        <option value="">Select an article to feature...</option>
+                    </select>
+                    <button onclick="updateFeaturedArticle()" class="w-full bg-admin-primary text-white px-4 py-3 rounded-lg font-semibold hover:bg-admin-secondary transition-colors">
+                        🌟 Set as Featured Article
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Articles List Management -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    📚 Articles List Management
+                </h2>
+                <button onclick="refreshArticlesList()" class="bg-admin-accent text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors">
+                    🔄 Refresh from Files
+                </button>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="border-b border-gray-200 mb-6">
+                <nav class="-mb-px flex space-x-8">
+                    <button onclick="showCategory('product-management')" id="tab-product-management" class="category-tab py-2 px-1 border-b-2 font-medium text-sm focus:outline-none border-admin-primary text-admin-primary">
+                        Product Management
+                    </button>
+                    <button onclick="showCategory('ai')" id="tab-ai" class="category-tab py-2 px-1 border-b-2 font-medium text-sm focus:outline-none border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        AI & Machine Learning
+                    </button>
+                    <button onclick="showCategory('development')" id="tab-development" class="category-tab py-2 px-1 border-b-2 font-medium text-sm focus:outline-none border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        Software Development
+                    </button>
+                    <button onclick="showCategory('startup')" id="tab-startup" class="category-tab py-2 px-1 border-b-2 font-medium text-sm focus:outline-none border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        Startup Growth
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Articles in each category -->
+            <div id="articles-container">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
+            <!-- Regenerate Articles Page -->
+            <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2">🔧 Regenerate Articles Page</h3>
+                <p class="text-gray-600 mb-4">This will rebuild the entire articles.html page based on the current article files and featured article selection.</p>
+                <button onclick="regenerateArticlesPage()" class="bg-admin-success text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors">
+                    🚀 Regenerate Articles Page
+                </button>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        let articles = [];
+        let featuredArticle = {
+            title: "From MVP to Market Leader: Navigating the Product Lifecycle",
+            description: "This article examines every phase of the product lifecycle offering best practices to achieve market leadership and sustainable growth.",
+            link: "articles/product-lifecycle.html",
+            category: "Product Management"
+        };
+
+        // Initialize the page
+        async function init() {
+            await loadArticles();
+            populateFeaturedSelector();
+            showCategory('product-management');
+        }
+
+        // Load articles from the file system
+        async function loadArticles() {
+            try {
+                const response = await fetch('/api/articles-list');
+                const data = await response.json();
+                articles = data.articles;
+                showNotification('✅ Articles loaded successfully', 'success');
+            } catch (error) {
+                console.error('Failed to load articles:', error);
+                showNotification('❌ Failed to load articles', 'error');
+            }
+        }
+
+        // Populate the featured article selector
+        function populateFeaturedSelector() {
+            const selector = document.getElementById('featured-selector');
+            selector.innerHTML = '<option value="">Select an article to feature...</option>';
+            
+            articles.forEach(article => {
+                const option = document.createElement('option');
+                option.value = article.filename;
+                option.textContent = `${article.title} (${article.category})`;
+                if (article.filename === featuredArticle.link) {
+                    option.selected = true;
+                }
+                selector.appendChild(option);
+            });
+        }
+
+        // Update featured article
+        async function updateFeaturedArticle() {
+            const selector = document.getElementById('featured-selector');
+            const selectedFilename = selector.value;
+            
+            if (!selectedFilename) {
+                showNotification('❌ Please select an article', 'error');
+                return;
+            }
+
+            const selectedArticle = articles.find(a => a.filename === selectedFilename);
+            if (!selectedArticle) {
+                showNotification('❌ Article not found', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/set-featured-article', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title: selectedArticle.title,
+                        description: selectedArticle.description,
+                        link: selectedArticle.filename,
+                        category: selectedArticle.category
+                    })
+                });
+
+                if (response.ok) {
+                    featuredArticle = {
+                        title: selectedArticle.title,
+                        description: selectedArticle.description,
+                        link: selectedArticle.filename,
+                        category: selectedArticle.category
+                    };
+                    updateFeaturedDisplay();
+                    showNotification('⭐ Featured article updated!', 'success');
+                } else {
+                    throw new Error('Failed to update featured article');
+                }
+            } catch (error) {
+                console.error('Error updating featured article:', error);
+                showNotification('❌ Failed to update featured article', 'error');
+            }
+        }
+
+        // Update the featured article display
+        function updateFeaturedDisplay() {
+            document.getElementById('featured-title').textContent = featuredArticle.title;
+            document.getElementById('featured-description').textContent = featuredArticle.description;
+            document.getElementById('featured-link').textContent = featuredArticle.link;
+        }
+
+        // Show articles by category
+        function showCategory(category) {
+            // Update tab styling
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('border-admin-primary', 'text-admin-primary');
+                tab.classList.add('border-transparent', 'text-gray-500');
+            });
+            document.getElementById(`tab-${category}`).classList.add('border-admin-primary', 'text-admin-primary');
+            document.getElementById(`tab-${category}`).classList.remove('border-transparent', 'text-gray-500');
+
+            // Filter and display articles
+            const categoryMap = {
+                'product-management': 'Product Management',
+                'ai': 'AI',
+                'development': 'Software Development',
+                'startup': 'Startup Growth'
+            };
+
+            const filteredArticles = articles.filter(article => article.category === categoryMap[category]);
+            renderArticlesList(filteredArticles);
+        }
+
+        // Render articles list
+        function renderArticlesList(articlesList) {
+            const container = document.getElementById('articles-container');
+            
+            if (articlesList.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-8">No articles found in this category.</p>';
+                return;
+            }
+
+            container.innerHTML = articlesList.map(article => `
+                <div class="border border-gray-200 rounded-lg p-4 mb-4">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-lg mb-2">${article.title}</h4>
+                            <p class="text-gray-600 text-sm mb-2">${article.description}</p>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <span class="bg-gray-100 px-2 py-1 rounded">${article.category}</span>
+                                <span>${article.filename}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 ml-4">
+                            <a href="../${article.filename}" target="_blank" class="text-admin-primary hover:text-admin-secondary text-sm">
+                                👁️ View
+                            </a>
+                            <a href="editor.html?file=${article.filename}" class="text-admin-accent hover:text-orange-600 text-sm">
+                                ✏️ Edit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Refresh articles list
+        async function refreshArticlesList() {
+            showNotification('🔄 Refreshing articles list...', 'info');
+            await loadArticles();
+            populateFeaturedSelector();
+            showCategory('product-management');
+        }
+
+        // Regenerate articles page
+        async function regenerateArticlesPage() {
+            try {
+                showNotification('🚀 Regenerating articles page...', 'info');
+                
+                const response = await fetch('/api/regenerate-articles-page', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ featuredArticle })
+                });
+
+                if (response.ok) {
+                    showNotification('✅ Articles page regenerated successfully!', 'success');
+                } else {
+                    throw new Error('Failed to regenerate articles page');
+                }
+            } catch (error) {
+                console.error('Error regenerating articles page:', error);
+                showNotification('❌ Failed to regenerate articles page', 'error');
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, type === 'error' ? 5000 : 3000);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Load navigation
+            try {
+                const response = await fetch('includes/nav.html');
+                if (response.ok) {
+                    const navHtml = await response.text();
+                    document.getElementById('admin-nav').innerHTML = navHtml;
+                }
+            } catch (error) {
+                console.error('Failed to load navigation:', error);
+            }
+            
+            init();
+        });
+    </script>
+</body>
+</html>

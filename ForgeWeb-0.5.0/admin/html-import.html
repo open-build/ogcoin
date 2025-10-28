@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Import - ForgeWeb Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'buildly-dark': '#1b5fa3',
+                        'buildly-light': '#144a84',
+                        'buildly-accent': '#f9943b'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-sans bg-gray-50" data-page="html-import">
+    <div class="admin-container">
+        <!-- Navigation Sidebar -->
+        <div id="admin-nav" class="h-full"></div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h2 class="text-2xl font-bold text-buildly-dark">HTML Import</h2>
+                    <p class="text-gray-600">Import existing HTML files and convert them to ForgeWeb</p>
+                </div>
+                <button class="btn btn-accent" onclick="showImportHelp()">
+                    <span>📖 Import Guide</span>
+                </button>
+            </div>
+
+            <!-- Import Methods -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <!-- File Upload Method -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                            📁 Upload HTML Files
+                            <span class="ml-2 text-sm text-gray-500">Import from your computer</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center"
+                             id="htmlDropZone"
+                             ondrop="handleHtmlDrop(event)" 
+                             ondragover="event.preventDefault()" 
+                             ondragenter="event.preventDefault()">
+                            
+                            <div id="uploadArea" class="space-y-4">
+                                <div class="mx-auto w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">Drag and drop HTML files here, or</p>
+                                    <button type="button" class="mt-2 btn btn-primary" onclick="document.getElementById('htmlInput').click()">
+                                        Browse Files
+                                    </button>
+                                    <input type="file" id="htmlInput" accept=".html,.htm" multiple class="hidden" onchange="handleHtmlUpload(this)">
+                                </div>
+                                <p class="text-xs text-gray-500">Supports .html and .htm files. Multiple files allowed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- URL Import Method -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                            🌐 Import from URL
+                            <span class="ml-2 text-sm text-gray-500">Import from a website</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Website URL</label>
+                                <input type="url" id="importUrl" 
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                                       placeholder="https://example.com/page.html">
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="importAssets" class="rounded">
+                                <label for="importAssets" class="text-sm text-gray-700">Import linked assets (CSS, images)</label>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="optimizeImport" class="rounded" checked>
+                                <label for="optimizeImport" class="text-sm text-gray-700">Optimize for ForgeWeb (recommended)</label>
+                            </div>
+                            
+                            <button class="btn btn-primary w-full" onclick="importFromUrl()">
+                                <span id="urlImportStatus">Import from URL</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Import Queue -->
+            <div id="importQueue" class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6 hidden">
+                <div class="p-6 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Import Queue</h3>
+                </div>
+                
+                <div class="p-6">
+                    <div id="queueList" class="space-y-3">
+                        <!-- Import items will be added here -->
+                    </div>
+                    
+                    <div class="mt-6 flex justify-between items-center">
+                        <div class="text-sm text-gray-600">
+                            <span id="queueCount">0</span> files in queue
+                        </div>
+                        <div class="space-x-2">
+                            <button class="btn btn-secondary" onclick="clearQueue()">Clear Queue</button>
+                            <button class="btn btn-primary" onclick="processQueue()">
+                                <span id="processStatus">Process All</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Import Results -->
+            <div id="importResults" class="bg-white rounded-lg shadow-sm border border-gray-200 hidden">
+                <div class="p-6 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Import Results</h3>
+                </div>
+                
+                <div class="p-6">
+                    <div id="resultsList" class="space-y-3">
+                        <!-- Results will be added here -->
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end space-x-2">
+                        <button class="btn btn-secondary" onclick="hideResults()">Close</button>
+                        <button class="btn btn-primary" onclick="previewImported()">Preview Site</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Import Options -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                        ⚙️ Import Settings
+                        <span class="ml-2 text-sm text-gray-500">Configure import behavior</span>
+                    </h3>
+                </div>
+                
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <h4 class="font-medium text-gray-900">Content Processing</h4>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="preserveStructure" class="rounded" checked>
+                                <label for="preserveStructure" class="text-sm text-gray-700">Preserve original HTML structure</label>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="extractMeta" class="rounded" checked>
+                                <label for="extractMeta" class="text-sm text-gray-700">Extract meta tags and SEO info</label>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="convertToTemplate" class="rounded">
+                                <label for="convertToTemplate" class="text-sm text-gray-700">Convert to ForgeWeb template</label>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="minifyOutput" class="rounded">
+                                <label for="minifyOutput" class="text-sm text-gray-700">Minify HTML output</label>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <h4 class="font-medium text-gray-900">Asset Handling</h4>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="downloadImages" class="rounded" checked>
+                                <label for="downloadImages" class="text-sm text-gray-700">Download and store images locally</label>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="inlineCSS" class="rounded">
+                                <label for="inlineCSS" class="text-sm text-gray-700">Inline external CSS files</label>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="optimizeImages" class="rounded" checked>
+                                <label for="optimizeImages" class="text-sm text-gray-700">Optimize imported images</label>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="generateSitemap" class="rounded" checked>
+                                <label for="generateSitemap" class="text-sm text-gray-700">Auto-generate sitemap</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-2xl mx-4 max-h-96 overflow-y-auto">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-lg font-semibold">HTML Import Guide</h3>
+                <button onclick="closeHelpModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="space-y-4 text-sm text-gray-700">
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-2">📁 File Upload Method</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Supports .html and .htm files</li>
+                        <li>Can upload multiple files at once</li>
+                        <li>Drag and drop or browse to select files</li>
+                        <li>Files are automatically processed and added to your site</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-2">🌐 URL Import Method</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Enter any public website URL</li>
+                        <li>Automatically downloads the HTML content</li>
+                        <li>Option to import linked assets (CSS, images)</li>
+                        <li>Optimizes content for ForgeWeb compatibility</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-2">⚙️ Import Settings</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Preserve Structure:</strong> Keeps original HTML layout</li>
+                        <li><strong>Extract Meta:</strong> Imports SEO and meta information</li>
+                        <li><strong>Convert to Template:</strong> Makes content editable in ForgeWeb</li>
+                        <li><strong>Download Images:</strong> Stores images locally for faster loading</li>
+                        <li><strong>Optimize Images:</strong> Compresses images to reduce file size</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-blue-50 p-3 rounded">
+                    <p><strong>💡 Tip:</strong> For best results, enable "Optimize for ForgeWeb" to automatically convert imported content to work seamlessly with ForgeWeb's features.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        let importQueue = [];
+        let importResults = [];
+
+        // File upload handling
+        function handleHtmlUpload(input) {
+            const files = Array.from(input.files);
+            files.forEach(file => {
+                if (file.type === 'text/html' || file.name.endsWith('.html') || file.name.endsWith('.htm')) {
+                    addToQueue(file, 'file');
+                }
+            });
+        }
+
+        function handleHtmlDrop(e) {
+            e.preventDefault();
+            const files = Array.from(e.dataTransfer.files);
+            files.forEach(file => {
+                if (file.type === 'text/html' || file.name.endsWith('.html') || file.name.endsWith('.htm')) {
+                    addToQueue(file, 'file');
+                }
+            });
+        }
+
+        // URL import handling
+        async function importFromUrl() {
+            const url = document.getElementById('importUrl').value;
+            const statusElement = document.getElementById('urlImportStatus');
+            
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            statusElement.textContent = 'Importing...';
+            
+            try {
+                const response = await fetch('/api/import-html', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        method: 'url',
+                        url: url,
+                        importAssets: document.getElementById('importAssets').checked,
+                        optimize: document.getElementById('optimizeImport').checked,
+                        settings: getImportSettings()
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    addToResults(result);
+                    statusElement.textContent = 'Import Complete!';
+                } else {
+                    throw new Error('Import failed');
+                }
+            } catch (error) {
+                statusElement.textContent = 'Import Failed';
+                alert('Failed to import from URL: ' + error.message);
+            } finally {
+                setTimeout(() => {
+                    statusElement.textContent = 'Import from URL';
+                }, 3000);
+            }
+        }
+
+        // Queue management
+        function addToQueue(item, type) {
+            const queueItem = {
+                id: Date.now() + Math.random(),
+                item: item,
+                type: type,
+                status: 'pending'
+            };
+            
+            importQueue.push(queueItem);
+            updateQueueDisplay();
+        }
+
+        function updateQueueDisplay() {
+            const queueContainer = document.getElementById('importQueue');
+            const queueList = document.getElementById('queueList');
+            const queueCount = document.getElementById('queueCount');
+            
+            if (importQueue.length > 0) {
+                queueContainer.classList.remove('hidden');
+                queueCount.textContent = importQueue.length;
+                
+                queueList.innerHTML = importQueue.map(item => `
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg" data-id="${item.id}">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-medium text-sm">${item.type === 'file' ? item.item.name : item.item}</div>
+                                <div class="text-xs text-gray-500">${item.status}</div>
+                            </div>
+                        </div>
+                        <button onclick="removeFromQueue('${item.id}')" class="text-red-600 hover:text-red-800">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                `).join('');
+            } else {
+                queueContainer.classList.add('hidden');
+            }
+        }
+
+        function removeFromQueue(id) {
+            importQueue = importQueue.filter(item => item.id !== id);
+            updateQueueDisplay();
+        }
+
+        function clearQueue() {
+            importQueue = [];
+            updateQueueDisplay();
+        }
+
+        // Process queue
+        async function processQueue() {
+            if (importQueue.length === 0) return;
+            
+            const processButton = document.getElementById('processStatus');
+            processButton.textContent = 'Processing...';
+            
+            for (let queueItem of importQueue) {
+                try {
+                    queueItem.status = 'processing';
+                    updateQueueDisplay();
+                    
+                    let result;
+                    if (queueItem.type === 'file') {
+                        result = await processFileImport(queueItem.item);
+                    } else {
+                        result = await processUrlImport(queueItem.item);
+                    }
+                    
+                    queueItem.status = 'completed';
+                    addToResults(result);
+                    
+                } catch (error) {
+                    queueItem.status = 'failed';
+                    console.error('Import failed:', error);
+                }
+                
+                updateQueueDisplay();
+            }
+            
+            // Clear queue and show results
+            importQueue = [];
+            updateQueueDisplay();
+            showResults();
+            
+            processButton.textContent = 'Process All';
+        }
+
+        async function processFileImport(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('settings', JSON.stringify(getImportSettings()));
+            
+            const response = await fetch('/api/import-html', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error('File import failed');
+            }
+            
+            return await response.json();
+        }
+
+        // Results management
+        function addToResults(result) {
+            importResults.push(result);
+        }
+
+        function showResults() {
+            const resultsContainer = document.getElementById('importResults');
+            const resultsList = document.getElementById('resultsList');
+            
+            if (importResults.length > 0) {
+                resultsContainer.classList.remove('hidden');
+                
+                resultsList.innerHTML = importResults.map(result => `
+                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-medium text-sm">${result.filename}</div>
+                                <div class="text-xs text-gray-500">${result.message || 'Successfully imported'}</div>
+                            </div>
+                        </div>
+                        <a href="page-editor.html?file=${encodeURIComponent(result.filename)}" 
+                           class="text-blue-600 hover:text-blue-800 text-sm">Edit</a>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function hideResults() {
+            document.getElementById('importResults').classList.add('hidden');
+            importResults = [];
+        }
+
+        function previewImported() {
+            window.open('/', '_blank');
+        }
+
+        // Settings
+        function getImportSettings() {
+            return {
+                preserveStructure: document.getElementById('preserveStructure').checked,
+                extractMeta: document.getElementById('extractMeta').checked,
+                convertToTemplate: document.getElementById('convertToTemplate').checked,
+                minifyOutput: document.getElementById('minifyOutput').checked,
+                downloadImages: document.getElementById('downloadImages').checked,
+                inlineCSS: document.getElementById('inlineCSS').checked,
+                optimizeImages: document.getElementById('optimizeImages').checked,
+                generateSitemap: document.getElementById('generateSitemap').checked
+            };
+        }
+
+        // Help modal
+        function showImportHelp() {
+            document.getElementById('helpModal').classList.remove('hidden');
+            document.getElementById('helpModal').classList.add('flex');
+        }
+
+        function closeHelpModal() {
+            document.getElementById('helpModal').classList.add('hidden');
+            document.getElementById('helpModal').classList.remove('flex');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup drag and drop styling
+            const dropZone = document.getElementById('htmlDropZone');
+            
+            dropZone.addEventListener('dragenter', function() {
+                this.classList.add('border-blue-400', 'bg-blue-50');
+            });
+            
+            dropZone.addEventListener('dragleave', function() {
+                this.classList.remove('border-blue-400', 'bg-blue-50');
+            });
+            
+            dropZone.addEventListener('drop', function() {
+                this.classList.remove('border-blue-400', 'bg-blue-50');
+            });
+        });
+    </script>
+</body>
+</html>

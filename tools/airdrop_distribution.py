@@ -68,7 +68,7 @@ def send_airdrop():
     total_time_estimate = len(chunks) * chunk_delay + len(recipients) * tx_delay
     
     # Confirmation
-    print(f"\\n📋 AIRDROP SUMMARY:")
+    print(f"\n📋 AIRDROP SUMMARY:")
     print(f"   • Recipients: {len(recipients)}")
     print(f"   • Amount Range: {min_amount}-{max_amount} OGC each")
     print(f"   • Estimated Total: {len(recipients) * 2} OGC (average)")
@@ -76,19 +76,19 @@ def send_airdrop():
     print(f"   • Estimated Time: {total_time_estimate//60}m {total_time_estimate%60}s")
     print(f"   • Asset: {config.TOKEN_CODE}")
     
-    confirm = input("\\n🚀 Proceed with airdrop? (yes/no): ").strip().lower()
+    confirm = input("\n🚀 Proceed with airdrop? (yes/no): ").strip().lower()
     if confirm != 'yes':
         print("❌ Airdrop cancelled")
         return
     
-    print(f"\\n🚀 Starting airdrop with rate limiting...")
+    print(f"\n🚀 Starting airdrop with rate limiting...")
     
     successful = 0
     failed = 0
     total_processed = 0
     
     for chunk_num, chunk in enumerate(chunks, 1):
-        print(f"\\n📦 Processing Chunk {chunk_num}/{len(chunks)} ({len(chunk)} recipients)")
+        print(f"\n📦 Processing Chunk {chunk_num}/{len(chunks)} ({len(chunk)} recipients)")
         
         for i, recipient in enumerate(chunk, 1):
             total_processed += 1
@@ -98,6 +98,15 @@ def send_airdrop():
                 amount = f"{float(amount):.2f}"  # Round to 2 decimal places
                 
                 print(f"[{total_processed}/{len(recipients)}] 🎁 Sending {amount} OGC to {recipient[:8]}...")
+                
+                # First check if recipient account exists
+                try:
+                    recipient_account = server.load_account(recipient)
+                    print(f"   ✅ Account exists and is active")
+                except Exception as e:
+                    print(f"   ⚠️  Account not found or inactive: {str(e)}")
+                    failed += 1
+                    continue
                 
                 # Load issuer account for current transaction
                 issuer_account = server.load_account(issuer_keypair.public_key)
@@ -109,7 +118,7 @@ def send_airdrop():
                         network_passphrase=config.NETWORK_PASSPHRASE,
                         base_fee=100
                     )
-                    .add_payment_op(
+                    .append_payment_op(
                         destination=recipient,
                         asset=ogc_asset,
                         amount=amount
@@ -130,7 +139,11 @@ def send_airdrop():
                     time.sleep(tx_delay)
                 
             except Exception as e:
-                print(f"   ❌ Failed: {str(e)}")
+                error_msg = str(e)
+                if "no trustline" in error_msg.lower() or "trustline" in error_msg.lower():
+                    print(f"   ⚠️  Account needs to establish OGC trustline first: {recipient[:8]}...")
+                else:
+                    print(f"   ❌ Failed: {error_msg}")
                 failed += 1
                 continue
         
@@ -139,14 +152,14 @@ def send_airdrop():
             print(f"⏳ Waiting {chunk_delay}s before next chunk to respect rate limits...")
             time.sleep(chunk_delay)
     
-    print(f"\\n🎉 AIRDROP COMPLETE!")
+    print(f"\n🎉 AIRDROP COMPLETE!")
     print(f"   ✅ Successful: {successful}")
     print(f"   ❌ Failed: {failed}")
     print(f"   📊 Success Rate: {(successful/(successful+failed)*100):.1f}%")
     
     if successful > 0:
         estimated_distributed = successful * 2  # Average amount
-        print(f"\\n🌟 Successfully distributed ~{estimated_distributed} OGC to {successful} early adopters!")
+        print(f"\n🌟 Successfully distributed ~{estimated_distributed} OGC to {successful} early adopters!")
         print(f"💡 This helps bootstrap the OGC ecosystem and creates initial adoption.")
         print(f"🔗 View on StellarExpert: https://stellar.expert/explorer/public/account/{issuer_keypair.public_key}")
 

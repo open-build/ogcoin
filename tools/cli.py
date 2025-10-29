@@ -244,116 +244,122 @@ def report_command(args):
         generate_report_for_month(prev_year, prev_month)
 
 def fund_command(args):
-    """Handle Open Build fund operations"""
+    """Handle fund operations"""
+    try:
+        fund = OpenBuildFund()
+        
+        if args.action == "balance":
+            result = fund.get_fund_account_balance()
+            if result['success']:
+                print("Open Build Fund Balance:")
+                for balance in result['balances']:
+                    print(f"  {balance['asset_code']}: {balance['balance']}")
+            else:
+                print(f"❌ Error getting fund balance: {result['error']}")
+        
+        elif args.action == "calculate":
+            if not args.amount:
+                print("Please provide --amount for calculation")
+                return
+            
+            result = calculate_transaction_with_fund_fee(float(args.amount))
+            print(f"Transaction Amount: {args.amount} OGC")
+            print(f"Fund Fee (0.1%): {result['fund_fee']} OGC")
+            print(f"Net Amount: {result['net_amount']} OGC")
+            
+        elif args.action == "send":
+            if not all([args.amount, args.source_secret, args.destination]):
+                print("Please provide --amount, --source-secret, and --destination")
+                return
+            
+            result = fund.send_payment_with_fund_fee(
+                args.source_secret, 
+                args.destination, 
+                float(args.amount),
+                memo=args.memo
+            )
+            
+            if result['success']:
+                print("✅ Payment sent successfully!")
+                print(f"Net amount sent: {result['net_amount']} OGC")
+                print(f"Fund fee: {result['fund_fee']} OGC")
+            else:
+                print(f"❌ Payment failed: {result['error']}")
+        
+        elif args.action == "report":
+            print("Generating fund report...")
+            fund.generate_fund_report()
+            print("✅ Fund report generated")
+        
+        elif args.action == "proposal":
+            print(fund.create_funding_proposal())
+    
+    except Exception as e:
+        print(f"❌ Fund operation failed: {str(e)}")
+
+def status_command(args):
+    """Handle status command"""
+    print("🔍 OGC Token Network Status")
+    print("=" * 40)
+    
     config = OGCConfig()
-    fund = OpenBuildFund(config)
     
-    if args.action == "balance":
-        print("🏦 Open Build Fund Balance")
-        print("=" * 30)
-        balance_info = fund.get_fund_balance()
-        
-        if 'error' in balance_info:
-            print(f"❌ Error: {balance_info['error']}")
-            return
-        
-        print(f"Fund Account: {balance_info['fund_account']}")
-        print(f"OGC Balance: {balance_info['ogc_balance']}")
-        print(f"Last Updated: {balance_info['last_updated']}")
-        
-        # Show allocation breakdown
-        allocations = fund.calculate_allocation_amounts(balance_info['ogc_balance'])
-        print("\n📊 Allocation Breakdown:")
-        print(f"  Open Source Projects (50%): {allocations['open_source_projects']} OGC")
-        print(f"  Developer Training (30%):   {allocations['developer_training']} OGC")
-        print(f"  Operations (20%):          {allocations['operations']} OGC")
+    # Network information
+    network_emoji = "🌍" if config.STELLAR_NETWORK in ["public", "mainnet"] else "🧪"
+    print(f"{network_emoji} Network: {config.STELLAR_NETWORK.upper()}")
+    print(f"🔗 Horizon URL: {config.HORIZON_URL}")
+    print(f"🔑 Network: {config.NETWORK_PASSPHRASE[:30]}...")
+    print(f"🪙 Token Code: {config.TOKEN_CODE}")
+    print(f"💰 Total Supply: {config.TOTAL_SUPPLY:,}")
     
-    elif args.action == "calculate":
-        if not args.amount:
-            print("❌ Amount required for calculation")
-            return
+    if config.ISSUER_PUBLIC_KEY:
+        print(f"\n📋 Issuer: {config.ISSUER_PUBLIC_KEY}")
         
-        print("💰 Transaction Fee Calculation")
-        print("=" * 35)
-        amounts = fund.calculate_fund_contribution(args.amount)
-        
-        print(f"Original Amount:       {args.amount} OGC")
-        print(f"Fund Contribution:     {amounts['fund_amount']} OGC")
-        print(f"Recipient Receives:    {amounts['remaining_amount']} OGC")
-        print(f"Fee Rate:             {amounts['fee_rate']} ({float(amounts['fee_rate']) * 100}%)")
+        # Check if we can connect to the network
+        try:
+            manager = StellarManager(config)
+            # Try to load the issuer account to verify it exists
+            account_data = manager.server.accounts().account_id(config.ISSUER_PUBLIC_KEY).call()
+            print(f"✅ Issuer account exists and is funded")
+            
+            # Check native balance
+            for balance in account_data['balances']:
+                if balance['asset_type'] == 'native':
+                    print(f"💎 XLM Balance: {balance['balance']}")
+                    break
+            
+            # Check for OGC asset
+            ogc_found = False
+            for balance in account_data['balances']:
+                if balance.get('asset_code') == config.TOKEN_CODE:
+                    print(f"🪙 {config.TOKEN_CODE} Balance: {balance['balance']}")
+                    ogc_found = True
+                    break
+            
+            if not ogc_found:
+                print(f"⚠️  {config.TOKEN_CODE} asset not found in issuer account")
+                
+        except Exception as e:
+            print(f"❌ Error connecting to network: {e}")
+    else:
+        print(f"⚠️  No issuer account configured")
     
-    elif args.action == "send":
-        if not all([args.source_secret, args.destination, args.amount]):
-            print("❌ source-secret, destination, and amount required for fund transactions")
-            return
-        
-        print("💸 Sending Transaction with Fund Contribution")
-        print("=" * 48)
-        
-        # Calculate amounts first
-        amounts = fund.calculate_fund_contribution(args.amount)
-        print(f"Original Amount:       {args.amount} OGC")
-        print(f"Fund Contribution:     {amounts['fund_amount']} OGC")
-        print(f"Recipient Receives:    {amounts['remaining_amount']} OGC")
-        
-        # Confirm transaction
-        confirm = input("\nProceed with transaction? (y/N): ").strip().lower()
-        if confirm != 'y':
-            print("❌ Transaction cancelled")
-            return
-        
-        # Execute transaction
-        result = fund.create_fund_transaction(
-            args.source_secret, 
-            args.destination, 
-            args.amount, 
-            args.memo or ""
-        )
-        
-        if result['success']:
-            print("✅ Transaction successful!")
-            print(f"Transaction Hash: {result['transaction_hash']}")
-            print(f"Recipient Amount: {result['recipient_amount']} OGC")
-            print(f"Fund Contribution: {result['fund_contribution']} OGC")
-        else:
-            print(f"❌ Transaction failed: {result['error']}")
+    # Network-specific information
+    if config.STELLAR_NETWORK == 'testnet':
+        print(f"\n🧪 TESTNET MODE")
+        print(f"• This is for testing only")
+        print(f"• Tokens have no real value")
+        print(f"• Free XLM available via Friendbot")
+        print(f"• To move to mainnet: python deploy_mainnet.py")
+    else:
+        print(f"\n🌍 MAINNET MODE - LIVE PRODUCTION")  
+        print(f"• This is the LIVE production network")
+        print(f"• Tokens have REAL value")
+        print(f"• Real XLM required for transactions")
+        if config.ISSUER_PUBLIC_KEY:
+            print(f"• Stellar Expert: https://stellar.expert/explorer/public/account/{config.ISSUER_PUBLIC_KEY}")
     
-    elif args.action == "report":
-        print("📊 Open Build Fund Report")
-        print("=" * 30)
-        report = fund.generate_fund_report()
-        
-        if 'error' in report:
-            print(f"❌ Error: {report['error']}")
-            return
-        
-        # Fund balance
-        balance = report['fund_balance']
-        print(f"Fund Account: {balance['fund_account']}")
-        print(f"Current Balance: {balance['ogc_balance']} OGC")
-        
-        # Allocations
-        allocations = report['allocations']
-        print("\n📊 Current Allocations:")
-        print(f"  Open Source Projects: {allocations['open_source_projects']} OGC")
-        print(f"  Developer Training:   {allocations['developer_training']} OGC")
-        print(f"  Operations:          {allocations['operations']} OGC")
-        print(f"  Total:               {allocations['total']} OGC")
-        
-        print(f"\n🔧 Configuration:")
-        print(f"  Transaction Fee Rate: {report['fee_rate']} ({float(report['fee_rate']) * 100}%)")
-        print(f"  Report Generated:     {report['generated_at']}")
-    
-    elif args.action == "proposal":
-        print("📝 Fund Distribution Proposal System")
-        print("=" * 40)
-        print("This feature allows the community to propose and vote on fund distributions.")
-        print("\nExample proposals would include:")
-        print("  • Funding for critical open source projects")
-        print("  • Developer bootcamp scholarships")
-        print("  • Security audits for popular libraries")
-        print("  • Infrastructure support for key projects")
-        print("\n🗳️  Community voting mechanism coming soon!")
+    print(f"\n� Use 'python cli.py --help' to see all available commands")
 
 def main():
     """Main CLI entry point"""
@@ -467,6 +473,10 @@ Examples:
     fund_parser.add_argument('--destination', help='Destination address for fund transactions')
     fund_parser.add_argument('--memo', help='Transaction memo')
     fund_parser.set_defaults(func=fund_command)
+    
+    # Status command
+    status_parser = subparsers.add_parser('status', help='Check network and configuration status')
+    status_parser.set_defaults(func=status_command)
     
     # Parse arguments
     args = parser.parse_args()

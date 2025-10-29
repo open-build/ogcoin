@@ -109,3 +109,10 @@ stellar_accounts.json
 **/wallets.json
 backup_*.json
 keys_*.txt
+mainnet_accounts.json
+mainnet.env
+new_accounts.txt
+testnet_accounts.txt
+*_accounts.txt
+*.env
+!.env.example

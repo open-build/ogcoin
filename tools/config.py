@@ -20,26 +20,25 @@ class Config:
     def load_config(self):
         """Load configuration from environment variables"""
         
-        # Stellar Network Configuration
-        self.STELLAR_NETWORK = os.getenv('STELLAR_NETWORK', 'testnet').lower()
-        self.NETWORK_PASSPHRASE = (
-            Network.PUBLIC_NETWORK_PASSPHRASE 
-            if self.STELLAR_NETWORK == 'public' 
-            else Network.TESTNET_NETWORK_PASSPHRASE
-        )
-        self.HORIZON_URL = (
-            'https://horizon.stellar.org'
-            if self.STELLAR_NETWORK == 'public'
-            else 'https://horizon-testnet.stellar.org'
-        )
+        # Stellar Network Configuration - MAINNET DEPLOYMENT
+        self.STELLAR_NETWORK = os.getenv('STELLAR_NETWORK', 'mainnet').lower()
+        if self.STELLAR_NETWORK in ['mainnet', 'public']:
+            self.NETWORK_PASSPHRASE = Network.PUBLIC_NETWORK_PASSPHRASE
+            self.HORIZON_URL = 'https://horizon.stellar.org'
+        else:
+            self.NETWORK_PASSPHRASE = Network.TESTNET_NETWORK_PASSPHRASE
+            self.HORIZON_URL = 'https://horizon-testnet.stellar.org'
         
-        # Account Configuration
+        # Account Configuration - MAINNET DEPLOYMENT
+        # SECURITY: Never hardcode secret keys - they must be provided via environment variables
         self.ISSUER_SECRET_KEY = os.getenv('ISSUER_SECRET_KEY')
-        self.ISSUER_PUBLIC_KEY = os.getenv('ISSUER_PUBLIC_KEY')
+        if not self.ISSUER_SECRET_KEY:
+            raise ValueError("ISSUER_SECRET_KEY environment variable is required")
+        self.ISSUER_PUBLIC_KEY = os.getenv('ISSUER_PUBLIC_KEY', 'GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57')
         
-        # Token Configuration
+        # Token Configuration - MAINNET DEPLOYMENT
         self.TOKEN_CODE = os.getenv('TOKEN_CODE', 'OGC')
-        self.TOTAL_SUPPLY = int(os.getenv('TOTAL_SUPPLY', '1000000'))
+        self.TOTAL_SUPPLY = int(os.getenv('TOTAL_SUPPLY', '1000000000'))  # 1 billion tokens
         
         # Website Integration
         self.WEBSITE_URL = os.getenv('WEBSITE_URL', 'https://open-build.github.io/ogcoin')

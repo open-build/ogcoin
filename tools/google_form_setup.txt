@@ -1,0 +1,83 @@
+
+📝 GOOGLE FORM SETUP INSTRUCTIONS
+==================================
+
+1. Go to https://forms.google.com
+2. Create a new form titled: "OGC Airdrop + Open Source Project Funding"
+3. Add these questions:
+
+QUESTION 1: Stellar Address (Required)
+- Type: Short answer
+- Title: "Your Stellar Address (Public Key)"
+- Description: "Must start with 'G' and be 56 characters long"
+- Required: Yes
+- Validation: Regular expression: ^G[A-Z2-7]{55}$
+
+QUESTION 2: Project Name (Required)
+- Type: Short answer  
+- Title: "Open Source Project Name"
+- Required: Yes
+
+QUESTION 3: Project URL (Required)
+- Type: Short answer
+- Title: "Project Repository URL"
+- Description: "GitHub, GitLab, or other repository link"
+- Required: Yes
+- Validation: Regular expression: ^https?://.*
+
+QUESTION 4: Project Description (Required)
+- Type: Paragraph
+- Title: "Project Description"
+- Description: "Brief description of your open source project and its goals"
+- Required: Yes
+
+QUESTION 5: Funding Request (Required)
+- Type: Paragraph
+- Title: "How would OGC funding help your project?"
+- Description: "Describe how OGC funding would support your project development"
+- Required: Yes
+
+QUESTION 6: Contact Info (Optional)
+- Type: Short answer
+- Title: "Contact Information"
+- Description: "Email, Twitter, Discord, etc. (optional)"
+- Required: No
+
+QUESTION 7: Trustline Confirmation (Required)
+- Type: Multiple choice
+- Title: "OGC Trustline Confirmation"
+- Description: "I confirm that I have established an OGC trustline in my Stellar wallet"
+- Options: "Yes, I have established the OGC trustline" / "No, I need help setting it up"
+- Required: Yes
+
+4. Form Settings:
+   - Collect email addresses: Yes
+   - Limit to 1 response: Yes
+   - Response receipts: Always
+
+5. After creating, get the shareable link and the sheet URL
+
+6. Configure the response sheet:
+   - Go to Responses tab → Create Spreadsheet
+   - Note the Google Sheets URL for our script
+
+FORM DESCRIPTION TEXT:
+======================
+"Join our OGC airdrop and get your open source project featured for funding support! 
+
+🪙 Get 1-3 free OGC tokens
+🚀 Feature your project on our website  
+💰 Qualify for ongoing funding (5-15% treasury allocation)
+
+Before submitting, please establish an OGC trustline in your Stellar wallet:
+- Asset Code: OGC
+- Issuer: GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57
+- Trust Limit: 1000 (recommended)
+
+Instructions: https://open-build.github.io/ogcoin/airdrop.html"
+
+AFTER SETUP:
+============
+1. Share the form link publicly
+2. Use the Google Sheets URL with our processing script
+3. Run processing script regularly to handle submissions

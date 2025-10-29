@@ -1,0 +1,22 @@
+
+🔗 HOW TO ESTABLISH OGC TRUSTLINE MANUALLY
+
+For users who want to establish trustlines in their own wallets:
+
+1. **Open your Stellar wallet** (Lobstr, StellarTerm, etc.)
+
+2. **Add Custom Asset:**
+   • Asset Code: OGC
+   • Issuer: GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57
+   • Trust Limit: 1000 (or your preferred maximum)
+
+3. **Confirm the trustline transaction**
+
+4. **You're ready to receive OGC tokens!**
+
+📋 COPY-PASTE INFO:
+Asset Code: OGC
+Issuer: GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57
+
+🌐 View Token Info:
+https://stellar.expert/explorer/public/asset/OGC-GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57

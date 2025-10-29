@@ -118,3 +118,20 @@ airdrop_recipients.txt
 *_recipients.txt
 *.env
 !.env.example
+
+# Airdrop system sensitive data
+airdrop_submissions.jsonl
+processed_submissions.txt
+funding_candidate_projects.csv
+airdrop_config.json
+*_backup.txt
+*_pre_*.txt
+demo_submissions.csv
+test_submissions.csv
+valid_test_submissions.csv
+mainnet_deployment_success.json
+mainnet_funding_instructions.txt
+*_transactions.txt
+multisig_transactions.txt
+single_funding_transaction.txt
+test_single_account.txt

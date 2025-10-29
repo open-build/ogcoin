@@ -114,5 +114,7 @@ mainnet.env
 new_accounts.txt
 testnet_accounts.txt
 *_accounts.txt
+airdrop_recipients.txt
+*_recipients.txt
 *.env
 !.env.example

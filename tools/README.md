@@ -30,6 +30,7 @@ This toolkit provides Python scripts and utilities for:
 - **`formatters.py`** - Output formatting helpers
 - **`test_fund.py`** - Test and demonstrate Open Build fund functionality
 - **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
+- **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
 
 ## Setup
 
@@ -104,6 +105,16 @@ python create_home_domain_xdr.py \
 ```
 
 Sign the generated XDR with the issuer account in Stellar Lab or your wallet. This script does not handle secret keys.
+
+### Local Console
+
+Start the local console:
+
+```bash
+python3 ogcoin_console.py
+```
+
+Then open `http://localhost:8787/`. The console combines live public checks, recipient validation, and campaign copy generation. It does not handle secret keys or submit transactions.
 
 ## Integration with ForgeWeb
 

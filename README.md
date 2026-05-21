@@ -52,6 +52,16 @@ ogcoin/
    - The same server previews the site at `http://localhost:8000/`
    - The helper script sets `WEBSITE_ROOT=..` so ForgeWeb edits the repo root site files
 
+### Local OGCoin Console
+
+Run the local operator console for legitimacy checks, recipient validation, home-domain XDR generation, and campaign copy:
+
+```bash
+python3 tools/ogcoin_console.py
+```
+
+Open `http://localhost:8787/`. The console is local-only and does not ask for secret keys or submit transactions.
+
 ### Manual Development
 
 If you prefer to edit files directly:

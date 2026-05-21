@@ -1,0 +1,3 @@
+[submodule "ForgeWeb"]
+	path = ForgeWeb
+	url = https://github.com/Buildly-Marketplace/ForgeWeb.git

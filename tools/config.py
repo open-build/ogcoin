@@ -41,9 +41,9 @@ class Config:
         self.TOTAL_SUPPLY = int(os.getenv('TOTAL_SUPPLY', '1000000000'))  # 1 billion tokens
         
         # Website Integration
-        self.WEBSITE_URL = os.getenv('WEBSITE_URL', 'https://open-build.github.io/ogcoin')
+        self.WEBSITE_URL = os.getenv('WEBSITE_URL', 'https://www.opengreencoin.com')
         self.WEBSITE_REPORTS_DIR = os.getenv('WEBSITE_REPORTS_DIR', '../reports')
-        self.WEBSITE_API_ENDPOINT = os.getenv('WEBSITE_API_ENDPOINT', 'https://open-build.github.io/ogcoin/api')
+        self.WEBSITE_API_ENDPOINT = os.getenv('WEBSITE_API_ENDPOINT', 'https://www.opengreencoin.com/api')
         
         # Tool Settings
         self.GENERATE_REPORTS = os.getenv('GENERATE_REPORTS', 'true').lower() == 'true'
@@ -225,7 +225,7 @@ TOTAL_SUPPLY=1000000
 
 # Website Integration
 WEBSITE_REPORTS_DIR=../reports
-WEBSITE_API_ENDPOINT=https://open-build.github.io/ogcoin/api
+WEBSITE_API_ENDPOINT=https://www.opengreencoin.com/api
 
 # Tool Settings
 GENERATE_REPORTS=true

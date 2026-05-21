@@ -29,6 +29,7 @@ This toolkit provides Python scripts and utilities for:
 - **`validators.py`** - Input validation utilities
 - **`formatters.py`** - Output formatting helpers
 - **`test_fund.py`** - Test and demonstrate Open Build fund functionality
+- **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
 
 ## Setup
 
@@ -54,7 +55,7 @@ TOTAL_SUPPLY=100000000
 
 # Website Integration
 WEBSITE_REPORTS_DIR=../reports
-WEBSITE_API_ENDPOINT=https://open-build.github.io/ogcoin/api
+WEBSITE_API_ENDPOINT=https://www.opengreencoin.com/api
 
 # Transparency Settings
 GENERATE_REPORTS=true
@@ -91,6 +92,18 @@ reporter = TransparencyReporter()
 report = reporter.generate_monthly_report()
 reporter.save_to_website(report)
 ```
+
+### Link Issuer to Website
+
+Create an unsigned XDR that sets the issuer account `home_domain` to the domain hosting `/.well-known/stellar.toml`:
+
+```bash
+python create_home_domain_xdr.py \
+  --issuer GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57 \
+  --home-domain www.opengreencoin.com
+```
+
+Sign the generated XDR with the issuer account in Stellar Lab or your wallet. This script does not handle secret keys.
 
 ## Integration with ForgeWeb
 
@@ -149,7 +162,7 @@ The toolkit includes built-in transparency features:
 
 ### Overview
 
-OGCoin implements an innovative funding mechanism where a small portion (0.1%) of every transaction contributes to the Open Build fund. This fund supports:
+OGCoin includes tooling for participating payments to include an explicit contribution to the Open Build fund. This fund supports:
 
 - **Open Source Projects** (50%) - Direct funding for critical infrastructure and innovative projects
 - **Developer Training** (30%) - Bootcamps, mentorship programs, and educational resources  
@@ -157,7 +170,7 @@ OGCoin implements an innovative funding mechanism where a small portion (0.1%) o
 
 ### How It Works
 
-1. **Transaction Fee Collection**: Every OGC transaction automatically contributes 0.1% to the fund
+1. **Contribution Collection**: Participating payment tools can route a contribution to the fund
 2. **Community Governance**: OGC holders vote on fund distribution proposals
 3. **Transparent Distribution**: All allocations are publicly tracked and reported
 
@@ -167,10 +180,10 @@ OGCoin implements an innovative funding mechanism where a small portion (0.1%) o
 # Check current fund balance and allocations
 python cli.py fund balance
 
-# Calculate fund contribution for a transaction
+# Calculate fund contribution for a participating transaction
 python cli.py fund calculate --amount 100
 
-# Send transaction with automatic fund contribution
+# Send transaction with an explicit fund contribution
 python cli.py fund send --source-secret SXXXXX... --destination GXXXXX... --amount 50
 
 # Generate comprehensive fund report

@@ -32,7 +32,7 @@ git push origin main
 
 ### 4. Launch! 🎉
 - Share the form: https://docs.google.com/forms/d/e/1FAIpQLScENyeUS_ZHUmMxnfjr1s8tMg5NqmGfI8dpFFYQc4j68VRpTQ/viewform
-- Share the info page: https://open-build.github.io/ogcoin/airdrop.html
+- Share the info page: https://www.opengreencoin.com/airdrop.html
 
 ## 🔄 **ONGOING OPERATIONS**
 

@@ -59,7 +59,7 @@ ISSUER_SECRET=SXXXXX...
 TOTAL_SUPPLY=1000000000
 
 # Website Integration
-WEBSITE_URL=https://open-build.github.io/ogcoin
+WEBSITE_URL=https://www.opengreencoin.com
 ```
 
 ## 🚀 Ready-to-Use Commands

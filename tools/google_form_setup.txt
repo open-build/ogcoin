@@ -74,7 +74,7 @@ Before submitting, please establish an OGC trustline in your Stellar wallet:
 - Issuer: GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57
 - Trust Limit: 1000 (recommended)
 
-Instructions: https://open-build.github.io/ogcoin/airdrop.html"
+Instructions: https://www.opengreencoin.com/airdrop.html"
 
 AFTER SETUP:
 ============

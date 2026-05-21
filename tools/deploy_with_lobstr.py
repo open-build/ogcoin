@@ -173,9 +173,9 @@ LOBSTR_SECRET_KEY={lobstr_secret}
 LOBSTR_PUBLIC_KEY={lobstr_public}
 
 # Website Integration
-WEBSITE_URL=https://open-build.github.io/ogcoin
+WEBSITE_URL=https://www.opengreencoin.com
 WEBSITE_REPORTS_DIR=../reports
-WEBSITE_API_ENDPOINT=https://open-build.github.io/ogcoin/api
+WEBSITE_API_ENDPOINT=https://www.opengreencoin.com/api
 
 # Tool Settings
 GENERATE_REPORTS=true

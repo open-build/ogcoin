@@ -4,11 +4,14 @@ A modern cryptocurrency project built with open-source principles and powered by
 
 ## 🌐 Live Site
 
-Visit the live site at: [https://open-build.github.io/ogcoin/](https://open-build.github.io/ogcoin/)
+Visit the live site at: [https://www.opengreencoin.com/](https://www.opengreencoin.com/)
 
 ## 🚀 Built with ForgeWeb
 
-This site is built using ForgeWeb v0.5.0, an AI-powered static site generator with local admin interface. The ForgeWeb tooling is included in the `ForgeWeb-0.5.0/` directory.
+This site is built using ForgeWeb, an AI-powered static site generator with a local admin interface.
+
+- `ForgeWeb/` is the editable upstream submodule from `Buildly-Marketplace/ForgeWeb`.
+- `ForgeWeb-0.5.0/` is the older vendored copy kept for compatibility while the submodule transition is verified.
 
 ### Site Structure
 
@@ -23,7 +26,10 @@ ogcoin/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml     # GitHub Pages deployment
-└── ForgeWeb-0.5.0/        # ForgeWeb tooling (not deployed)
+├── .well-known/
+│   └── stellar.toml       # Stellar SEP-1 issuer metadata
+├── ForgeWeb/              # ForgeWeb upstream submodule
+└── ForgeWeb-0.5.0/        # Legacy ForgeWeb tooling copy
     ├── admin/             # Local admin interface
     ├── templates/         # HTML templates
     └── ...               # Other ForgeWeb files
@@ -35,8 +41,7 @@ ogcoin/
 
 1. **Start the ForgeWeb Admin Interface**:
    ```bash
-   cd ForgeWeb-0.5.0/admin
-   python file-api.py
+   tools/run_forgeweb.sh
    ```
 
 2. **Open Admin Interface**:
@@ -44,8 +49,8 @@ ogcoin/
    - Use the interface to edit content and manage the site
 
 3. **Preview Changes**:
-   - Open `index.html` in your browser to preview changes
-   - Or use a local server like `python -m http.server 8080`
+   - The same server previews the site at `http://localhost:8000/`
+   - The helper script sets `WEBSITE_ROOT=..` so ForgeWeb edits the repo root site files
 
 ### Manual Development
 
@@ -73,12 +78,13 @@ Update these in `css/style.css` under the `:root` section.
 - **About Section**: Update project information and features
 - **Features**: Modify the three feature cards
 - **Contact**: Update social links and contact information
+- **Legitimacy Plan**: See `devdocs/LEGITIMACY_AND_TRADING_PLAN.md`
 
 ### ForgeWeb Integration
 
 This site is fully compatible with ForgeWeb's:
 
-- Template system (templates are in `ForgeWeb-0.5.0/templates/`)
+- Template system (templates are in `ForgeWeb/templates/`)
 - Branding system (colors, fonts, etc.)
 - Admin interface for content management
 - AI-powered content generation (if enabled)
@@ -86,6 +92,18 @@ This site is fully compatible with ForgeWeb's:
 ## 🚀 Deployment
 
 The site automatically deploys to GitHub Pages when you push to the `main` branch.
+
+### Stellar Metadata
+
+The public SEP-1 file is in `.well-known/stellar.toml`. After deployment, sign a mainnet `set_options` transaction from the issuer account to set `home_domain=www.opengreencoin.com`:
+
+```bash
+python tools/create_home_domain_xdr.py \
+  --issuer GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57 \
+  --home-domain www.opengreencoin.com
+```
+
+Sign the generated XDR with the issuer account in Stellar Lab or your wallet, then submit it.
 
 ### Manual Deployment
 
@@ -117,7 +135,7 @@ This project is open source. See the LICENSE file for details.
 
 ## 🔧 Technical Details
 
-- **Framework**: ForgeWeb v0.5.0 compatible
+- **Framework**: ForgeWeb compatible
 - **CSS**: Tailwind CSS + Custom CSS
 - **JavaScript**: Vanilla JS with ForgeWeb utilities
 - **Build**: GitHub Actions

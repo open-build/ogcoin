@@ -200,9 +200,9 @@ DISTRIBUTOR_SECRET_KEY={distributor['secret_key']}
 DISTRIBUTOR_PUBLIC_KEY={distributor['public_key']}
 
 # Website Integration
-WEBSITE_URL=https://open-build.github.io/ogcoin
+WEBSITE_URL=https://www.opengreencoin.com
 WEBSITE_REPORTS_DIR=../reports
-WEBSITE_API_ENDPOINT=https://open-build.github.io/ogcoin/api
+WEBSITE_API_ENDPOINT=https://www.opengreencoin.com/api
 
 # Tool Settings
 GENERATE_REPORTS=true

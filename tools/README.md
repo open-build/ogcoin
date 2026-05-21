@@ -116,6 +116,13 @@ python3 ogcoin_console.py
 
 Then open `http://localhost:8787/`. The console combines live public checks, recipient validation, and campaign copy generation. It does not handle secret keys or submit transactions.
 
+For scheduled checks or CI:
+
+```bash
+python3 ogcoin_console.py --check
+python3 ogcoin_console.py --check --format json
+```
+
 ## Integration with ForgeWeb
 
 The tools are designed to integrate seamlessly with your ForgeWeb-powered website:

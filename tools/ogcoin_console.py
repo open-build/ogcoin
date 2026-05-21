@@ -1052,11 +1052,54 @@ def run(host: str, port: int) -> None:
         server.server_close()
 
 
+def format_status_markdown(status: dict[str, Any]) -> str:
+    lines = [
+        "# OGCoin Status Check",
+        "",
+        f"- Checked: {status['generated_at']}",
+        f"- Issuer home_domain: `{status['issuer'].get('home_domain') or 'not set'}`",
+        f"- Authorized trustlines: `{status['asset'].get('accounts_authorized')}`",
+        f"- OGC/XLM bids: `{status['market'].get('bid_count')}`",
+        f"- OGC/XLM asks: `{status['market'].get('ask_count')}`",
+        f"- Liquidity pools: `{status['market'].get('pool_count')}`",
+        "",
+        "## Readiness",
+        "",
+    ]
+    for item in status["readiness"]:
+        lines.append(f"- **{item['title']}**: `{item['status']}` - {item['detail']}")
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the local OGCoin operator console.")
     parser.add_argument("--host", default="127.0.0.1", help="Bind host. Defaults to 127.0.0.1.")
     parser.add_argument("--port", type=int, default=8787, help="Bind port. Defaults to 8787.")
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Run one public status check and print it instead of starting the web console.",
+    )
+    parser.add_argument(
+        "--format",
+        choices=["json", "markdown"],
+        default="markdown",
+        help="Output format for --check. Defaults to markdown.",
+    )
+    parser.add_argument("--output", help="Optional file path for --check output.")
     args = parser.parse_args()
+    if args.check:
+        status = build_status()
+        output = (
+            json.dumps(status, indent=2)
+            if args.format == "json"
+            else format_status_markdown(status)
+        )
+        if args.output:
+            Path(args.output).write_text(output, encoding="utf-8")
+        else:
+            print(output, end="")
+        return 0
     run(args.host, args.port)
     return 0
 

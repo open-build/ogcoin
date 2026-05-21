@@ -62,6 +62,12 @@ python3 tools/ogcoin_console.py
 
 Open `http://localhost:8787/`. The console is local-only and does not ask for secret keys or submit transactions.
 
+For a one-shot automation-friendly status report:
+
+```bash
+python3 tools/ogcoin_console.py --check
+```
+
 ### Manual Development
 
 If you prefer to edit files directly:

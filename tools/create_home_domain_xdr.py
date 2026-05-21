@@ -30,7 +30,7 @@ NETWORKS = {
 }
 
 
-def build_home_domain_xdr(issuer: str, home_domain: str, network: str) -> str:
+def build_home_domain_xdr(issuer: str, home_domain: str, network: str, timeout: int = 3600) -> str:
     network_config = NETWORKS[network]
     server = Server(network_config["horizon"])
     source_account = server.load_account(issuer)
@@ -42,7 +42,7 @@ def build_home_domain_xdr(issuer: str, home_domain: str, network: str) -> str:
             base_fee=100,
         )
         .append_set_options_op(home_domain=home_domain)
-        .set_timeout(300)
+        .set_timeout(timeout)
         .build()
     )
     return transaction.to_xdr()
@@ -68,9 +68,15 @@ def main() -> int:
         default="public",
         help="Stellar network",
     )
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=3600,
+        help="Transaction timeout in seconds. Defaults to 3600.",
+    )
     args = parser.parse_args()
 
-    xdr = build_home_domain_xdr(args.issuer, args.home_domain, args.network)
+    xdr = build_home_domain_xdr(args.issuer, args.home_domain, args.network, args.timeout)
     print("Unsigned XDR:")
     print(xdr)
     print()

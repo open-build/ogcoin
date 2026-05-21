@@ -73,5 +73,6 @@ python3 tools/ogcoin_console.py --check --format json
 # Generate a fresh unsigned home-domain transaction
 python3 tools/create_home_domain_xdr.py \
   --issuer GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57 \
-  --home-domain www.opengreencoin.com
+  --home-domain www.opengreencoin.com \
+  --timeout 3600
 ```

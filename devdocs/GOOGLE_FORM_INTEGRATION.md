@@ -86,7 +86,7 @@ python3 google_sheets_handler.py demo
 
 4. **Review funding candidates**:
    - Check `funding_candidate_projects.csv`
-   - Select projects for funding support
+   - Review projects for future grant consideration
    - Update website with featured projects
 
 ## 📁 File Structure

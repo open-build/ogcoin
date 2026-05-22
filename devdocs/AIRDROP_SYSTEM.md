@@ -2,7 +2,7 @@
 
 ## 🎯 Overview
 
-We've created a comprehensive airdrop system that not only distributes OGC tokens but also identifies and supports open source projects for ongoing funding.
+We've created a comprehensive airdrop pilot system that distributes small OGC test amounts, validates trustlines, and identifies open source projects for future review.
 
 ## 🌐 Website Integration
 
@@ -11,12 +11,12 @@ We've created a comprehensive airdrop system that not only distributes OGC token
   - Trustline setup instructions
   - Project submission form
   - FAQ section
-  - Open source funding incentives
+- Open source project review language
 
 ### Main Site Updates:
 - Added prominent airdrop banner section
 - Updated navigation with airdrop link
-- Integrated project funding promises
+- Replaced project funding promises with policy-gated project review language
 
 ## 🛠️ Technical Components
 
@@ -46,20 +46,20 @@ We've created a comprehensive airdrop system that not only distributes OGC token
 1. **Visit** `airdrop.html`
 2. **Setup** OGC trustline in Stellar wallet
 3. **Submit** project information
-4. **Receive** free OGC tokens + funding consideration
+4. **Receive** a discretionary small OGC distribution if eligible
 
 ### For Administrators:
 1. **Collect** submissions via `airdrop_handler.py`
 2. **Review** projects in `funding_candidate_projects.csv`  
 3. **Run** airdrops to validated recipients
-4. **Select** projects for ongoing funding
+4. **Review** projects for future grant consideration
 
-## 💰 Funding Incentive Structure
+## Pilot Distribution Structure
 
 ### What We Offer:
-- **Immediate**: 1-3 free OGC tokens per participant
-- **Featured**: Project listing on website
-- **Ongoing**: 5-15% of treasury allocation for selected projects
+- **Immediate**: small discretionary OGC test distributions for eligible participants
+- **Featured**: project review for possible future listing
+- **Future grants**: subject to approved treasury, governance, and disclosure policy
 
 ### Selection Criteria:
 - Active open source project

@@ -42,6 +42,7 @@ OPERATIONS_ACCOUNT = "GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L"
 HOME_DOMAIN = "www.opengreencoin.com"
 HORIZON_URL = "https://horizon.stellar.org"
 STELLAR_TOML_URL = f"https://{HOME_DOMAIN}/.well-known/stellar.toml"
+TRUST_URL = f"https://{HOME_DOMAIN}/trust.html"
 STELLAR_EXPERT_ASSET_URL = (
     f"https://stellar.expert/explorer/public/asset/{ASSET_CODE}-{ISSUER}"
 )
@@ -268,6 +269,7 @@ HTML = """<!doctype html>
       <button id="refreshStatus">Run Live Check</button>
       <a class="button-link secondary" href="http://localhost:8000/admin/" target="_blank" rel="noreferrer">Open ForgeWeb</a>
       <a class="button-link secondary" href="https://www.opengreencoin.com/" target="_blank" rel="noreferrer">Live Site</a>
+      <a class="button-link secondary" href="__TRUST_URL__" target="_blank" rel="noreferrer">Trust Page</a>
       <a class="button-link secondary" href="__STELLAR_EXPERT_ASSET_URL__" target="_blank" rel="noreferrer">StellarExpert</a>
     </section>
 
@@ -619,6 +621,7 @@ def build_status() -> dict[str, Any]:
     )
     expert_data, expert_error = http_json(STELLAR_EXPERT_API_URL)
     toml_text, toml_error = http_text(STELLAR_TOML_URL)
+    trust_text, trust_error = http_text(TRUST_URL)
 
     asset_record: dict[str, Any] = {}
     if asset_data:
@@ -650,6 +653,15 @@ def build_status() -> dict[str, Any]:
             "title": "Issuer home_domain is set",
             "status": "good" if home_domain == HOME_DOMAIN else "bad",
             "detail": f"Current home_domain: {home_domain or 'not set'}",
+        },
+        {
+            "title": "Public trust and risk page is live",
+            "status": "good" if trust_text and "Trust, Risk, and Governance" in trust_text else "warn",
+            "detail": (
+                "Verification, risk, governance, liquidity, and payroll disclosures are published."
+                if trust_text and "Trust, Risk, and Governance" in trust_text
+                else (trust_error or "Deploy trust.html before broad promotion.")
+            ),
         },
         {
             "title": "Trading liquidity exists",
@@ -702,6 +714,12 @@ def build_status() -> dict[str, Any]:
             "contains_issuer": contains_issuer,
             "contains_asset": contains_asset,
             "error": toml_error,
+        },
+        "trust_page": {
+            "url": TRUST_URL,
+            "reachable": bool(trust_text),
+            "contains_disclosures": bool(trust_text and "Trust, Risk, and Governance" in trust_text),
+            "error": trust_error,
         },
         "market": {
             "has_liquidity": bool(bids or asks or pool_count),
@@ -947,6 +965,7 @@ def render_html() -> bytes:
         .replace("__OPERATIONS_SHORT__", f"{OPERATIONS_ACCOUNT[:7]}...{OPERATIONS_ACCOUNT[-6:]}")
         .replace("__HOME_DOMAIN__", HOME_DOMAIN)
         .replace("__STELLAR_TOML_URL__", STELLAR_TOML_URL)
+        .replace("__TRUST_URL__", TRUST_URL)
         .replace("__STELLAR_EXPERT_ASSET_URL__", STELLAR_EXPERT_ASSET_URL)
     )
     return html.encode("utf-8")

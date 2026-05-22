@@ -18,6 +18,9 @@ This site is built using ForgeWeb, an AI-powered static site generator with a lo
 ```
 ogcoin/
 ├── index.html              # Main homepage
+├── trust.html              # Public verification, risk, and governance page
+├── roadmap.html            # Development roadmap and progress tracking
+├── airdrop.html            # Airdrop pilot and trustline instructions
 ├── css/
 │   └── style.css          # Custom styles (ForgeWeb compatible)
 ├── js/

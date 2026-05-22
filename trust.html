@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGCoin Trust, Risk, and Governance | Open Build</title>
+    <meta name="description" content="Verify OGCoin issuer metadata, Stellar account details, risk disclosures, payroll limitations, governance status, and liquidity readiness.">
+    <link rel="canonical" href="https://www.opengreencoin.com/trust.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.opengreencoin.com/trust.html">
+    <meta property="og:title" content="OGCoin Trust, Risk, and Governance">
+    <meta property="og:description" content="Public verification, disclosures, and operating policies for OGCoin on Stellar.">
+    <meta property="og:image" content="https://www.opengreencoin.com/assets/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1b5fa3',
+                        secondary: '#144a84',
+                        accent: '#f9943b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/buildly-head.js"></script>
+</head>
+<body class="bg-white text-gray-900">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">OGCoin</a>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="index.html#about" class="text-gray-700 hover:text-primary transition-colors">About</a>
+                    <a href="roadmap.html" class="text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                    <a href="trust.html" class="text-primary font-semibold">Trust</a>
+                    <a href="airdrop.html" class="text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                    <a href="https://github.com/open-build/ogcoin" target="_blank" class="text-gray-700 hover:text-primary transition-colors">GitHub</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary" aria-expanded="false" aria-label="Open navigation menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Home</a>
+                <a href="index.html#about" class="block py-2 text-gray-700 hover:text-primary transition-colors">About</a>
+                <a href="roadmap.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                <a href="trust.html" class="block py-2 text-primary font-semibold">Trust</a>
+                <a href="airdrop.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                <a href="https://github.com/open-build/ogcoin" target="_blank" class="block py-2 text-gray-700 hover:text-primary transition-colors">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-gradient text-white py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="inline-flex items-center bg-white/15 border border-white/25 rounded-md px-3 py-1 text-sm font-semibold mb-6">
+                    Public verification center
+                </p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-5">Trust, Risk, and Governance</h1>
+                <p class="text-xl text-blue-100 max-w-4xl">
+                    OGCoin is an experimental Stellar mainnet asset for Open Build's open source funding and developer education programs. This page records what is verifiable today, what is still experimental, and what must be decided before broader trading or payroll use.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Issuer Domain</p>
+                        <p class="text-2xl font-bold text-green-700 mt-2">Verified</p>
+                        <p class="text-sm text-gray-600 mt-3">Issuer account <code>home_domain</code> is set to <code>www.opengreencoin.com</code> on Stellar mainnet.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Market Liquidity</p>
+                        <p class="text-2xl font-bold text-orange-700 mt-2">Not Ready</p>
+                        <p class="text-sm text-gray-600 mt-3">No OGC/XLM bids, asks, or liquidity pools were detected at the last local check.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Payroll Use</p>
+                        <p class="text-2xl font-bold text-orange-700 mt-2">Review Required</p>
+                        <p class="text-sm text-gray-600 mt-3">OGC should not replace required wages unless payroll, tax, labor, and state-law review is complete.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">How to Verify OGC</h2>
+                        <p class="text-gray-600 mb-6">
+                            Use these public records to confirm you are looking at the intended OGC asset. Do not rely on screenshots, messages, or unofficial token names.
+                        </p>
+                        <dl class="space-y-4">
+                            <div>
+                                <dt class="font-semibold text-gray-900">Asset code</dt>
+                                <dd class="font-mono text-sm break-all text-gray-700">OGC</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Issuer</dt>
+                                <dd class="font-mono text-sm break-all text-gray-700">GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">SEP-1 metadata</dt>
+                                <dd><a class="text-primary hover:underline" href="https://www.opengreencoin.com/.well-known/stellar.toml">www.opengreencoin.com/.well-known/stellar.toml</a></dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Home-domain transaction</dt>
+                                <dd><a class="text-primary hover:underline" href="https://stellar.expert/explorer/public/tx/8b17b271d53bd8f9df817648acd3aa80169005d0be9a032bcbe7467c06f3eb01">8b17b271d53bd8f9df817648acd3aa80169005d0be9a032bcbe7467c06f3eb01</a></dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Asset explorer</dt>
+                                <dd><a class="text-primary hover:underline" href="https://stellar.expert/explorer/public/asset/OGC-GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57">View OGC on StellarExpert</a></dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-3xl font-bold mb-4">What OGC Is Not</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>OGC is not equity, debt, ownership, or voting stock in Open Build.</li>
+                            <li>OGC is not redeemable for fiat, legal tender, or a guaranteed off-chain asset.</li>
+                            <li>OGC does not include profit, dividend, interest, buyback, or price-support promises.</li>
+                            <li>Early markets may be thin, volatile, or unavailable, and holders may not be able to exit.</li>
+                            <li>Airdrops, grants, and project support are discretionary and subject to eligibility, compliance, and treasury policy.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-3">Governance</h2>
+                        <p class="text-gray-600 mb-4">The issuer account is active and should be treated as a cold governance account. Before fixed-supply or treasury claims are made, Open Build should publish a signed policy covering signer thresholds, supply authority, distribution wallets, and who can authorize treasury movement.</p>
+                        <p class="text-sm text-gray-500">Next action: approve and publish an issuer and treasury policy.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-3">Distribution</h2>
+                        <p class="text-gray-600 mb-4">Airdrops and grants should remain opt-in and trustline-based. Each distribution batch should be validated locally, approved by a human signer, and recorded with recipient count, purpose, amount, and transaction hashes.</p>
+                        <p class="text-sm text-gray-500">Next action: publish a distribution log format before the next campaign.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-3">Liquidity</h2>
+                        <p class="text-gray-600 mb-4">OGC should not be promoted as readily tradable until a small, documented market-making or liquidity policy is approved. Any initial OGC/XLM market should use limited exposure and public wallet records.</p>
+                        <p class="text-sm text-gray-500">Next action: decide whether to start with tiny offers or a small Stellar liquidity pool.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">Payroll Readiness</h2>
+                        <p class="text-gray-600 mb-4">
+                            OGC may be useful for optional grants, bonuses, or contributor rewards, but employee wage use needs separate review. Required wages, withholding, wage statements, recordkeeping, overtime, and state-law rules must still be satisfied.
+                        </p>
+                        <p class="text-gray-600">
+                            Until that review is complete, Open Build should preserve ordinary payroll in USD and treat any OGC employee distribution as an elective supplemental grant with written consent, valuation support, and tax reporting.
+                        </p>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold text-blue-950 mb-3">Reference Points</h2>
+                        <p class="text-blue-900 mb-4">
+                            This is not legal, tax, payroll, or investment advice. These links are starting points for professional review.
+                        </p>
+                        <ul class="space-y-2">
+                            <li><a class="text-primary hover:underline" href="https://www.irs.gov/individuals/international-taxpayers/frequently-asked-questions-on-virtual-currency-transactions">IRS virtual currency transaction FAQs</a></li>
+                            <li><a class="text-primary hover:underline" href="https://www.dol.gov/agencies/whd/flsa">U.S. Department of Labor FLSA overview</a></li>
+                            <li><a class="text-primary hover:underline" href="https://www.dol.gov/index.php/general/topic/wages/wagesrecordkeeping">DOL wage recordkeeping overview</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">OGCoin</h3>
+                    <p class="text-gray-400 max-w-md">A Stellar mainnet asset for open source funding experiments and developer education programs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Project</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="roadmap.html" class="text-gray-400 hover:text-white transition-colors">Roadmap</a></li>
+                        <li><a href="trust.html" class="text-gray-400 hover:text-white transition-colors">Trust</a></li>
+                        <li><a href="airdrop.html" class="text-gray-400 hover:text-white transition-colors">Airdrop</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Verify</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.opengreencoin.com/.well-known/stellar.toml" class="text-gray-400 hover:text-white transition-colors">stellar.toml</a></li>
+                        <li><a href="https://stellar.expert/explorer/public/asset/OGC-GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57" class="text-gray-400 hover:text-white transition-colors">StellarExpert</a></li>
+                        <li><a href="https://github.com/open-build/ogcoin" class="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <p>&copy; 2026 Open Build. OGC is experimental and carries market, custody, tax, and regulatory risk.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

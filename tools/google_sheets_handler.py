@@ -265,18 +265,19 @@ QUESTION 7: Trustline Confirmation (Required)
 
 FORM DESCRIPTION TEXT:
 ======================
-"Join our OGC airdrop and get your open source project featured for funding support! 
+"Join the OGC airdrop pilot and submit your open source project for future review.
 
-🪙 Get 1-3 free OGC tokens
-🚀 Feature your project on our website  
-💰 Qualify for ongoing funding (5-15% treasury allocation)
+Eligible participants may receive a small discretionary OGC test distribution.
+Submitted projects may be reviewed for future website features or grant experiments after treasury policy is approved.
+No profit, redemption, or grant approval is promised.
 
 Before submitting, please establish an OGC trustline in your Stellar wallet:
 - Asset Code: OGC
 - Issuer: GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57
 - Trust Limit: 1000 (recommended)
 
-Instructions: https://www.opengreencoin.com/airdrop.html"
+Instructions: https://www.opengreencoin.com/airdrop.html
+Trust and risk disclosures: https://www.opengreencoin.com/trust.html"
 
 AFTER SETUP:
 ============

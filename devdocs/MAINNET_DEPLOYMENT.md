@@ -48,7 +48,7 @@ The script will:
 ### Step 3: Verify Deployment
 After successful deployment, verify on Stellar Expert:
 - Check issuer account exists
-- Verify 1M OGC tokens issued
+- Verify public OGC asset balances and issuer details
 - Confirm asset details are correct
 
 ### Step 4: Update Website

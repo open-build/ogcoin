@@ -68,7 +68,7 @@ python3 google_sheets_handler.py process 'YOUR_SHEET_URL'
 3. **Clicks Google Form** link
 4. **Submits project** information
 5. **Gets processed** automatically
-6. **Receives OGC tokens** within 24-48 hours
+6. **Receives a response** after trustline and eligibility review
 
 ### Administrator Workflow:
 1. **Submissions arrive** in Google Sheets
@@ -119,12 +119,12 @@ python3 google_sheets_handler.py process 'YOUR_SHEET_URL'
 ## 💰 Economic Impact
 
 ### Immediate Value:
-- **Free tokens**: 1-3 OGC per participant
+- **Pilot distributions**: small discretionary OGC amounts for eligible participants
 - **No barriers**: Simple trustline setup
-- **Quick distribution**: 24-48 hour processing
+- **Review workflow**: validation before any distribution
 
 ### Long-term Value:
-- **Project funding**: 5-15% treasury allocation
+- **Project review**: candidates for future grant experiments
 - **Website featuring**: Exposure for projects
 - **Community building**: Developer engagement
 - **Ecosystem growth**: Real utility demonstration

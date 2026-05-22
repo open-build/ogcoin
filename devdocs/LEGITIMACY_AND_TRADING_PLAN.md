@@ -1,6 +1,6 @@
 # OGCoin Legitimacy and Trading Readiness
 
-Last checked: 2026-05-21
+Last checked: 2026-05-22
 
 This is the practical path for making OGCoin easier for wallets, traders, employees, and open source contributors to verify. It is not legal or tax advice; token sales, fundraising, and payroll need review by qualified counsel and payroll/tax professionals.
 
@@ -12,15 +12,16 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 - Personal/operations account observed on-chain: `GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L`.
 - Supply observed through Horizon: `999999501.3700000` OGC in authorized balances plus `500.0000000` OGC in claimable balances.
 - Liquidity observed through Horizon: no OGC/XLM order book bids or asks and no liquidity pools.
-- Stellar metadata gap: the live site did not expose `/.well-known/stellar.toml`, and the issuer account did not have `home_domain` set.
+- Stellar metadata status: `/.well-known/stellar.toml` is live and the issuer account has `home_domain=www.opengreencoin.com`.
+- Public disclosure status: `trust.html` now documents verification details, risk boundaries, governance status, liquidity readiness, and payroll limitations.
 
 ## Legitimacy Checklist
 
 1. Publish `https://www.opengreencoin.com/.well-known/stellar.toml`.
-   The repo now includes `.well-known/stellar.toml`, but GitHub Pages must deploy it and the contact email/logo must be real.
+   Done. Keep the contact email, logo, and public org details current.
 
 2. Set issuer `home_domain` to `www.opengreencoin.com`.
-   This requires a signed mainnet `set_options` transaction from the issuer account. Use `tools/create_home_domain_xdr.py` to create an unsigned XDR, then sign it with the issuer key in a wallet or Stellar Lab.
+   Done in transaction `8b17b271d53bd8f9df817648acd3aa80169005d0be9a032bcbe7467c06f3eb01`, ledger `62686761`.
 
 3. Confirm public org details.
    `support@opengreencoin.com` and `assets/logo.png` must exist before treating the TOML as production-grade. Replace the placeholder city/country level address with the correct public business address if you want stronger exchange/wallet trust.
@@ -64,8 +65,8 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 
 ## Immediate Next Steps
 
-1. Deploy this repo so `/.well-known/stellar.toml` and `/assets/logo.png` are live.
-2. Run `python tools/create_home_domain_xdr.py --issuer GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57 --home-domain www.opengreencoin.com`.
-3. Sign and submit the generated XDR with the issuer account.
-4. Re-check Horizon: the asset record should expose a non-empty TOML link.
-5. Create a small OGC/XLM market-making transaction or liquidity pool only after legal, treasury, and disclosure decisions are settled.
+1. Publish `trust.html` and link it from all public navigation.
+2. Approve an issuer/treasury governance policy before fixed-supply or treasury claims.
+3. Create a distribution log format for airdrops, grants, and future contributor rewards.
+4. Decide whether to start OGC/XLM liquidity with tiny offers or a small liquidity pool after disclosures and treasury limits are approved.
+5. Test OGC/XLM swaps through Stellar Lab, StellarTerm, LOBSTR, and Freighter using small amounts only.

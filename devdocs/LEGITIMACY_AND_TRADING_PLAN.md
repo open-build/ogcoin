@@ -14,6 +14,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 - Liquidity observed through Horizon: no OGC/XLM order book bids or asks and no liquidity pools.
 - Stellar metadata status: `/.well-known/stellar.toml` is live and the issuer account has `home_domain=www.opengreencoin.com`.
 - Public disclosure status: `trust.html` now documents verification details, risk boundaries, governance status, liquidity readiness, and payroll limitations.
+- Governance status: `governance.html` now publishes interim issuer, supply, signer, treasury, distribution, and liquidity guardrails.
 
 ## Legitimacy Checklist
 
@@ -27,7 +28,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
    `support@opengreencoin.com` and `assets/logo.png` must exist before treating the TOML as production-grade. Replace the placeholder city/country level address with the correct public business address if you want stronger exchange/wallet trust.
 
 4. Separate hot and cold accounts.
-   Keep the issuer account cold. Use a distribution or treasury account for airdrops, grants, payroll, market making, and liquidity. Add multisig and sane thresholds before moving meaningful value.
+   Keep the issuer account cold. Use a distribution or treasury account for airdrops, grants, payroll, market making, and liquidity. The interim policy is published in `governance.html`; add multisig and sane thresholds before moving meaningful value.
 
 5. Decide supply governance before promising fixed supply.
    The issuer currently can issue more OGC because its master signer is active and no immutable/lockdown policy is documented. If the project promises fixed supply, publish a signed policy and consider locking or multisig-controlling the issuer.
@@ -65,8 +66,8 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 
 ## Immediate Next Steps
 
-1. Publish `trust.html` and link it from all public navigation.
-2. Approve an issuer/treasury governance policy before fixed-supply or treasury claims.
-3. Create a distribution log format for airdrops, grants, and future contributor rewards.
-4. Decide whether to start OGC/XLM liquidity with tiny offers or a small liquidity pool after disclosures and treasury limits are approved.
+1. Review `governance.html` with counsel and project leadership.
+2. Create a distribution log format for airdrops, grants, and future contributor rewards.
+3. Designate treasury, grant, and liquidity wallets before using them publicly.
+4. Decide whether to start OGC/XLM liquidity with tiny offers or a small liquidity pool after treasury limits are approved.
 5. Test OGC/XLM swaps through Stellar Lab, StellarTerm, LOBSTR, and Freighter using small amounts only.

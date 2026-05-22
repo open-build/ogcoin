@@ -10,6 +10,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 - SEP-1 metadata: live at `https://www.opengreencoin.com/.well-known/stellar.toml`.
 - Asset: `OGC:GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57`.
 - Issuer `home_domain`: set to `www.opengreencoin.com` on-chain in ledger `62686761`.
+- Governance policy: interim issuer and treasury policy published at `https://www.opengreencoin.com/governance.html`.
 - OGC/XLM order book: no bids or asks at last check.
 - Liquidity pools: none at last check.
 - Trustlines: low adoption; build slowly and transparently.
@@ -22,8 +23,9 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P0 | Sign and submit issuer `home_domain=www.opengreencoin.com` XDR | Human signer | Transaction `8b17b271d53bd8f9df817648acd3aa80169005d0be9a032bcbe7467c06f3eb01`, ledger `62686761`. |
 | Done | P0 | Verify Horizon asset TOML link after `home_domain` lands | Codex/local console | `python3 tools/ogcoin_console.py --check` reports the issuer home domain as good. |
 | Done | P1 | Draft public risk/disclosure page | Codex | `trust.html` covers verification, risk boundaries, governance status, liquidity readiness, and payroll limitations. |
-| Next | P0 | Decide issuer governance policy | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until policy is signed/published. |
-| Next | P1 | Create treasury/distribution account policy | Project lead | Define hot wallet, cold wallet, market-making wallet, grant wallet, and signer thresholds. |
+| Done | P0 | Publish interim issuer and treasury governance policy | Codex | `governance.html` defines issuer, supply, signer, treasury, distribution, liquidity, and review guardrails. |
+| Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
+| Next | P1 | Designate treasury, grant, and liquidity wallets | Project lead | Define hot wallet, cold wallet, market-making wallet, grant wallet, and signer thresholds. |
 | Next | P1 | Draft trustline/onboarding campaign | Codex | Use copy from the local console and publish a clear wallet guide. |
 | Next | P2 | Build recipient import workflow into console | Codex | Read Google Sheets CSV and produce validated local CSV for dry-run distribution. |
 | Next | P2 | Add transparency report artifact | Codex | Generate public JSON/HTML showing treasury, grants, trustlines, and liquidity policy. |

@@ -19,6 +19,7 @@ This site is built using ForgeWeb, an AI-powered static site generator with a lo
 ogcoin/
 ├── index.html              # Main homepage
 ├── trust.html              # Public verification, risk, and governance page
+├── governance.html         # Issuer and treasury governance policy
 ├── roadmap.html            # Development roadmap and progress tracking
 ├── airdrop.html            # Airdrop pilot and trustline instructions
 ├── css/

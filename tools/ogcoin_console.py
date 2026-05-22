@@ -43,6 +43,7 @@ HOME_DOMAIN = "www.opengreencoin.com"
 HORIZON_URL = "https://horizon.stellar.org"
 STELLAR_TOML_URL = f"https://{HOME_DOMAIN}/.well-known/stellar.toml"
 TRUST_URL = f"https://{HOME_DOMAIN}/trust.html"
+GOVERNANCE_URL = f"https://{HOME_DOMAIN}/governance.html"
 STELLAR_EXPERT_ASSET_URL = (
     f"https://stellar.expert/explorer/public/asset/{ASSET_CODE}-{ISSUER}"
 )
@@ -270,6 +271,7 @@ HTML = """<!doctype html>
       <a class="button-link secondary" href="http://localhost:8000/admin/" target="_blank" rel="noreferrer">Open ForgeWeb</a>
       <a class="button-link secondary" href="https://www.opengreencoin.com/" target="_blank" rel="noreferrer">Live Site</a>
       <a class="button-link secondary" href="__TRUST_URL__" target="_blank" rel="noreferrer">Trust Page</a>
+      <a class="button-link secondary" href="__GOVERNANCE_URL__" target="_blank" rel="noreferrer">Governance</a>
       <a class="button-link secondary" href="__STELLAR_EXPERT_ASSET_URL__" target="_blank" rel="noreferrer">StellarExpert</a>
     </section>
 
@@ -622,6 +624,7 @@ def build_status() -> dict[str, Any]:
     expert_data, expert_error = http_json(STELLAR_EXPERT_API_URL)
     toml_text, toml_error = http_text(STELLAR_TOML_URL)
     trust_text, trust_error = http_text(TRUST_URL)
+    governance_text, governance_error = http_text(GOVERNANCE_URL)
 
     asset_record: dict[str, Any] = {}
     if asset_data:
@@ -661,6 +664,15 @@ def build_status() -> dict[str, Any]:
                 "Verification, risk, governance, liquidity, and payroll disclosures are published."
                 if trust_text and "Trust, Risk, and Governance" in trust_text
                 else (trust_error or "Deploy trust.html before broad promotion.")
+            ),
+        },
+        {
+            "title": "Issuer and treasury governance policy is live",
+            "status": "good" if governance_text and "Issuer and Treasury Governance" in governance_text else "warn",
+            "detail": (
+                "Issuer, supply, signer, treasury, distribution, and liquidity guardrails are published."
+                if governance_text and "Issuer and Treasury Governance" in governance_text
+                else (governance_error or "Deploy governance.html before broad promotion.")
             ),
         },
         {
@@ -720,6 +732,12 @@ def build_status() -> dict[str, Any]:
             "reachable": bool(trust_text),
             "contains_disclosures": bool(trust_text and "Trust, Risk, and Governance" in trust_text),
             "error": trust_error,
+        },
+        "governance_page": {
+            "url": GOVERNANCE_URL,
+            "reachable": bool(governance_text),
+            "contains_policy": bool(governance_text and "Issuer and Treasury Governance" in governance_text),
+            "error": governance_error,
         },
         "market": {
             "has_liquidity": bool(bids or asks or pool_count),
@@ -966,6 +984,7 @@ def render_html() -> bytes:
         .replace("__HOME_DOMAIN__", HOME_DOMAIN)
         .replace("__STELLAR_TOML_URL__", STELLAR_TOML_URL)
         .replace("__TRUST_URL__", TRUST_URL)
+        .replace("__GOVERNANCE_URL__", GOVERNANCE_URL)
         .replace("__STELLAR_EXPERT_ASSET_URL__", STELLAR_EXPERT_ASSET_URL)
     )
     return html.encode("utf-8")

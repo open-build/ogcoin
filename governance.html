@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGCoin Issuer and Treasury Governance Policy | Open Build</title>
+    <meta name="description" content="Open Build's interim governance policy for OGCoin issuer authority, treasury movement, distribution batches, liquidity guardrails, and signer security.">
+    <link rel="canonical" href="https://www.opengreencoin.com/governance.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.opengreencoin.com/governance.html">
+    <meta property="og:title" content="OGCoin Issuer and Treasury Governance Policy">
+    <meta property="og:description" content="Issuer, treasury, distribution, liquidity, and signer guardrails for OGCoin.">
+    <meta property="og:image" content="https://www.opengreencoin.com/assets/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1b5fa3',
+                        secondary: '#144a84',
+                        accent: '#f9943b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/buildly-head.js"></script>
+</head>
+<body class="bg-white text-gray-900">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">OGCoin</a>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="index.html#about" class="text-gray-700 hover:text-primary transition-colors">About</a>
+                    <a href="roadmap.html" class="text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                    <a href="trust.html" class="text-gray-700 hover:text-primary transition-colors">Trust</a>
+                    <a href="governance.html" class="text-primary font-semibold">Governance</a>
+                    <a href="airdrop.html" class="text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                    <a href="https://github.com/open-build/ogcoin" target="_blank" class="text-gray-700 hover:text-primary transition-colors">GitHub</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary" aria-expanded="false" aria-label="Open navigation menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Home</a>
+                <a href="index.html#about" class="block py-2 text-gray-700 hover:text-primary transition-colors">About</a>
+                <a href="roadmap.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                <a href="trust.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Trust</a>
+                <a href="governance.html" class="block py-2 text-primary font-semibold">Governance</a>
+                <a href="airdrop.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                <a href="https://github.com/open-build/ogcoin" target="_blank" class="block py-2 text-gray-700 hover:text-primary transition-colors">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-gradient text-white py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="inline-flex items-center bg-white/15 border border-white/25 rounded-md px-3 py-1 text-sm font-semibold mb-6">
+                    Interim policy v0.1, May 22, 2026
+                </p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-5">Issuer and Treasury Governance</h1>
+                <p class="text-xl text-blue-100 max-w-4xl">
+                    This policy defines how Open Build intends to operate OGCoin while the project is still experimental: issuer access stays cold, treasury movement is deliberate, public claims stay conservative, and all distributions are recorded.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Issuer Rule</p>
+                        <p class="text-2xl font-bold text-primary mt-2">Cold Account</p>
+                        <p class="text-sm text-gray-600 mt-3">The issuer is for asset configuration and governance actions, not routine airdrops, payroll, grants, or market making.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Supply Claims</p>
+                        <p class="text-2xl font-bold text-orange-700 mt-2">Conservative</p>
+                        <p class="text-sm text-gray-600 mt-3">Open Build will not make fixed-supply claims while issuer authority remains active and policy hardening is pending.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Transparency</p>
+                        <p class="text-2xl font-bold text-green-700 mt-2">Publish Records</p>
+                        <p class="text-sm text-gray-600 mt-3">Distribution, grant, treasury, and liquidity actions should be logged with purpose, amount, account, and transaction hash.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">Known Public Accounts</h2>
+                        <p class="text-gray-600 mb-6">
+                            These accounts are public ledger identifiers. They are not secret keys and cannot authorize transactions by themselves.
+                        </p>
+                        <dl class="space-y-4">
+                            <div>
+                                <dt class="font-semibold text-gray-900">Issuer account</dt>
+                                <dd class="font-mono text-sm break-all text-gray-700">GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Distribution account observed on-chain</dt>
+                                <dd class="font-mono text-sm break-all text-gray-700">GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Operations account observed on-chain</dt>
+                                <dd class="font-mono text-sm break-all text-gray-700">GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Future treasury, grant, and liquidity wallets</dt>
+                                <dd class="text-gray-700">Must be published before they are used for public programs.</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h2 class="text-3xl font-bold text-blue-950 mb-4">Signer Safety</h2>
+                        <ul class="space-y-3 text-blue-950">
+                            <li>Secret keys, seed phrases, and hardware-wallet recovery material must never be committed, emailed, posted to chat, or stored in project docs.</li>
+                            <li>Every signer-changing transaction should be generated as unsigned XDR, reviewed by a human, signed in a trusted wallet or hardware signer, and submitted manually.</li>
+                            <li>Before meaningful treasury or liquidity activity, Open Build should add multisig and thresholds appropriate to the amount at risk.</li>
+                            <li>Emergency signer recovery and key rotation should be rehearsed on Stellar testnet before mainnet changes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-3">Issuer and Supply Policy</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>The issuer account should not be used for routine payments, grants, payroll, airdrops, liquidity, or experiments.</li>
+                            <li>No additional OGC should be issued without a public proposal, approval by project leadership, a waiting period of at least seven days, and a post-transaction ledger record.</li>
+                            <li>No public fixed-supply claim should be made until issuer authority is either locked, multisig-controlled, or governed by a stronger signed policy.</li>
+                            <li>Any issuer configuration change should be documented with purpose, transaction hash, date, signer, and expected user impact.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-3">Treasury and Distribution Policy</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>Distribution batches must be opt-in and trustline-based.</li>
+                            <li>Recipient lists should be validated locally before signing any transaction.</li>
+                            <li>Each batch should have a stated purpose, maximum amount, approver, transaction hash, and public summary.</li>
+                            <li>Employee or contractor distributions require separate written consent, valuation support, and payroll/tax review.</li>
+                            <li>Treasury wallets should not be used from automated jobs that hold secret keys.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-3">Grant Guardrails</h2>
+                        <p class="text-gray-600">Grant programs must publish eligibility, review criteria, batch size, and records before larger allocations. OGC grants are discretionary and do not create employment, ownership, or redemption rights.</p>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-3">Liquidity Guardrails</h2>
+                        <p class="text-gray-600">No one should promote OGC as readily tradable until a documented OGC/XLM market-making or liquidity-pool policy is published. Initial liquidity should be small, reversible, and publicly logged.</p>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-3">Review Cadence</h2>
+                        <p class="text-gray-600">This policy should be reviewed before each campaign, after any signer or treasury incident, and at least monthly while OGC is in pilot mode.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border border-gray-200 rounded-lg p-6">
+                    <h2 class="text-3xl font-bold mb-4">Next Policy Tasks</h2>
+                    <ol class="list-decimal pl-6 space-y-3 text-gray-700">
+                        <li>Create a public distribution log page or JSON report.</li>
+                        <li>Designate treasury, grant, and liquidity wallets before using them.</li>
+                        <li>Prepare unsigned XDRs for multisig hardening on testnet first.</li>
+                        <li>Publish a separate liquidity policy before creating OGC/XLM offers or a liquidity pool.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">OGCoin</h3>
+                    <p class="text-gray-400 max-w-md">A Stellar mainnet asset for open source funding experiments and developer education programs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Project</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="roadmap.html" class="text-gray-400 hover:text-white transition-colors">Roadmap</a></li>
+                        <li><a href="trust.html" class="text-gray-400 hover:text-white transition-colors">Trust</a></li>
+                        <li><a href="governance.html" class="text-gray-400 hover:text-white transition-colors">Governance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Verify</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.opengreencoin.com/.well-known/stellar.toml" class="text-gray-400 hover:text-white transition-colors">stellar.toml</a></li>
+                        <li><a href="https://stellar.expert/explorer/public/asset/OGC-GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57" class="text-gray-400 hover:text-white transition-colors">StellarExpert</a></li>
+                        <li><a href="https://github.com/open-build/ogcoin" class="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <p>&copy; 2026 Open Build. This operating policy is not legal, tax, payroll, or investment advice.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

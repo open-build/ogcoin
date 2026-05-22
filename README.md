@@ -99,6 +99,20 @@ python3 tools/transparency_log.py add \
 
 Remove `--dry-run` only after the record has been reviewed. The helper edits `data/transparency-log.json`; it never signs transactions, submits XDR, or reads secret keys.
 
+For wallet role approvals, use the worksheet in `devdocs/WALLET_DESIGNATION_WORKSHEET.md`, then publish the public address with:
+
+```bash
+TREASURY_PUBLIC_KEY=G...PUBLIC_ACCOUNT
+
+python3 tools/transparency_log.py designate-account \
+  --role treasury \
+  --address "$TREASURY_PUBLIC_KEY" \
+  --date 2026-05-22 \
+  --policy "Cold or low-frequency account for approved OGCoin treasury activity; no routine airdrops, payroll, or liquidity operations." \
+  --summary "Designated the public treasury wallet for approved OGCoin reserve and program funding activity." \
+  --dry-run
+```
+
 ### Manual Development
 
 If you prefer to edit files directly:

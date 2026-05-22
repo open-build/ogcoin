@@ -69,6 +69,11 @@ ENTRY_KEYS = {
 PUBLIC_ACCOUNT_RE = re.compile(r"^G[A-Z2-7]{55}$")
 TRANSACTION_HASH_RE = re.compile(r"^[0-9a-fA-F]{64}$")
 ENTRY_ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{2,}$")
+WALLET_DESIGNATION_LINKS = [
+    "https://www.opengreencoin.com/governance.html",
+    "https://www.opengreencoin.com/transparency.html",
+]
+CORE_WALLET_ROLES = {"treasury", "grant", "liquidity"}
 
 
 class TransparencyLogError(ValueError):
@@ -260,6 +265,13 @@ def validate_log(data: dict[str, Any]) -> None:
         require_string(rule, f"reporting_rules[{index}]")
 
 
+def slugify(value: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    if not slug:
+        raise TransparencyLogError("Could not build a slug from an empty value")
+    return slug
+
+
 def build_entry(args: argparse.Namespace) -> dict[str, Any]:
     transaction_hash = args.tx.lower() if args.tx else None
     return {
@@ -279,8 +291,47 @@ def build_entry(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def build_designation_entry(args: argparse.Namespace) -> dict[str, Any]:
+    role = args.role.strip().lower()
+    entry_id = args.entry_id or f"{args.date}-{slugify(role)}-wallet-designated"
+    links = args.link if args.link is not None else WALLET_DESIGNATION_LINKS
+    title = args.title or f"{role.replace('_', ' ').title()} wallet designated"
+    summary = args.summary.strip()
+    transaction_hash = args.tx.lower() if args.tx else None
+
+    return {
+        "id": entry_id,
+        "date": args.date,
+        "category": "governance",
+        "status": args.entry_status,
+        "title": title,
+        "summary": summary,
+        "account_role": role,
+        "account": args.address,
+        "amount_ogc": "0",
+        "counter_asset": None,
+        "transaction_hash": transaction_hash,
+        "ledger": args.ledger,
+        "links": links,
+    }
+
+
 def sort_entries(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(entries, key=lambda entry: (entry["date"], entry["id"]))
+
+
+def sort_accounts(accounts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    role_order = {
+        "issuer": 0,
+        "treasury": 1,
+        "grant": 2,
+        "distribution": 3,
+        "distribution_observed": 4,
+        "liquidity": 5,
+        "operations": 6,
+        "operations_observed": 7,
+    }
+    return sorted(accounts, key=lambda account: (role_order.get(account["role"], 99), account["role"]))
 
 
 def print_entry_list(data: dict[str, Any]) -> None:
@@ -301,6 +352,43 @@ def print_entry_list(data: dict[str, Any]) -> None:
         print(f"{entry['date']}  {entry['category']:<12} {entry['status']:<18} {amount:<18} {entry['id']}{chain}")
 
 
+def print_account_list(data: dict[str, Any]) -> None:
+    accounts = sort_accounts(data["accounts"])
+    if not accounts:
+        print("No public account records yet.")
+        return
+
+    for account in accounts:
+        address = account["address"] or "pending"
+        print(f"{account['role']:<22} {account['status']:<22} {address}")
+
+
+def find_account(accounts: list[dict[str, Any]], role: str) -> dict[str, Any] | None:
+    for account in accounts:
+        if account["role"] == role:
+            return account
+    return None
+
+
+def core_wallets_designated(data: dict[str, Any]) -> bool:
+    accounts_by_role = {account["role"]: account for account in data["accounts"]}
+    for role in CORE_WALLET_ROLES:
+        account = accounts_by_role.get(role)
+        if not account or not account.get("address"):
+            return False
+        if str(account.get("status", "")).startswith("pending"):
+            return False
+    return True
+
+
+def update_wallet_open_item(data: dict[str, Any]) -> None:
+    target_title = "Designate treasury, grant, and liquidity wallets"
+    for item in data["open_items"]:
+        if isinstance(item, dict) and item.get("title") == target_title:
+            item["status"] = "done" if core_wallets_designated(data) else "in_progress"
+            return
+
+
 def command_validate(args: argparse.Namespace) -> int:
     data = load_log(args.path)
     validate_log(data)
@@ -312,6 +400,13 @@ def command_list(args: argparse.Namespace) -> int:
     data = load_log(args.path)
     validate_log(data)
     print_entry_list(data)
+    return 0
+
+
+def command_accounts(args: argparse.Namespace) -> int:
+    data = load_log(args.path)
+    validate_log(data)
+    print_account_list(data)
     return 0
 
 
@@ -340,6 +435,56 @@ def command_add(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_designate_account(args: argparse.Namespace) -> int:
+    data = load_log(args.path)
+    validate_log(data)
+
+    role = args.role.strip().lower()
+    account_record = {
+        "role": role,
+        "address": args.address,
+        "status": args.account_status,
+        "policy": args.policy.strip(),
+    }
+    validate_public_account(account_record["address"], "account.address")
+    require_string(account_record["policy"], "account.policy")
+
+    entry = build_designation_entry(args)
+    validate_entry(entry, "wallet designation entry")
+
+    existing_ids = {item["id"] for item in data["entries"]}
+    if entry["id"] in existing_ids:
+        raise TransparencyLogError(f"Entry id already exists: {entry['id']}")
+
+    existing_account = find_account(data["accounts"], role)
+    if existing_account:
+        existing_address = existing_account.get("address")
+        if existing_address and existing_address != args.address and not args.replace:
+            raise TransparencyLogError(
+                f"{role} already has address {existing_address}; pass --replace to publish a replacement"
+            )
+        existing_account.update(account_record)
+    else:
+        data["accounts"].append(account_record)
+
+    data["accounts"] = sort_accounts(data["accounts"])
+    data["entries"] = sort_entries([*data["entries"], entry])
+    data["updated_at"] = utc_timestamp()
+    update_wallet_open_item(data)
+    validate_log(data)
+
+    if args.dry_run:
+        print("Dry run only; file was not changed. Proposed account record:")
+        print(json.dumps(account_record, indent=2))
+        print("Proposed transparency entry:")
+        print(json.dumps(entry, indent=2))
+        return 0
+
+    write_log(args.path, data)
+    print(f"Designated {role} account in {args.path}.")
+    return 0
+
+
 def add_path_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--path",
@@ -363,6 +508,10 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     add_path_argument(list_parser)
     list_parser.set_defaults(func=command_list)
 
+    accounts_parser = subparsers.add_parser("accounts", help="List current public account roles")
+    add_path_argument(accounts_parser)
+    accounts_parser.set_defaults(func=command_accounts)
+
     add_parser = subparsers.add_parser("add", help="Append a reviewed transparency entry")
     add_path_argument(add_parser)
     add_parser.add_argument("--id", required=True, help="Stable lowercase id, for example 2026-05-22-home-domain")
@@ -380,6 +529,31 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     add_parser.add_argument("--link", action="append", help="Public supporting URL. May be repeated")
     add_parser.add_argument("--dry-run", action="store_true", help="Validate and print the entry without editing the file")
     add_parser.set_defaults(func=command_add)
+
+    designate_parser = subparsers.add_parser(
+        "designate-account",
+        help="Publish a public wallet role and append its designation record",
+    )
+    add_path_argument(designate_parser)
+    designate_parser.add_argument("--role", required=True, help="Public role, for example treasury, grant, liquidity")
+    designate_parser.add_argument("--address", required=True, help="Public Stellar account for this role")
+    designate_parser.add_argument(
+        "--account-status",
+        default="designated",
+        help="Status for the public account role. Default: designated",
+    )
+    designate_parser.add_argument("--policy", required=True, help="Public operating policy for this account role")
+    designate_parser.add_argument("--date", required=True, help="Approval or publication date in YYYY-MM-DD format")
+    designate_parser.add_argument("--entry-id", help="Optional transparency entry id")
+    designate_parser.add_argument("--entry-status", default="published", choices=sorted(STATUSES))
+    designate_parser.add_argument("--title", help="Optional transparency entry title")
+    designate_parser.add_argument("--summary", required=True, help="Public summary of the wallet designation")
+    designate_parser.add_argument("--tx", help="Optional 64-character Stellar transaction hash")
+    designate_parser.add_argument("--ledger", type=int, help="Optional Stellar ledger number for the transaction")
+    designate_parser.add_argument("--link", action="append", help="Public supporting URL. May be repeated")
+    designate_parser.add_argument("--replace", action="store_true", help="Allow replacing an existing non-pending address")
+    designate_parser.add_argument("--dry-run", action="store_true", help="Validate and print changes without editing the file")
+    designate_parser.set_defaults(func=command_designate_account)
 
     return parser.parse_args(argv)
 

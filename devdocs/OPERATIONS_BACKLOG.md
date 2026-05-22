@@ -27,11 +27,12 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P0 | Publish interim issuer and treasury governance policy | Codex | `governance.html` defines issuer, supply, signer, treasury, distribution, liquidity, and review guardrails. |
 | Done | P2 | Add transparency report artifact | Codex | `transparency.html` renders `data/transparency-log.json` for public records and future batch logging. |
 | Done | P2 | Add transparency log update helper | Codex | `tools/transparency_log.py` validates and appends reviewed records without signing or submitting transactions. |
+| Done | P2 | Add wallet designation workflow | Codex | `devdocs/WALLET_DESIGNATION_WORKSHEET.md` and `tools/transparency_log.py designate-account` support public wallet role updates. |
 | Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
-| Next | P1 | Designate treasury, grant, and liquidity wallets | Project lead | Define hot wallet, cold wallet, market-making wallet, grant wallet, and signer thresholds. |
+| Next | P1 | Designate treasury, grant, and liquidity wallets | Project lead | Choose public `G...` addresses, custody owners, signer thresholds, and routine movement limits using `devdocs/WALLET_DESIGNATION_WORKSHEET.md`. |
 | Next | P1 | Draft trustline/onboarding campaign | Codex | Use copy from the local console and publish a clear wallet guide. |
 | Next | P2 | Build recipient import workflow into console | Codex | Read Google Sheets CSV and produce validated local CSV for dry-run distribution. |
-| Next | P2 | Add first wallet designation record | Codex + project lead | Use `tools/transparency_log.py` after treasury, grant, and liquidity wallet roles are approved. |
+| Next | P2 | Add first wallet designation record | Codex + project lead | Use `tools/transparency_log.py designate-account` after a wallet role is approved. |
 
 ## Liquidity Readiness
 
@@ -78,6 +79,9 @@ python3 tools/ogcoin_console.py --check --format json
 # Validate current public transparency records
 python3 tools/transparency_log.py validate
 
+# List public account roles
+python3 tools/transparency_log.py accounts
+
 # Draft a reviewed public transparency record without editing the file
 python3 tools/transparency_log.py add \
   --id 2026-05-22-example-record \
@@ -87,6 +91,17 @@ python3 tools/transparency_log.py add \
   --title "Example record" \
   --summary "Short public summary with no private recipient or payroll data." \
   --link https://www.opengreencoin.com/transparency.html \
+  --dry-run
+
+# Draft an approved wallet designation without editing the file
+TREASURY_PUBLIC_KEY=G...PUBLIC_ACCOUNT
+
+python3 tools/transparency_log.py designate-account \
+  --role treasury \
+  --address "$TREASURY_PUBLIC_KEY" \
+  --date 2026-05-22 \
+  --policy "Cold or low-frequency account for approved OGCoin treasury activity; no routine airdrops, payroll, or liquidity operations." \
+  --summary "Designated the public treasury wallet for approved OGCoin reserve and program funding activity." \
   --dry-run
 
 # Generate a fresh unsigned home-domain transaction if the domain ever needs to change

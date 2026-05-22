@@ -131,6 +131,7 @@ Validate the public transparency data:
 ```bash
 python3 transparency_log.py validate
 python3 transparency_log.py list
+python3 transparency_log.py accounts
 ```
 
 Draft a reviewed governance, distribution, grant, treasury, or liquidity record:
@@ -148,6 +149,22 @@ python3 transparency_log.py add \
 ```
 
 Remove `--dry-run` only after the record is approved for public release. The helper only edits JSON and never handles secret keys, signs transactions, or submits XDR.
+
+Publish an approved public wallet role:
+
+```bash
+TREASURY_PUBLIC_KEY=G...PUBLIC_ACCOUNT
+
+python3 transparency_log.py designate-account \
+  --role treasury \
+  --address "$TREASURY_PUBLIC_KEY" \
+  --date 2026-05-22 \
+  --policy "Cold or low-frequency account for approved OGCoin treasury activity; no routine airdrops, payroll, or liquidity operations." \
+  --summary "Designated the public treasury wallet for approved OGCoin reserve and program funding activity." \
+  --dry-run
+```
+
+Use `devdocs/WALLET_DESIGNATION_WORKSHEET.md` before publishing treasury, grant, distribution, or liquidity wallet addresses.
 
 ## Integration with ForgeWeb
 

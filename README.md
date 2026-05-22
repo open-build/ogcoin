@@ -111,7 +111,9 @@ The site automatically deploys to GitHub Pages when you push to the `main` branc
 
 ### Stellar Metadata
 
-The public SEP-1 file is in `.well-known/stellar.toml`. After deployment, sign a mainnet `set_options` transaction from the issuer account to set `home_domain=www.opengreencoin.com`:
+The public SEP-1 file is in `.well-known/stellar.toml`. The issuer account has `home_domain=www.opengreencoin.com` set on-chain as of ledger `62686761` with transaction `8b17b271d53bd8f9df817648acd3aa80169005d0be9a032bcbe7467c06f3eb01`.
+
+If the domain ever needs to change, generate a fresh mainnet `set_options` transaction from the issuer account:
 
 ```bash
 python tools/create_home_domain_xdr.py \
@@ -119,7 +121,7 @@ python tools/create_home_domain_xdr.py \
   --home-domain www.opengreencoin.com
 ```
 
-Sign the generated XDR with the issuer account in Stellar Lab or your wallet, then submit it.
+Sign the generated XDR with the issuer account in Stellar Lab or your wallet, then submit it. Never commit or share issuer secret keys.
 
 ### Manual Deployment
 

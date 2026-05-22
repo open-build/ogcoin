@@ -1,6 +1,6 @@
 # OGCoin Operations Backlog
 
-Last updated: 2026-05-21
+Last updated: 2026-05-22
 
 This is the working list for getting OGCoin from "asset exists" to "credible, distributable, and responsibly tradable." Keep transaction signing, treasury movement, payroll decisions, and liquidity commitments behind explicit human approval.
 
@@ -9,7 +9,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 - Public site: live at `https://www.opengreencoin.com/`.
 - SEP-1 metadata: live at `https://www.opengreencoin.com/.well-known/stellar.toml`.
 - Asset: `OGC:GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57`.
-- Issuer `home_domain`: not set on-chain yet.
+- Issuer `home_domain`: set to `www.opengreencoin.com` on-chain in ledger `62686761`.
 - OGC/XLM order book: no bids or asks at last check.
 - Liquidity pools: none at last check.
 - Trustlines: low adoption; build slowly and transparently.
@@ -19,8 +19,8 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 
 | Status | Priority | Task | Owner | Notes |
 | --- | --- | --- | --- | --- |
-| Next | P0 | Sign and submit issuer `home_domain=www.opengreencoin.com` XDR | Human signer | Regenerate the XDR immediately before signing because it is time-bounded. |
-| Next | P0 | Verify Horizon asset TOML link after `home_domain` lands | Codex/local console | Run `python3 tools/ogcoin_console.py --check`. |
+| Done | P0 | Sign and submit issuer `home_domain=www.opengreencoin.com` XDR | Human signer | Transaction `8b17b271d53bd8f9df817648acd3aa80169005d0be9a032bcbe7467c06f3eb01`, ledger `62686761`. |
+| Done | P0 | Verify Horizon asset TOML link after `home_domain` lands | Codex/local console | `python3 tools/ogcoin_console.py --check` reports the issuer home domain as good. |
 | Next | P0 | Decide issuer governance policy | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until policy is signed/published. |
 | Next | P1 | Create treasury/distribution account policy | Project lead | Define hot wallet, cold wallet, market-making wallet, grant wallet, and signer thresholds. |
 | Next | P1 | Draft public risk/disclosure page | Codex | Make investor-style expectations explicitly out of scope. |
@@ -70,7 +70,7 @@ python3 tools/ogcoin_console.py --check
 # JSON status for other automation
 python3 tools/ogcoin_console.py --check --format json
 
-# Generate a fresh unsigned home-domain transaction
+# Generate a fresh unsigned home-domain transaction if the domain ever needs to change
 python3 tools/create_home_domain_xdr.py \
   --issuer GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57 \
   --home-domain www.opengreencoin.com \

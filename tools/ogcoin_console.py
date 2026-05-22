@@ -691,7 +691,7 @@ def build_status() -> dict[str, Any]:
             "detail": (
                 f"Master signer weight {master_signer.get('weight', 0)}, "
                 f"high threshold {thresholds.get('high_threshold', 'unknown')}. "
-                "Publish a policy before making fixed-supply claims."
+                "Interim policy is published; complete signer hardening before making fixed-supply claims."
             ),
         },
         {

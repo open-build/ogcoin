@@ -30,7 +30,9 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P2 | Add transparency log update helper | Codex | `tools/transparency_log.py` validates and appends reviewed records without signing or submitting transactions. |
 | Done | P2 | Add wallet designation workflow | Codex | `devdocs/WALLET_DESIGNATION_WORKSHEET.md` and `tools/transparency_log.py designate-account` support public wallet role updates. |
 | Done | P1 | Designate public distribution wallet | Project lead + Codex | `GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB` is published for opt-in airdrops and reviewed distribution batches only. |
+| Done | P1 | Add blocker removal plan and issuer hardening XDR helper | Codex | `devdocs/BLOCKER_REMOVAL_PLAN.md` and `tools/create_issuer_signer_xdr.py` define the next signer, trustline, and liquidity path. |
 | Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
+| Next | P0 | Choose two issuer signer public accounts | Project lead | Use separate controlled accounts. The next proposed threshold pattern is master `1`, signer A `1`, signer B `1`, low `1`, medium `2`, high `2`. |
 | Next | P1 | Designate treasury, grant, and liquidity wallets | Project lead | Choose public `G...` addresses, custody owners, signer thresholds, and routine movement limits using `devdocs/WALLET_DESIGNATION_WORKSHEET.md`. |
 | Next | P1 | Draft trustline/onboarding campaign | Codex | Use copy from the local console and publish a clear wallet guide. |
 | Next | P2 | Build recipient import workflow into console | Codex | Read Google Sheets CSV and produce validated local CSV for dry-run distribution. |
@@ -111,4 +113,16 @@ python3 tools/create_home_domain_xdr.py \
   --issuer GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57 \
   --home-domain www.opengreencoin.com \
   --timeout 3600
+
+# Draft an unsigned issuer signer hardening XDR after signer public keys are approved
+SIGNER_A=G...PUBLIC_SIGNER_ONE
+SIGNER_B=G...PUBLIC_SIGNER_TWO
+
+python3 tools/create_issuer_signer_xdr.py \
+  --signer "$SIGNER_A:1" \
+  --signer "$SIGNER_B:1" \
+  --master-weight 1 \
+  --low-threshold 1 \
+  --med-threshold 2 \
+  --high-threshold 2
 ```

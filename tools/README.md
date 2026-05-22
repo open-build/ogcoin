@@ -30,6 +30,7 @@ This toolkit provides Python scripts and utilities for:
 - **`formatters.py`** - Output formatting helpers
 - **`test_fund.py`** - Test and demonstrate Open Build fund functionality
 - **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
+- **`create_issuer_signer_xdr.py`** - Build an unsigned issuer signer and threshold hardening XDR
 - **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
 - **`transparency_log.py`** - Validate and append reviewed public records to `data/transparency-log.json`
 
@@ -106,6 +107,25 @@ python create_home_domain_xdr.py \
 ```
 
 Sign the generated XDR with the issuer account in Stellar Lab or your wallet. This script does not handle secret keys.
+
+### Harden Issuer Signers
+
+Create an unsigned XDR that adds approved issuer signers and updates thresholds:
+
+```bash
+SIGNER_A=G...PUBLIC_SIGNER_ONE
+SIGNER_B=G...PUBLIC_SIGNER_TWO
+
+python create_issuer_signer_xdr.py \
+  --signer "$SIGNER_A:1" \
+  --signer "$SIGNER_B:1" \
+  --master-weight 1 \
+  --low-threshold 1 \
+  --med-threshold 2 \
+  --high-threshold 2
+```
+
+This creates a 2-of-3 issuer-control pattern after signing and submission. It does not lock the issuer or create a fixed-supply guarantee.
 
 ### Local Console
 

@@ -168,6 +168,23 @@ python tools/create_home_domain_xdr.py \
 
 Sign the generated XDR with the issuer account in Stellar Lab or your wallet, then submit it. Never commit or share issuer secret keys.
 
+To harden issuer signer policy, first choose approved public signer accounts, then build an unsigned signer/threshold XDR:
+
+```bash
+SIGNER_A=G...PUBLIC_SIGNER_ONE
+SIGNER_B=G...PUBLIC_SIGNER_TWO
+
+python tools/create_issuer_signer_xdr.py \
+  --signer "$SIGNER_A:1" \
+  --signer "$SIGNER_B:1" \
+  --master-weight 1 \
+  --low-threshold 1 \
+  --med-threshold 2 \
+  --high-threshold 2
+```
+
+See `devdocs/BLOCKER_REMOVAL_PLAN.md` before signing. This helper never handles secret keys.
+
 ### Manual Deployment
 
 If you need to deploy manually:

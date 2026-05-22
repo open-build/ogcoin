@@ -26,11 +26,12 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P1 | Draft public risk/disclosure page | Codex | `trust.html` covers verification, risk boundaries, governance status, liquidity readiness, and payroll limitations. |
 | Done | P0 | Publish interim issuer and treasury governance policy | Codex | `governance.html` defines issuer, supply, signer, treasury, distribution, liquidity, and review guardrails. |
 | Done | P2 | Add transparency report artifact | Codex | `transparency.html` renders `data/transparency-log.json` for public records and future batch logging. |
+| Done | P2 | Add transparency log update helper | Codex | `tools/transparency_log.py` validates and appends reviewed records without signing or submitting transactions. |
 | Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
 | Next | P1 | Designate treasury, grant, and liquidity wallets | Project lead | Define hot wallet, cold wallet, market-making wallet, grant wallet, and signer thresholds. |
 | Next | P1 | Draft trustline/onboarding campaign | Codex | Use copy from the local console and publish a clear wallet guide. |
 | Next | P2 | Build recipient import workflow into console | Codex | Read Google Sheets CSV and produce validated local CSV for dry-run distribution. |
-| Next | P2 | Add transparency log update helper | Codex | Generate or append records safely after reviewed distributions, grants, treasury changes, or liquidity actions. |
+| Next | P2 | Add first wallet designation record | Codex + project lead | Use `tools/transparency_log.py` after treasury, grant, and liquidity wallet roles are approved. |
 
 ## Liquidity Readiness
 
@@ -73,6 +74,20 @@ python3 tools/ogcoin_console.py --check
 
 # JSON status for other automation
 python3 tools/ogcoin_console.py --check --format json
+
+# Validate current public transparency records
+python3 tools/transparency_log.py validate
+
+# Draft a reviewed public transparency record without editing the file
+python3 tools/transparency_log.py add \
+  --id 2026-05-22-example-record \
+  --date 2026-05-22 \
+  --category policy \
+  --status published \
+  --title "Example record" \
+  --summary "Short public summary with no private recipient or payroll data." \
+  --link https://www.opengreencoin.com/transparency.html \
+  --dry-run
 
 # Generate a fresh unsigned home-domain transaction if the domain ever needs to change
 python3 tools/create_home_domain_xdr.py \

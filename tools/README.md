@@ -31,6 +31,7 @@ This toolkit provides Python scripts and utilities for:
 - **`test_fund.py`** - Test and demonstrate Open Build fund functionality
 - **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
 - **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
+- **`transparency_log.py`** - Validate and append reviewed public records to `data/transparency-log.json`
 
 ## Setup
 
@@ -122,6 +123,31 @@ For scheduled checks or CI:
 python3 ogcoin_console.py --check
 python3 ogcoin_console.py --check --format json
 ```
+
+### Transparency Log Helper
+
+Validate the public transparency data:
+
+```bash
+python3 transparency_log.py validate
+python3 transparency_log.py list
+```
+
+Draft a reviewed governance, distribution, grant, treasury, or liquidity record:
+
+```bash
+python3 transparency_log.py add \
+  --id 2026-05-22-example-record \
+  --date 2026-05-22 \
+  --category policy \
+  --status published \
+  --title "Example record" \
+  --summary "Short public summary with no private recipient or payroll data." \
+  --link https://www.opengreencoin.com/transparency.html \
+  --dry-run
+```
+
+Remove `--dry-run` only after the record is approved for public release. The helper only edits JSON and never handles secret keys, signs transactions, or submits XDR.
 
 ## Integration with ForgeWeb
 

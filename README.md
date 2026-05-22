@@ -75,6 +75,30 @@ For a one-shot automation-friendly status report:
 python3 tools/ogcoin_console.py --check
 ```
 
+### Transparency Log Updates
+
+Validate the public transparency JSON before a site push:
+
+```bash
+python3 tools/transparency_log.py validate
+```
+
+Append a reviewed public record with a dry run first:
+
+```bash
+python3 tools/transparency_log.py add \
+  --id 2026-05-22-example-record \
+  --date 2026-05-22 \
+  --category policy \
+  --status published \
+  --title "Example record" \
+  --summary "Short public summary with no private recipient or payroll data." \
+  --link https://www.opengreencoin.com/transparency.html \
+  --dry-run
+```
+
+Remove `--dry-run` only after the record has been reviewed. The helper edits `data/transparency-log.json`; it never signs transactions, submits XDR, or reads secret keys.
+
 ### Manual Development
 
 If you prefer to edit files directly:

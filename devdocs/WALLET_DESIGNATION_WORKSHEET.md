@@ -10,7 +10,7 @@ Use this worksheet before publishing treasury, grant, distribution, or liquidity
 | --- | --- | --- | --- | --- | --- | --- |
 | `treasury` | Holds reserves and funds approved programs | Pending | Pending | Pending | Pending | Pending |
 | `grant` | Sends approved project grants or community allocations | Pending | Pending | Pending | Pending | Pending |
-| `distribution` | Handles opt-in airdrops and small batch distributions | Pending | Pending | Pending | Pending | Pending |
+| `distribution` | Handles opt-in airdrops and small batch distributions | `GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB` | Pending | Pending | Pending | Designated |
 | `liquidity` | Holds market-making funds or liquidity pool inventory | Pending | Pending | Pending | Pending | Pending |
 
 ## Approval Checklist

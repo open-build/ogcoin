@@ -10,6 +10,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 - SEP-1 metadata: live at `https://www.opengreencoin.com/.well-known/stellar.toml`.
 - Asset: `OGC:GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57`.
 - Issuer `home_domain`: set to `www.opengreencoin.com` on-chain in ledger `62686761`.
+- Distribution wallet: `GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB` designated for opt-in airdrops and reviewed distribution batches.
 - Governance policy: interim issuer and treasury policy published at `https://www.opengreencoin.com/governance.html`.
 - Transparency log: public page at `https://www.opengreencoin.com/transparency.html` with machine-readable records in `data/transparency-log.json`.
 - OGC/XLM order book: no bids or asks at last check.
@@ -28,6 +29,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P2 | Add transparency report artifact | Codex | `transparency.html` renders `data/transparency-log.json` for public records and future batch logging. |
 | Done | P2 | Add transparency log update helper | Codex | `tools/transparency_log.py` validates and appends reviewed records without signing or submitting transactions. |
 | Done | P2 | Add wallet designation workflow | Codex | `devdocs/WALLET_DESIGNATION_WORKSHEET.md` and `tools/transparency_log.py designate-account` support public wallet role updates. |
+| Done | P1 | Designate public distribution wallet | Project lead + Codex | `GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB` is published for opt-in airdrops and reviewed distribution batches only. |
 | Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
 | Next | P1 | Designate treasury, grant, and liquidity wallets | Project lead | Choose public `G...` addresses, custody owners, signer thresholds, and routine movement limits using `devdocs/WALLET_DESIGNATION_WORKSHEET.md`. |
 | Next | P1 | Draft trustline/onboarding campaign | Codex | Use copy from the local console and publish a clear wallet guide. |

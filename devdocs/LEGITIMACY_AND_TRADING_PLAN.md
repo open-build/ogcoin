@@ -8,7 +8,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 
 - Asset: `OGC:GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57`
 - Issuer account: active on Stellar public network.
-- Distribution account observed on-chain: `GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB`.
+- Distribution wallet designated: `GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB` for opt-in OGC airdrops and reviewed distribution batches only.
 - Personal/operations account observed on-chain: `GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L`.
 - Supply observed through Horizon: `999999501.3700000` OGC in authorized balances plus `500.0000000` OGC in claimable balances.
 - Liquidity observed through Horizon: no OGC/XLM order book bids or asks and no liquidity pools.

@@ -370,6 +370,14 @@ def find_account(accounts: list[dict[str, Any]], role: str) -> dict[str, Any] | 
     return None
 
 
+def find_observed_account(accounts: list[dict[str, Any]], role: str, address: str) -> dict[str, Any] | None:
+    observed_role = f"{role}_observed"
+    for account in accounts:
+        if account["role"] == observed_role and account.get("address") == address:
+            return account
+    return None
+
+
 def core_wallets_designated(data: dict[str, Any]) -> bool:
     accounts_by_role = {account["role"]: account for account in data["accounts"]}
     for role in CORE_WALLET_ROLES:
@@ -457,6 +465,8 @@ def command_designate_account(args: argparse.Namespace) -> int:
         raise TransparencyLogError(f"Entry id already exists: {entry['id']}")
 
     existing_account = find_account(data["accounts"], role)
+    if not existing_account:
+        existing_account = find_observed_account(data["accounts"], role, args.address)
     if existing_account:
         existing_address = existing_account.get("address")
         if existing_address and existing_address != args.address and not args.replace:
@@ -470,7 +480,8 @@ def command_designate_account(args: argparse.Namespace) -> int:
     data["accounts"] = sort_accounts(data["accounts"])
     data["entries"] = sort_entries([*data["entries"], entry])
     data["updated_at"] = utc_timestamp()
-    update_wallet_open_item(data)
+    if role in CORE_WALLET_ROLES:
+        update_wallet_open_item(data)
     validate_log(data)
 
     if args.dry_run:

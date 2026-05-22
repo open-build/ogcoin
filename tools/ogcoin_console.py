@@ -44,6 +44,8 @@ HORIZON_URL = "https://horizon.stellar.org"
 STELLAR_TOML_URL = f"https://{HOME_DOMAIN}/.well-known/stellar.toml"
 TRUST_URL = f"https://{HOME_DOMAIN}/trust.html"
 GOVERNANCE_URL = f"https://{HOME_DOMAIN}/governance.html"
+TRANSPARENCY_URL = f"https://{HOME_DOMAIN}/transparency.html"
+TRANSPARENCY_DATA_URL = f"https://{HOME_DOMAIN}/data/transparency-log.json"
 STELLAR_EXPERT_ASSET_URL = (
     f"https://stellar.expert/explorer/public/asset/{ASSET_CODE}-{ISSUER}"
 )
@@ -272,6 +274,7 @@ HTML = """<!doctype html>
       <a class="button-link secondary" href="https://www.opengreencoin.com/" target="_blank" rel="noreferrer">Live Site</a>
       <a class="button-link secondary" href="__TRUST_URL__" target="_blank" rel="noreferrer">Trust Page</a>
       <a class="button-link secondary" href="__GOVERNANCE_URL__" target="_blank" rel="noreferrer">Governance</a>
+      <a class="button-link secondary" href="__TRANSPARENCY_URL__" target="_blank" rel="noreferrer">Transparency</a>
       <a class="button-link secondary" href="__STELLAR_EXPERT_ASSET_URL__" target="_blank" rel="noreferrer">StellarExpert</a>
     </section>
 
@@ -625,6 +628,8 @@ def build_status() -> dict[str, Any]:
     toml_text, toml_error = http_text(STELLAR_TOML_URL)
     trust_text, trust_error = http_text(TRUST_URL)
     governance_text, governance_error = http_text(GOVERNANCE_URL)
+    transparency_text, transparency_error = http_text(TRANSPARENCY_URL)
+    transparency_data, transparency_data_error = http_json(TRANSPARENCY_DATA_URL)
 
     asset_record: dict[str, Any] = {}
     if asset_data:
@@ -673,6 +678,25 @@ def build_status() -> dict[str, Any]:
                 "Issuer, supply, signer, treasury, distribution, and liquidity guardrails are published."
                 if governance_text and "Issuer and Treasury Governance" in governance_text
                 else (governance_error or "Deploy governance.html before broad promotion.")
+            ),
+        },
+        {
+            "title": "Transparency log is live",
+            "status": (
+                "good"
+                if transparency_text
+                and "Transparency Log" in transparency_text
+                and transparency_data
+                and transparency_data.get("entries")
+                else "warn"
+            ),
+            "detail": (
+                f"{len(transparency_data.get('entries', []))} public records in the machine-readable log."
+                if transparency_text
+                and "Transparency Log" in transparency_text
+                and transparency_data
+                and transparency_data.get("entries")
+                else (transparency_error or transparency_data_error or "Deploy transparency.html and data/transparency-log.json.")
             ),
         },
         {
@@ -738,6 +762,14 @@ def build_status() -> dict[str, Any]:
             "reachable": bool(governance_text),
             "contains_policy": bool(governance_text and "Issuer and Treasury Governance" in governance_text),
             "error": governance_error,
+        },
+        "transparency_page": {
+            "url": TRANSPARENCY_URL,
+            "data_url": TRANSPARENCY_DATA_URL,
+            "reachable": bool(transparency_text),
+            "contains_log": bool(transparency_text and "Transparency Log" in transparency_text),
+            "record_count": len((transparency_data or {}).get("entries", [])) if transparency_data else 0,
+            "error": transparency_error or transparency_data_error,
         },
         "market": {
             "has_liquidity": bool(bids or asks or pool_count),
@@ -985,6 +1017,7 @@ def render_html() -> bytes:
         .replace("__STELLAR_TOML_URL__", STELLAR_TOML_URL)
         .replace("__TRUST_URL__", TRUST_URL)
         .replace("__GOVERNANCE_URL__", GOVERNANCE_URL)
+        .replace("__TRANSPARENCY_URL__", TRANSPARENCY_URL)
         .replace("__STELLAR_EXPERT_ASSET_URL__", STELLAR_EXPERT_ASSET_URL)
     )
     return html.encode("utf-8")

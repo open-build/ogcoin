@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGCoin Transparency Log | Open Build</title>
+    <meta name="description" content="Public transparency log for OGCoin governance actions, treasury records, airdrops, grants, liquidity activity, and known public accounts.">
+    <link rel="canonical" href="https://www.opengreencoin.com/transparency.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.opengreencoin.com/transparency.html">
+    <meta property="og:title" content="OGCoin Transparency Log">
+    <meta property="og:description" content="Public OGCoin records for governance, distributions, grants, treasury, and liquidity activity.">
+    <meta property="og:image" content="https://www.opengreencoin.com/assets/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1b5fa3',
+                        secondary: '#144a84',
+                        accent: '#f9943b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/buildly-head.js"></script>
+</head>
+<body class="bg-white text-gray-900">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">OGCoin</a>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="roadmap.html" class="text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                    <a href="trust.html" class="text-gray-700 hover:text-primary transition-colors">Trust</a>
+                    <a href="governance.html" class="text-gray-700 hover:text-primary transition-colors">Governance</a>
+                    <a href="transparency.html" class="text-primary font-semibold">Transparency</a>
+                    <a href="airdrop.html" class="text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                    <a href="https://github.com/open-build/ogcoin" target="_blank" class="text-gray-700 hover:text-primary transition-colors">GitHub</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary" aria-expanded="false" aria-label="Open navigation menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Home</a>
+                <a href="roadmap.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                <a href="trust.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Trust</a>
+                <a href="governance.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Governance</a>
+                <a href="transparency.html" class="block py-2 text-primary font-semibold">Transparency</a>
+                <a href="airdrop.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                <a href="https://github.com/open-build/ogcoin" target="_blank" class="block py-2 text-gray-700 hover:text-primary transition-colors">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-gradient text-white py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="inline-flex items-center bg-white/15 border border-white/25 rounded-md px-3 py-1 text-sm font-semibold mb-6">
+                    Public records
+                </p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-5">Transparency Log</h1>
+                <p class="text-xl text-blue-100 max-w-4xl">
+                    This log records OGCoin governance actions, policy publications, public account roles, future airdrops, grant batches, treasury movement, and liquidity activity. It is designed to be readable by people and available as JSON for tooling.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Entries</p>
+                        <p id="entryCount" class="text-3xl font-bold text-primary mt-2">Loading</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Known Accounts</p>
+                        <p id="accountCount" class="text-3xl font-bold text-primary mt-2">Loading</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Last Updated</p>
+                        <p id="updatedAt" class="text-lg font-bold text-gray-900 mt-2">Loading</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Raw Data</p>
+                        <p class="mt-2"><a class="text-primary font-semibold hover:underline" href="data/transparency-log.json">transparency-log.json</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-3">Record Entries</h2>
+                        <p class="text-gray-600 max-w-3xl">Confirmed on-chain transactions use ledger and transaction-hash links. Policy and operating records use public page links until they correspond to an on-chain transaction.</p>
+                    </div>
+                    <a href="governance.html" class="inline-flex justify-center bg-primary text-white px-5 py-3 rounded-md font-semibold hover:bg-secondary transition-colors">Governance Policy</a>
+                </div>
+                <div class="overflow-x-auto border border-gray-200 rounded-lg">
+                    <table class="min-w-full text-sm">
+                        <thead class="bg-gray-50 text-left text-gray-600">
+                            <tr>
+                                <th class="px-4 py-3 font-semibold">Date</th>
+                                <th class="px-4 py-3 font-semibold">Category</th>
+                                <th class="px-4 py-3 font-semibold">Record</th>
+                                <th class="px-4 py-3 font-semibold">Amount</th>
+                                <th class="px-4 py-3 font-semibold">Ledger / Hash</th>
+                            </tr>
+                        </thead>
+                        <tbody id="entriesBody" class="divide-y divide-gray-200 bg-white">
+                            <tr><td class="px-4 py-4 text-gray-500" colspan="5">Loading transparency log...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-6">Known Public Accounts</h2>
+                <div id="accountsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6 text-gray-500">Loading account records...</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">Reporting Rules</h2>
+                        <ul id="reportingRules" class="space-y-3 text-gray-700">
+                            <li>Loading reporting rules...</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">Open Items</h2>
+                        <ul id="openItems" class="space-y-3 text-gray-700">
+                            <li>Loading open items...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">OGCoin</h3>
+                    <p class="text-gray-400 max-w-md">A Stellar mainnet asset for open source funding experiments and developer education programs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Project</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="trust.html" class="text-gray-400 hover:text-white transition-colors">Trust</a></li>
+                        <li><a href="governance.html" class="text-gray-400 hover:text-white transition-colors">Governance</a></li>
+                        <li><a href="transparency.html" class="text-gray-400 hover:text-white transition-colors">Transparency</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Verify</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.opengreencoin.com/.well-known/stellar.toml" class="text-gray-400 hover:text-white transition-colors">stellar.toml</a></li>
+                        <li><a href="data/transparency-log.json" class="text-gray-400 hover:text-white transition-colors">Transparency JSON</a></li>
+                        <li><a href="https://github.com/open-build/ogcoin" class="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <p>&copy; 2026 Open Build. Records are published for transparency and may lag pending human review, privacy screening, or chain finality.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function text(value) {
+            return value === null || value === undefined || value === '' ? 'Pending' : String(value);
+        }
+
+        function escapeHtml(value) {
+            return text(value).replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[char]));
+        }
+
+        function accountShort(address) {
+            if (!address) return 'Pending designation';
+            return `${address.slice(0, 8)}...${address.slice(-8)}`;
+        }
+
+        function linkList(links) {
+            if (!links || links.length === 0) return '';
+            return links.map((href, index) => `<a class="text-primary hover:underline" href="${escapeHtml(href)}" target="_blank" rel="noreferrer">Link ${index + 1}</a>`).join('<span class="text-gray-300 px-2">|</span>');
+        }
+
+        async function loadTransparencyLog() {
+            const response = await fetch('data/transparency-log.json', { cache: 'no-store' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+
+            document.getElementById('entryCount').textContent = data.entries.length;
+            document.getElementById('accountCount').textContent = data.accounts.length;
+            document.getElementById('updatedAt').textContent = new Date(data.updated_at).toLocaleString();
+
+            document.getElementById('entriesBody').innerHTML = data.entries.map((entry) => `
+                <tr>
+                    <td class="px-4 py-4 align-top font-medium text-gray-900">${escapeHtml(entry.date)}</td>
+                    <td class="px-4 py-4 align-top"><span class="inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-800">${escapeHtml(entry.category)}</span></td>
+                    <td class="px-4 py-4 align-top">
+                        <div class="font-semibold text-gray-900">${escapeHtml(entry.title)}</div>
+                        <div class="text-gray-600 mt-1">${escapeHtml(entry.summary)}</div>
+                        <div class="text-xs text-gray-500 mt-2">${escapeHtml(entry.status)}${entry.account ? ` | ${escapeHtml(accountShort(entry.account))}` : ''}</div>
+                        <div class="text-xs mt-2">${linkList(entry.links)}</div>
+                    </td>
+                    <td class="px-4 py-4 align-top font-mono text-gray-700">${escapeHtml(entry.amount_ogc)} OGC</td>
+                    <td class="px-4 py-4 align-top text-sm">
+                        <div>Ledger: ${escapeHtml(entry.ledger)}</div>
+                        <div class="font-mono break-all text-xs text-gray-600">${escapeHtml(entry.transaction_hash)}</div>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.getElementById('accountsGrid').innerHTML = data.accounts.map((account) => `
+                <div class="bg-white border border-gray-200 rounded-lg p-6">
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                        <h3 class="text-xl font-bold text-gray-900">${escapeHtml(account.role.replaceAll('_', ' '))}</h3>
+                        <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600">${escapeHtml(account.status)}</span>
+                    </div>
+                    <p class="font-mono text-sm break-all text-gray-700 mb-3">${escapeHtml(account.address)}</p>
+                    <p class="text-gray-600">${escapeHtml(account.policy)}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('reportingRules').innerHTML = data.reporting_rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join('');
+            document.getElementById('openItems').innerHTML = data.open_items.map((item) => `
+                <li><span class="font-semibold">${escapeHtml(item.priority)}</span> ${escapeHtml(item.title)} <span class="text-gray-500">(${escapeHtml(item.status)})</span></li>
+            `).join('');
+        }
+
+        loadTransparencyLog().catch((error) => {
+            document.getElementById('entriesBody').innerHTML = `<tr><td class="px-4 py-4 text-red-700" colspan="5">Unable to load transparency log: ${error.message}</td></tr>`;
+        });
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

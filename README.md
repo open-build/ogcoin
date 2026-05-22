@@ -20,6 +20,9 @@ ogcoin/
 ├── index.html              # Main homepage
 ├── trust.html              # Public verification, risk, and governance page
 ├── governance.html         # Issuer and treasury governance policy
+├── transparency.html       # Public transparency log viewer
+├── data/
+│   └── transparency-log.json # Machine-readable transparency records
 ├── roadmap.html            # Development roadmap and progress tracking
 ├── airdrop.html            # Airdrop pilot and trustline instructions
 ├── css/

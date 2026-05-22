@@ -1,0 +1,123 @@
+{
+  "schema_version": "0.1",
+  "updated_at": "2026-05-22T17:54:00Z",
+  "network": {
+    "name": "Stellar Public Network",
+    "passphrase": "Public Global Stellar Network ; September 2015"
+  },
+  "asset": {
+    "code": "OGC",
+    "issuer": "GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57",
+    "home_domain": "www.opengreencoin.com",
+    "stellar_toml": "https://www.opengreencoin.com/.well-known/stellar.toml",
+    "stellar_expert": "https://stellar.expert/explorer/public/asset/OGC-GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57"
+  },
+  "accounts": [
+    {
+      "role": "issuer",
+      "address": "GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57",
+      "status": "active",
+      "policy": "Cold account for issuer configuration and governance actions only."
+    },
+    {
+      "role": "distribution_observed",
+      "address": "GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB",
+      "status": "observed_on_chain",
+      "policy": "Candidate distribution account. Final wallet role and signer thresholds still need project approval."
+    },
+    {
+      "role": "operations_observed",
+      "address": "GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L",
+      "status": "observed_on_chain",
+      "policy": "Candidate operations account. Final wallet role and signer thresholds still need project approval."
+    },
+    {
+      "role": "treasury",
+      "address": null,
+      "status": "pending_designation",
+      "policy": "Must be published before public treasury programs or larger grant activity."
+    },
+    {
+      "role": "liquidity",
+      "address": null,
+      "status": "pending_designation",
+      "policy": "Must be published before OGC/XLM offers or liquidity pool activity."
+    }
+  ],
+  "entries": [
+    {
+      "id": "2026-05-22-home-domain",
+      "date": "2026-05-22",
+      "category": "governance",
+      "status": "confirmed_on_chain",
+      "title": "Issuer home domain set",
+      "summary": "Set issuer home_domain to www.opengreencoin.com so wallets and explorers can discover the public SEP-1 metadata.",
+      "account_role": "issuer",
+      "account": "GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57",
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": "8b17b271d53bd8f9df817648acd3aa80169005d0be9a032bcbe7467c06f3eb01",
+      "ledger": 62686761,
+      "links": [
+        "https://stellar.expert/explorer/public/tx/8b17b271d53bd8f9df817648acd3aa80169005d0be9a032bcbe7467c06f3eb01"
+      ]
+    },
+    {
+      "id": "2026-05-22-trust-page",
+      "date": "2026-05-22",
+      "category": "policy",
+      "status": "published",
+      "title": "Trust, risk, and governance disclosures published",
+      "summary": "Published public verification details, risk boundaries, governance status, liquidity readiness, and payroll limitations.",
+      "account_role": null,
+      "account": null,
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/trust.html"
+      ]
+    },
+    {
+      "id": "2026-05-22-governance-policy",
+      "date": "2026-05-22",
+      "category": "policy",
+      "status": "published",
+      "title": "Interim issuer and treasury governance policy published",
+      "summary": "Published issuer, supply, signer, treasury, distribution, liquidity, and review guardrails for the OGC pilot period.",
+      "account_role": null,
+      "account": null,
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/governance.html"
+      ]
+    }
+  ],
+  "open_items": [
+    {
+      "priority": "P0",
+      "title": "Designate treasury, grant, and liquidity wallets",
+      "status": "pending"
+    },
+    {
+      "priority": "P0",
+      "title": "Harden issuer signer policy before fixed-supply claims",
+      "status": "pending"
+    },
+    {
+      "priority": "P1",
+      "title": "Publish liquidity policy before OGC/XLM market activity",
+      "status": "pending"
+    }
+  ],
+  "reporting_rules": [
+    "Record every OGC distribution batch with date, purpose, amount, account, transaction hash, and approver.",
+    "Record every grant allocation with project name, eligibility basis, amount, account, transaction hash, and public summary.",
+    "Record every liquidity action with wallet, amount, counter asset, transaction hash, and policy reference.",
+    "Do not publish secret keys, seed phrases, private memos, payroll personal data, or private recipient information."
+  ]
+}

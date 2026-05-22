@@ -15,6 +15,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 - Stellar metadata status: `/.well-known/stellar.toml` is live and the issuer account has `home_domain=www.opengreencoin.com`.
 - Public disclosure status: `trust.html` now documents verification details, risk boundaries, governance status, liquidity readiness, and payroll limitations.
 - Governance status: `governance.html` now publishes interim issuer, supply, signer, treasury, distribution, and liquidity guardrails.
+- Transparency status: `transparency.html` and `data/transparency-log.json` now publish public governance records and provide a format for future distributions, grants, treasury movement, and liquidity activity.
 
 ## Legitimacy Checklist
 
@@ -45,7 +46,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
    Explain that early markets may be thin, volatile, and hard to exit. Do not imply a stable price unless there is an actual redemption or reserve program.
 
 3. Add transparency reporting.
-   Publish treasury balances, distribution wallets, liquidity wallet addresses, grant disbursements, and any market-making policy.
+   Done at the starter level with `transparency.html` and `data/transparency-log.json`. Keep it current with treasury balances, distribution wallets, liquidity wallet addresses, grant disbursements, and any market-making policy.
 
 4. Test path payments before public launch.
    Verify OGC/XLM swaps from Freighter, StellarTerm, LOBSTR, and Stellar Lab using small amounts only.
@@ -67,7 +68,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 ## Immediate Next Steps
 
 1. Review `governance.html` with counsel and project leadership.
-2. Create a distribution log format for airdrops, grants, and future contributor rewards.
-3. Designate treasury, grant, and liquidity wallets before using them publicly.
+2. Designate treasury, grant, and liquidity wallets before using them publicly.
+3. Add a helper for updating `data/transparency-log.json` after reviewed transactions.
 4. Decide whether to start OGC/XLM liquidity with tiny offers or a small liquidity pool after treasury limits are approved.
 5. Test OGC/XLM swaps through Stellar Lab, StellarTerm, LOBSTR, and Freighter using small amounts only.

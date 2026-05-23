@@ -82,13 +82,20 @@ python3 tools/ogcoin_console.py --check
 Use the non-custodial next-step helper to prepare trustline campaigns, wallet designation commands, and tiny liquidity readiness checks:
 
 ```bash
+python3 tools/create_role_wallets.py
 python3 tools/ogcoin_next_steps.py status
 python3 tools/ogcoin_next_steps.py trustline-campaign --target 25
 python3 tools/ogcoin_next_steps.py wallet-designation --treasury G... --grant G... --liquidity G...
 python3 tools/ogcoin_next_steps.py liquidity-checklist --online
 ```
 
-The helper prints reviewable commands only. It never reads secret keys, signs transactions, or submits anything to Stellar. See `devdocs/NEXT_STEPS_RUNBOOK.md`.
+The helpers print reviewable commands only. They do not fund accounts, sign transactions, or submit anything to Stellar. `create_role_wallets.py` writes public addresses to Markdown and private seeds to a gitignored local file for immediate secure custody. See `devdocs/NEXT_STEPS_RUNBOOK.md`.
+
+To run the full next-step command set and write a Markdown outcome report:
+
+```bash
+python3 tools/run_next_steps_report.py
+```
 
 ### Transparency Log Updates
 

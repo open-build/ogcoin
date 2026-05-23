@@ -35,6 +35,14 @@ python3 tools/ogcoin_console.py
 
 Open `http://localhost:8787/`, paste the CSV, enable online checks, and export the ready rows for dry-run review.
 
+To run the command set and write the latest outcome:
+
+```bash
+python3 tools/run_next_steps_report.py
+```
+
+The report is written to `devdocs/NEXT_STEPS_OUTCOME.md`.
+
 ## 2. Designate Treasury, Grant, And Liquidity Wallets
 
 Goal: three separate public Stellar accounts, each with a clear role and operating limit.
@@ -52,13 +60,17 @@ Recommended split:
 Draft the transparency commands:
 
 ```bash
+python3 tools/create_role_wallets.py
+
 python3 tools/ogcoin_next_steps.py wallet-designation \
   --treasury G...TREASURY_PUBLIC \
   --grant G...GRANT_PUBLIC \
   --liquidity G...LIQUIDITY_PUBLIC
 ```
 
-The helper prints `tools/transparency_log.py designate-account` commands with `--dry-run`. Run those first, review the proposed JSON, then remove `--dry-run` only after the wallet roles are approved.
+`create_role_wallets.py` writes public addresses to `devdocs/GENERATED_ROLE_WALLETS.md` and private seed keys to `.ogcoin-secrets/`. The seed file is gitignored, but it is still plaintext. Move those seeds into secure custody and delete the plaintext file.
+
+The next-step helper prints `tools/transparency_log.py designate-account` commands with `--dry-run`. Run those first, review the proposed JSON, then remove `--dry-run` only after the wallet roles are approved.
 
 After applying approved designations:
 

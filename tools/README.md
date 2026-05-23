@@ -31,8 +31,10 @@ This toolkit provides Python scripts and utilities for:
 - **`test_fund.py`** - Test and demonstrate Open Build fund functionality
 - **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
 - **`create_issuer_signer_xdr.py`** - Build an unsigned issuer signer and threshold hardening XDR
+- **`create_role_wallets.py`** - Generate public role wallet addresses and a local gitignored seed file
 - **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
 - **`ogcoin_next_steps.py`** - Non-custodial helper for trustline campaigns, wallet designation commands, and tiny liquidity readiness checks
+- **`run_next_steps_report.py`** - Run next-step commands and write `devdocs/NEXT_STEPS_OUTCOME.md`
 - **`transparency_log.py`** - Validate and append reviewed public records to `data/transparency-log.json`
 
 ## Setup
@@ -150,13 +152,20 @@ python3 ogcoin_console.py --check --format json
 Prepare the remaining blocker work without handling secret keys:
 
 ```bash
+python3 create_role_wallets.py
 python3 ogcoin_next_steps.py status
 python3 ogcoin_next_steps.py trustline-campaign --target 25
 python3 ogcoin_next_steps.py wallet-designation --treasury G... --grant G... --liquidity G...
 python3 ogcoin_next_steps.py liquidity-checklist --online
 ```
 
-Use `../devdocs/NEXT_STEPS_RUNBOOK.md` for the full operating sequence.
+`create_role_wallets.py` writes public addresses to Markdown and private seeds to `.ogcoin-secrets/`, which is gitignored. Move the seeds into secure custody and delete the plaintext seed file. Use `../devdocs/NEXT_STEPS_RUNBOOK.md` for the full operating sequence.
+
+Write a full outcome report:
+
+```bash
+python3 run_next_steps_report.py
+```
 
 ### Transparency Log Helper
 

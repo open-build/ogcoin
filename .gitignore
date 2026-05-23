@@ -11,6 +11,7 @@
 *.key
 **/secret_*
 **/private_*
+.ogcoin-secrets/
 
 # Python
 __pycache__/

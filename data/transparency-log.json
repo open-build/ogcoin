@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-05-23T00:54:14Z",
+  "updated_at": "2026-05-23T16:13:47Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -20,16 +20,22 @@
       "policy": "Cold account for issuer configuration and governance actions only."
     },
     {
+      "role": "issuer_signer",
+      "address": "GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L",
+      "status": "designated",
+      "policy": "Approved issuer co-signer for high-threshold OGC issuer governance actions. Not approved as treasury, payroll, or liquidity wallet."
+    },
+    {
       "role": "treasury",
-      "address": null,
-      "status": "pending_designation",
-      "policy": "Must be published before public treasury programs or larger grant activity."
+      "address": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
+      "status": "designated",
+      "policy": "Cold or low-frequency account for approved OGCoin treasury activity; no routine airdrops, payroll, or liquidity operations."
     },
     {
       "role": "grant",
-      "address": null,
-      "status": "pending_designation",
-      "policy": "Must be published before recurring grant allocations or project disbursements."
+      "address": "GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV",
+      "status": "designated",
+      "policy": "Public grant disbursement account for approved open source project allocations; no issuer configuration, payroll, or liquidity operations."
     },
     {
       "role": "distribution",
@@ -39,15 +45,9 @@
     },
     {
       "role": "liquidity",
-      "address": null,
-      "status": "pending_designation",
-      "policy": "Must be published before OGC/XLM offers or liquidity pool activity."
-    },
-    {
-      "role": "issuer_signer",
-      "address": "GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L",
+      "address": "GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC",
       "status": "designated",
-      "policy": "Approved issuer co-signer for high-threshold OGC issuer governance actions. Not approved as treasury, payroll, or liquidity wallet."
+      "policy": "Public liquidity test account for policy-limited OGC/XLM market activity; must stay within approved exposure limits and public reconciliation rules."
     }
   ],
   "entries": [
@@ -121,6 +121,24 @@
       ]
     },
     {
+      "id": "2026-05-23-grant-wallet-designated",
+      "date": "2026-05-23",
+      "category": "governance",
+      "status": "published",
+      "title": "Grant wallet designated",
+      "summary": "Designated the public grant wallet for approved open source project and community allocations.",
+      "account_role": "grant",
+      "account": "GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV",
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/governance.html",
+        "https://www.opengreencoin.com/transparency.html"
+      ]
+    },
+    {
       "id": "2026-05-23-issuer-signer-hardening",
       "date": "2026-05-23",
       "category": "governance",
@@ -155,6 +173,42 @@
       ]
     },
     {
+      "id": "2026-05-23-liquidity-wallet-designated",
+      "date": "2026-05-23",
+      "category": "governance",
+      "status": "published",
+      "title": "Liquidity wallet designated",
+      "summary": "Designated the public liquidity wallet for policy-limited OGC/XLM test activity.",
+      "account_role": "liquidity",
+      "account": "GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC",
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/governance.html",
+        "https://www.opengreencoin.com/transparency.html"
+      ]
+    },
+    {
+      "id": "2026-05-23-treasury-wallet-designated",
+      "date": "2026-05-23",
+      "category": "governance",
+      "status": "published",
+      "title": "Treasury wallet designated",
+      "summary": "Designated the public treasury wallet for approved OGCoin reserve and program funding activity.",
+      "account_role": "treasury",
+      "account": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/governance.html",
+        "https://www.opengreencoin.com/transparency.html"
+      ]
+    },
+    {
       "id": "2026-05-23-trustline-onboarding-guide",
       "date": "2026-05-23",
       "category": "policy",
@@ -176,7 +230,7 @@
     {
       "priority": "P0",
       "title": "Designate treasury, grant, and liquidity wallets",
-      "status": "pending"
+      "status": "done"
     },
     {
       "priority": "P0",

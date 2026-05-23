@@ -1,8 +1,8 @@
 # OGCoin Next Steps Outcome
 
-Generated: `2026-05-23T14:41:35Z`
-Summary status: `blocked`
-Wallet addresses: `not provided`
+Generated: `2026-05-23T16:15:18Z`
+Summary status: `ready for review`
+Wallet addresses: `provided`
 
 ## Outcome Summary
 
@@ -12,7 +12,7 @@ Wallet addresses: `not provided`
 - Next-step status: `ok` (exit 0)
 - Trustline campaign plan: `ok` (exit 0)
 - Wallet designation dry-run: `ok` (exit 0)
-- Tiny liquidity readiness: `blocked` (expected blocker)
+- Tiny liquidity readiness: `ok` (exit 0)
 
 ## Important Things To Remember
 
@@ -49,7 +49,7 @@ Output:
 ```text
 # OGCoin Status Check
 
-- Checked: 2026-05-23T14:41:31.478828+00:00
+- Checked: 2026-05-23T16:15:12.970072+00:00
 - Issuer home_domain: `www.opengreencoin.com`
 - Authorized trustlines: `2`
 - OGC/XLM bids: `0`
@@ -86,7 +86,7 @@ Command:
 Output:
 
 ```text
-OK: /Users/greglind/Projects/open-build/ogcoin/data/transparency-log.json is valid (7 entries, 6 accounts).
+OK: /Users/greglind/Projects/open-build/ogcoin/data/transparency-log.json is valid (10 entries, 6 accounts).
 ```
 
 ### Public account roles
@@ -105,10 +105,10 @@ Output:
 ```text
 issuer                 active                 GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57
 issuer_signer          designated             GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L
-treasury               pending_designation    pending
-grant                  pending_designation    pending
+treasury               designated             GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F
+grant                  designated             GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV
 distribution           designated             GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB
-liquidity              pending_designation    pending
+liquidity              designated             GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC
 ```
 
 ### Next-step status
@@ -129,9 +129,9 @@ Output:
 - issuer: active - GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57
 - issuer_signer: designated - GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L
 - distribution: designated - GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB
-- treasury: pending_designation - pending
-- grant: pending_designation - pending
-- liquidity: pending_designation - pending
+- treasury: designated - GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F
+- grant: designated - GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV
+- liquidity: designated - GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC
 
 ## Next Safe Actions
 1. Share https://www.opengreencoin.com/trustline.html with known testers and collect public G... addresses only.
@@ -183,7 +183,7 @@ python3 tools/ogcoin_console.py --check
 Command:
 
 ```bash
-/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 tools/ogcoin_next_steps.py wallet-designation --date 2026-05-23
+/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 tools/ogcoin_next_steps.py wallet-designation --date 2026-05-23 --treasury GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F --grant GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV --liquidity GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC
 ```
 
 Output:
@@ -193,22 +193,36 @@ Output:
 - issuer: active - GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57
 - issuer_signer: designated - GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L
 - distribution: designated - GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB
-- treasury: pending_designation - pending
-- grant: pending_designation - pending
-- liquidity: pending_designation - pending
+- treasury: designated - GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F
+- grant: designated - GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV
+- liquidity: designated - GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC
 
-Pass --treasury, --grant, and/or --liquidity with public G... accounts to draft commands.
+## Review Commands
+Run each command first as printed. Remove --dry-run only after review.
+
+# treasury
+python3 tools/transparency_log.py designate-account --role treasury --address GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F --date 2026-05-23 --policy 'Cold or low-frequency account for approved OGCoin treasury activity; no routine airdrops, payroll, or liquidity operations.' --summary 'Designated the public treasury wallet for approved OGCoin reserve and program funding activity.' --dry-run
+
+# grant
+python3 tools/transparency_log.py designate-account --role grant --address GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV --date 2026-05-23 --policy 'Public grant disbursement account for approved open source project allocations; no issuer configuration, payroll, or liquidity operations.' --summary 'Designated the public grant wallet for approved open source project and community allocations.' --dry-run
+
+# liquidity
+python3 tools/transparency_log.py designate-account --role liquidity --address GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC --date 2026-05-23 --policy 'Public liquidity test account for policy-limited OGC/XLM market activity; must stay within approved exposure limits and public reconciliation rules.' --summary 'Designated the public liquidity wallet for policy-limited OGC/XLM test activity.' --dry-run
+
+After applying approved designations:
+python3 tools/transparency_log.py validate
+git diff data/transparency-log.json
 ```
 
 ### Tiny liquidity readiness
 
-- Status: `blocked`
-- Exit code: `1`
+- Status: `ok`
+- Exit code: `0`
 
 Command:
 
 ```bash
-/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 tools/ogcoin_next_steps.py liquidity-checklist --date 2026-05-23 --ogc-amount 1 --xlm-exposure 1 --online
+/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 tools/ogcoin_next_steps.py liquidity-checklist --date 2026-05-23 --ogc-amount 1 --xlm-exposure 1 --wallet GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC
 ```
 
 Output:
@@ -216,6 +230,22 @@ Output:
 ```text
 ## Tiny OGC/XLM Liquidity Checklist
 Policy: https://www.opengreencoin.com/liquidity-policy.html
-Blocked: no liquidity wallet is designated yet.
-Run wallet-designation after choosing a separate public G... account.
+Wallet: GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC
+Maximum proposed test amount: 1 OGC
+Maximum proposed XLM exposure: 1 XLM
+
+Preconditions:
+- Treasury/legal approval has named the maximum OGC and XLM exposure.
+- Liquidity wallet is funded only with the approved tiny test amounts.
+- Use one test path first: a small SDEX offer or a small liquidity-pool deposit, not both.
+- Do not promote OGC as liquid, redeemable, or investment-like.
+
+Conservative first test:
+- Use Stellar Lab on public network from the liquidity wallet.
+- Create one Manage Sell Offer or Manage Buy Offer for OGC/XLM with the approved price and amount.
+- Sign with the liquidity wallet only. Do not use the issuer for market activity.
+- Submit, copy the transaction hash and ledger, then record it publicly.
+
+Post-settlement record template:
+python3 tools/transparency_log.py add --id 2026-05-23-tiny-ogc-xlm-liquidity-test --date 2026-05-23 --category liquidity --status confirmed_on_chain --title 'Tiny OGC/XLM liquidity test' --summary 'Executed a policy-limited tiny OGC/XLM liquidity test from the designated liquidity wallet.' --account-role liquidity --account GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC --amount-ogc 1 --counter-asset XLM --tx TX_HASH --ledger LEDGER_NUMBER --link https://www.opengreencoin.com/liquidity-policy.html --link https://stellar.expert/explorer/public/tx/TX_HASH --dry-run
 ```

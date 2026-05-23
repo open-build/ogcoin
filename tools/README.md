@@ -32,6 +32,7 @@ This toolkit provides Python scripts and utilities for:
 - **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
 - **`create_issuer_signer_xdr.py`** - Build an unsigned issuer signer and threshold hardening XDR
 - **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
+- **`ogcoin_next_steps.py`** - Non-custodial helper for trustline campaigns, wallet designation commands, and tiny liquidity readiness checks
 - **`transparency_log.py`** - Validate and append reviewed public records to `data/transparency-log.json`
 
 ## Setup
@@ -143,6 +144,19 @@ For scheduled checks or CI:
 python3 ogcoin_console.py --check
 python3 ogcoin_console.py --check --format json
 ```
+
+### Next-Step Operations
+
+Prepare the remaining blocker work without handling secret keys:
+
+```bash
+python3 ogcoin_next_steps.py status
+python3 ogcoin_next_steps.py trustline-campaign --target 25
+python3 ogcoin_next_steps.py wallet-designation --treasury G... --grant G... --liquidity G...
+python3 ogcoin_next_steps.py liquidity-checklist --online
+```
+
+Use `../devdocs/NEXT_STEPS_RUNBOOK.md` for the full operating sequence.
 
 ### Transparency Log Helper
 

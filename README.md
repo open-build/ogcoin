@@ -77,6 +77,19 @@ For a one-shot automation-friendly status report:
 python3 tools/ogcoin_console.py --check
 ```
 
+### Next-Step Operations
+
+Use the non-custodial next-step helper to prepare trustline campaigns, wallet designation commands, and tiny liquidity readiness checks:
+
+```bash
+python3 tools/ogcoin_next_steps.py status
+python3 tools/ogcoin_next_steps.py trustline-campaign --target 25
+python3 tools/ogcoin_next_steps.py wallet-designation --treasury G... --grant G... --liquidity G...
+python3 tools/ogcoin_next_steps.py liquidity-checklist --online
+```
+
+The helper prints reviewable commands only. It never reads secret keys, signs transactions, or submits anything to Stellar. See `devdocs/NEXT_STEPS_RUNBOOK.md`.
+
 ### Transparency Log Updates
 
 Validate the public transparency JSON before a site push:

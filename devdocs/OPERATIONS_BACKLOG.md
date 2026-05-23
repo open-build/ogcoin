@@ -1,6 +1,6 @@
 # OGCoin Operations Backlog
 
-Last updated: 2026-05-22
+Last updated: 2026-05-23
 
 This is the working list for getting OGCoin from "asset exists" to "credible, distributable, and responsibly tradable." Keep transaction signing, treasury movement, payroll decisions, and liquidity commitments behind explicit human approval.
 
@@ -16,6 +16,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 - Transparency log: public page at `https://www.opengreencoin.com/transparency.html` with machine-readable records in `data/transparency-log.json`.
 - Trustline guide: public onboarding page at `https://www.opengreencoin.com/trustline.html`.
 - Liquidity policy: public guardrails page at `https://www.opengreencoin.com/liquidity-policy.html`.
+- Next-step runbook: `devdocs/NEXT_STEPS_RUNBOOK.md` with `tools/ogcoin_next_steps.py` for trustline, wallet, and liquidity preparation.
 - OGC/XLM order book: no bids or asks at last check.
 - Liquidity pools: none at last check.
 - Trustlines: low adoption; build slowly and transparently.
@@ -37,6 +38,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P0 | Harden issuer signer policy | Human signer + Codex | Transaction `f4deef4595aef811db59d173df37714b232886954b8dc885579b8a0095d12ca0`, ledger `62691902`, set low `1`, medium `2`, high `2`, with issuer and personal signer weight `1` each. |
 | Done | P1 | Publish trustline onboarding guide | Codex | `trustline.html` gives wallet-specific setup paths for LOBSTR, Freighter, StellarTerm, and Stellar Lab. |
 | Done | P1 | Publish liquidity policy before market activity | Codex | `liquidity-policy.html` defines wallet, exposure, pause, and transparency requirements before OGC/XLM activity. |
+| Done | P1 | Add next-step runbook and prep helper | Codex | `devdocs/NEXT_STEPS_RUNBOOK.md` and `tools/ogcoin_next_steps.py` turn trustline growth, wallet designation, and liquidity readiness into repeatable local commands. |
 | Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
 | Next | P1 | Designate treasury, grant, and liquidity wallets | Project lead | Choose public `G...` addresses, custody owners, signer thresholds, and routine movement limits using `devdocs/WALLET_DESIGNATION_WORKSHEET.md`. |
 | Next | P1 | Grow opt-in trustlines to 10-25 testers | Project lead + Codex | Share `trustline.html`, collect public Stellar addresses only, then validate with the local console. |

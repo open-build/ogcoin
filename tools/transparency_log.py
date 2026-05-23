@@ -16,6 +16,11 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
+try:
+    from stellar_sdk import StrKey
+except Exception:  # pragma: no cover - optional dependency fallback
+    StrKey = None
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_LOG_PATH = PROJECT_ROOT / "data" / "transparency-log.json"
@@ -164,6 +169,8 @@ def validate_public_account(value: Any, label: str) -> None:
     require_string(value, label)
     if not PUBLIC_ACCOUNT_RE.fullmatch(value):
         raise TransparencyLogError(f"{label} must look like a Stellar public account")
+    if StrKey and not StrKey.is_valid_ed25519_public_key(value):
+        raise TransparencyLogError(f"{label} has an invalid Stellar public account checksum")
 
 
 def validate_entry(entry: Any, label: str) -> None:

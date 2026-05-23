@@ -10,15 +10,16 @@ Current state:
 
 - Issuer: `GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57`
 - Master signer weight: `1`
-- Low / medium / high thresholds: `0 / 0 / 0`
-- Native balance observed: about `2.9996 XLM`
+- Personal co-signer: `GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L`
+- Low / medium / high thresholds: `1 / 2 / 2`
+- Hardening transaction: `f4deef4595aef811db59d173df37714b232886954b8dc885579b8a0095d12ca0`, ledger `62691902`
 
-Target for the next safe step:
+Completed hardening step:
 
-- Add two controlled public signer accounts with weight `1` each.
-- Keep master weight at `1` for now.
+- Added the personal account as an issuer co-signer with weight `1`.
+- Kept master weight at `1`.
 - Set thresholds to `low=1`, `medium=2`, `high=2`.
-- Treat this as 2-of-3 issuer control. This hardens governance, but it does not make the supply fixed.
+- Treat this as 2-of-2 issuer control. This hardens governance, but it does not make the supply fixed.
 
 Why this comes first:
 
@@ -109,11 +110,8 @@ Minimum readiness target:
 
 ## Order Of Work
 
-1. Choose two issuer signer public accounts.
-2. Generate and review the issuer signer hardening XDR.
-3. Sign and submit the XDR with the currently authorized issuer signer.
-4. Verify issuer signer state on Horizon and in the local console.
-5. Publish the signer hardening transparency record.
-6. Run a trustline onboarding campaign.
-7. Designate treasury, grant, and liquidity wallets.
-8. Publish a liquidity policy before any OGC/XLM market activity.
+1. Run a trustline onboarding campaign.
+2. Designate treasury, grant, and liquidity wallets.
+3. Publish a liquidity policy before any OGC/XLM market activity.
+4. Create one tiny OGC/XLM test path only after liquidity wallet and limits are approved.
+5. Record each approved distribution or liquidity action in the transparency log.

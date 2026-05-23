@@ -645,6 +645,15 @@ def build_status() -> dict[str, Any]:
     thresholds = issuer_data.get("thresholds", {}) if issuer_data else {}
     signers = issuer_data.get("signers", []) if issuer_data else []
     master_signer = next((signer for signer in signers if signer.get("key") == ISSUER), {})
+    master_weight = int(master_signer.get("weight") or 0)
+    high_threshold = int(thresholds.get("high_threshold") or 0)
+    total_signer_weight = sum(int(signer.get("weight") or 0) for signer in signers)
+    active_signer_count = sum(1 for signer in signers if int(signer.get("weight") or 0) > 0)
+    issuer_hardened = (
+        active_signer_count >= 2
+        and high_threshold > master_weight
+        and total_signer_weight >= high_threshold
+    )
 
     readiness = [
         {
@@ -711,11 +720,15 @@ def build_status() -> dict[str, Any]:
         },
         {
             "title": "Issuer supply governance",
-            "status": "warn" if master_signer.get("weight", 0) else "good",
+            "status": "good" if issuer_hardened or master_weight == 0 else "warn",
             "detail": (
-                f"Master signer weight {master_signer.get('weight', 0)}, "
-                f"high threshold {thresholds.get('high_threshold', 'unknown')}. "
-                "Interim policy is published; complete signer hardening before making fixed-supply claims."
+                f"Master signer weight {master_weight}, high threshold {high_threshold}, "
+                f"{active_signer_count} active signer(s), total signer weight {total_signer_weight}. "
+                + (
+                    "Issuer signer policy is hardened; do not make fixed-supply claims until an issuer-lock or supply policy is separately approved."
+                    if issuer_hardened
+                    else "Interim policy is published; complete signer hardening before making fixed-supply claims."
+                )
             ),
         },
         {
@@ -734,7 +747,9 @@ def build_status() -> dict[str, Any]:
             "exists": bool(issuer_data),
             "home_domain": home_domain,
             "thresholds": thresholds,
-            "master_weight": master_signer.get("weight"),
+            "master_weight": master_weight,
+            "total_signer_weight": total_signer_weight,
+            "active_signer_count": active_signer_count,
             "error": issuer_error,
         },
         "asset": {

@@ -323,13 +323,14 @@ def sort_entries(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
 def sort_accounts(accounts: list[dict[str, Any]]) -> list[dict[str, Any]]:
     role_order = {
         "issuer": 0,
-        "treasury": 1,
-        "grant": 2,
-        "distribution": 3,
-        "distribution_observed": 4,
-        "liquidity": 5,
-        "operations": 6,
-        "operations_observed": 7,
+        "issuer_signer": 1,
+        "treasury": 2,
+        "grant": 3,
+        "distribution": 4,
+        "distribution_observed": 5,
+        "liquidity": 6,
+        "operations": 7,
+        "operations_observed": 8,
     }
     return sorted(accounts, key=lambda account: (role_order.get(account["role"], 99), account["role"]))
 

@@ -8,6 +8,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 
 - Asset: `OGC:GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57`
 - Issuer account: active on Stellar public network.
+- Issuer signer policy: hardened to low `1`, medium `2`, high `2`, with issuer and personal signer weight `1` each in transaction `f4deef4595aef811db59d173df37714b232886954b8dc885579b8a0095d12ca0`.
 - Distribution wallet designated: `GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB` for opt-in OGC airdrops and reviewed distribution batches only.
 - Personal/operations account observed on-chain: `GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L`.
 - Supply observed through Horizon: `999999501.3700000` OGC in authorized balances plus `500.0000000` OGC in claimable balances.
@@ -33,7 +34,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
    Keep the issuer account cold. Use a distribution or treasury account for airdrops, grants, payroll, market making, and liquidity. The interim policy is published in `governance.html`; use `devdocs/WALLET_DESIGNATION_WORKSHEET.md` and add multisig and sane thresholds before moving meaningful value.
 
 5. Decide supply governance before promising fixed supply.
-   The issuer currently can issue more OGC because its master signer is active and no immutable/lockdown policy is documented. Use `tools/create_issuer_signer_xdr.py` for the next multisig-control step. If the project promises fixed supply, publish a signed policy and consider locking or stronger multisig-controlling the issuer.
+   The issuer is now high-threshold controlled by the issuer key and personal co-signer, but the project still has not locked the issuer or published an immutable supply policy. If the project promises fixed supply, publish a signed policy and consider locking or stronger multisig-controlling the issuer.
 
 6. Remove investment-style promises from public copy.
    Avoid language that creates an expectation of profit from Open Build's future efforts. Describe utility, grants, community participation, and risks plainly.
@@ -69,8 +70,7 @@ This is the practical path for making OGCoin easier for wallets, traders, employ
 ## Immediate Next Steps
 
 1. Review `governance.html` with counsel and project leadership.
-2. Choose two issuer signer public accounts and generate an unsigned hardening XDR with `tools/create_issuer_signer_xdr.py`.
-3. Choose treasury, grant, and liquidity public account addresses using `devdocs/WALLET_DESIGNATION_WORKSHEET.md`.
-4. Use `tools/transparency_log.py designate-account --dry-run ...` to record approved public wallet designations.
-5. Decide whether to start OGC/XLM liquidity with tiny offers or a small liquidity pool after treasury limits are approved.
-6. Test OGC/XLM swaps through Stellar Lab, StellarTerm, LOBSTR, and Freighter using small amounts only.
+2. Choose treasury, grant, and liquidity public account addresses using `devdocs/WALLET_DESIGNATION_WORKSHEET.md`.
+3. Use `tools/transparency_log.py designate-account --dry-run ...` to record approved public wallet designations.
+4. Decide whether to start OGC/XLM liquidity with tiny offers or a small liquidity pool after treasury limits are approved.
+5. Test OGC/XLM swaps through Stellar Lab, StellarTerm, LOBSTR, and Freighter using small amounts only.

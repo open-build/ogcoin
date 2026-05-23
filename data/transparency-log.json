@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-05-22T20:38:25Z",
+  "updated_at": "2026-05-23T00:43:09Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -44,10 +44,10 @@
       "policy": "Must be published before OGC/XLM offers or liquidity pool activity."
     },
     {
-      "role": "operations_observed",
+      "role": "issuer_signer",
       "address": "GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L",
-      "status": "observed_on_chain",
-      "policy": "Candidate operations account. Final wallet role and signer thresholds still need project approval."
+      "status": "designated",
+      "policy": "Approved issuer co-signer for high-threshold OGC issuer governance actions. Not approved as treasury, payroll, or liquidity wallet."
     }
   ],
   "entries": [
@@ -119,6 +119,23 @@
       "links": [
         "https://www.opengreencoin.com/trust.html"
       ]
+    },
+    {
+      "id": "2026-05-23-issuer-signer-hardening",
+      "date": "2026-05-23",
+      "category": "governance",
+      "status": "confirmed_on_chain",
+      "title": "Issuer signer policy hardened",
+      "summary": "Added the approved personal account as issuer co-signer and updated issuer thresholds to low 1, medium 2, high 2 for stronger OGC governance.",
+      "account_role": "issuer",
+      "account": "GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57",
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": "f4deef4595aef811db59d173df37714b232886954b8dc885579b8a0095d12ca0",
+      "ledger": 62691902,
+      "links": [
+        "https://stellar.expert/explorer/public/tx/f4deef4595aef811db59d173df37714b232886954b8dc885579b8a0095d12ca0"
+      ]
     }
   ],
   "open_items": [
@@ -130,7 +147,7 @@
     {
       "priority": "P0",
       "title": "Harden issuer signer policy before fixed-supply claims",
-      "status": "pending"
+      "status": "done"
     },
     {
       "priority": "P1",

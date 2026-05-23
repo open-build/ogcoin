@@ -19,7 +19,9 @@ This site is built using ForgeWeb, an AI-powered static site generator with a lo
 ogcoin/
 ├── index.html              # Main homepage
 ├── trust.html              # Public verification, risk, and governance page
+├── trustline.html          # Wallet-specific OGC trustline onboarding guide
 ├── governance.html         # Issuer and treasury governance policy
+├── liquidity-policy.html   # Public OGC/XLM liquidity readiness policy
 ├── transparency.html       # Public transparency log viewer
 ├── data/
 │   └── transparency-log.json # Machine-readable transparency records

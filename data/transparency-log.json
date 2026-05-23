@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-05-23T00:43:09Z",
+  "updated_at": "2026-05-23T00:54:14Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -136,6 +136,40 @@
       "links": [
         "https://stellar.expert/explorer/public/tx/f4deef4595aef811db59d173df37714b232886954b8dc885579b8a0095d12ca0"
       ]
+    },
+    {
+      "id": "2026-05-23-liquidity-policy",
+      "date": "2026-05-23",
+      "category": "policy",
+      "status": "published",
+      "title": "Liquidity policy published",
+      "summary": "Published OGC/XLM liquidity readiness guardrails covering wallet designation, exposure limits, pause rules, and transparency records before market activity.",
+      "account_role": null,
+      "account": null,
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/liquidity-policy.html"
+      ]
+    },
+    {
+      "id": "2026-05-23-trustline-onboarding-guide",
+      "date": "2026-05-23",
+      "category": "policy",
+      "status": "published",
+      "title": "Trustline onboarding guide published",
+      "summary": "Published wallet-specific OGC trustline setup guidance for opt-in recipients using LOBSTR, Freighter, StellarTerm, and Stellar Lab.",
+      "account_role": null,
+      "account": null,
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/trustline.html"
+      ]
     }
   ],
   "open_items": [
@@ -152,7 +186,7 @@
     {
       "priority": "P1",
       "title": "Publish liquidity policy before OGC/XLM market activity",
-      "status": "pending"
+      "status": "done"
     }
   ],
   "reporting_rules": [

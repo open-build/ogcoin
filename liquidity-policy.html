@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGCoin Liquidity Policy | Open Build</title>
+    <meta name="description" content="Public liquidity readiness policy for OGC/XLM market activity, wallet designation, exposure limits, and transparency records.">
+    <link rel="canonical" href="https://www.opengreencoin.com/liquidity-policy.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.opengreencoin.com/liquidity-policy.html">
+    <meta property="og:title" content="OGCoin Liquidity Policy">
+    <meta property="og:description" content="Guardrails for any future OGC/XLM offers or liquidity pool activity.">
+    <meta property="og:image" content="https://www.opengreencoin.com/assets/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1b5fa3',
+                        secondary: '#144a84',
+                        accent: '#f9943b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/buildly-head.js"></script>
+</head>
+<body class="bg-white text-gray-900">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">OGCoin</a>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="roadmap.html" class="text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                    <a href="trust.html" class="text-gray-700 hover:text-primary transition-colors">Trust</a>
+                    <a href="governance.html" class="text-gray-700 hover:text-primary transition-colors">Governance</a>
+                    <a href="transparency.html" class="text-gray-700 hover:text-primary transition-colors">Transparency</a>
+                    <a href="airdrop.html" class="text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                    <a href="https://github.com/open-build/ogcoin" target="_blank" class="text-gray-700 hover:text-primary transition-colors">GitHub</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary" aria-expanded="false" aria-label="Open navigation menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Home</a>
+                <a href="roadmap.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                <a href="trust.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Trust</a>
+                <a href="governance.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Governance</a>
+                <a href="transparency.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Transparency</a>
+                <a href="airdrop.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                <a href="https://github.com/open-build/ogcoin" target="_blank" class="block py-2 text-gray-700 hover:text-primary transition-colors">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-gradient text-white py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="inline-flex items-center bg-white/15 border border-white/25 rounded-md px-3 py-1 text-sm font-semibold mb-6">
+                    Market readiness
+                </p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-5">OGC/XLM Liquidity Policy</h1>
+                <p class="text-xl text-blue-100 max-w-4xl">
+                    OGC should not be promoted as readily tradable until wallet roles, exposure limits, disclosures, and transparency records are in place. This policy defines the minimum steps before any OGC/XLM market activity.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Order Book</p>
+                        <p class="text-2xl font-bold text-orange-700 mt-2">Not Active</p>
+                        <p class="text-sm text-gray-600 mt-3">No OGC/XLM bids or asks are currently part of the approved launch plan.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Liquidity Wallet</p>
+                        <p class="text-2xl font-bold text-orange-700 mt-2">Pending</p>
+                        <p class="text-sm text-gray-600 mt-3">A separate public liquidity wallet must be designated before any market activity.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Payroll Valuation</p>
+                        <p class="text-2xl font-bold text-orange-700 mt-2">Blocked</p>
+                        <p class="text-sm text-gray-600 mt-3">Payroll use still requires legal, tax, and valuation review.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">Required Before Any OGC/XLM Activity</h2>
+                        <ol class="list-decimal pl-5 space-y-3 text-gray-700">
+                            <li>Designate a separate public liquidity wallet.</li>
+                            <li>Define the signer policy and recovery owner for that wallet.</li>
+                            <li>Approve a maximum starting exposure in both OGC and XLM.</li>
+                            <li>Publish the wallet designation and exposure cap in the transparency log.</li>
+                            <li>Confirm legal and treasury approval for a tiny test transaction.</li>
+                            <li>Record every offer, pool deposit, pool withdrawal, or pause action after settlement.</li>
+                        </ol>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">What This Policy Does Not Promise</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>No stable price, redemption, reserve, or buyback commitment.</li>
+                            <li>No expectation that holders can exit quickly or at a particular value.</li>
+                            <li>No promise that a public OGC market will remain active.</li>
+                            <li>No payroll valuation until professional review and defensible pricing are available.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-6">Approved Test Sequence</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Step 1</p>
+                        <h3 class="text-xl font-bold mb-3">Designate Wallet</h3>
+                        <p class="text-gray-600">Publish the liquidity wallet role with <code>tools/transparency_log.py designate-account</code>.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Step 2</p>
+                        <h3 class="text-xl font-bold mb-3">Fund Tiny Test</h3>
+                        <p class="text-gray-600">Move only the approved test amount into the liquidity wallet after signer review.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Step 3</p>
+                        <h3 class="text-xl font-bold mb-3">Create Market Action</h3>
+                        <p class="text-gray-600">Use either a small SDEX offer or a small Stellar liquidity pool deposit, not both at once.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">Step 4</p>
+                        <h3 class="text-xl font-bold mb-3">Record Outcome</h3>
+                        <p class="text-gray-600">Publish the transaction hash, ledger, wallet, amounts, and purpose in the transparency log.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold text-blue-950 mb-4">Stellar Mechanics</h2>
+                        <p class="text-blue-900 mb-4">
+                            Stellar supports decentralized exchange offers and protocol liquidity pools. Liquidity pool participation requires the relevant reserve-asset trustlines and a pool-share trustline before depositing.
+                        </p>
+                        <ul class="space-y-2">
+                            <li><a class="text-primary hover:underline" href="https://developers.stellar.org/docs/learn/fundamentals/liquidity-on-stellar-sdex-liquidity-pools">Stellar liquidity on SDEX and liquidity pools</a></li>
+                            <li><a class="text-primary hover:underline" href="https://developers.stellar.org/docs/learn/fundamentals/transactions/list-of-operations">Stellar operation thresholds and liquidity operations</a></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">Pause Rules</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>Pause if wallet custody is uncertain.</li>
+                            <li>Pause if price movement exceeds the approved test purpose.</li>
+                            <li>Pause if any transaction cannot be reconciled publicly.</li>
+                            <li>Pause if legal, tax, payroll, or treasury review changes the approved scope.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">OGCoin</h3>
+                    <p class="text-gray-400 max-w-md">A Stellar mainnet asset for open source funding experiments and developer education programs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Project</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="trust.html" class="text-gray-400 hover:text-white transition-colors">Trust</a></li>
+                        <li><a href="governance.html" class="text-gray-400 hover:text-white transition-colors">Governance</a></li>
+                        <li><a href="transparency.html" class="text-gray-400 hover:text-white transition-colors">Transparency</a></li>
+                        <li><a href="trustline.html" class="text-gray-400 hover:text-white transition-colors">Trustline Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Verify</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.opengreencoin.com/.well-known/stellar.toml" class="text-gray-400 hover:text-white transition-colors">stellar.toml</a></li>
+                        <li><a href="data/transparency-log.json" class="text-gray-400 hover:text-white transition-colors">Transparency JSON</a></li>
+                        <li><a href="https://github.com/open-build/ogcoin" class="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <p>&copy; 2026 Open Build. This policy is a public operating guardrail, not legal, tax, payroll, or investment advice.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

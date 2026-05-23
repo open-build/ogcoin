@@ -43,7 +43,9 @@ HOME_DOMAIN = "www.opengreencoin.com"
 HORIZON_URL = "https://horizon.stellar.org"
 STELLAR_TOML_URL = f"https://{HOME_DOMAIN}/.well-known/stellar.toml"
 TRUST_URL = f"https://{HOME_DOMAIN}/trust.html"
+TRUSTLINE_URL = f"https://{HOME_DOMAIN}/trustline.html"
 GOVERNANCE_URL = f"https://{HOME_DOMAIN}/governance.html"
+LIQUIDITY_POLICY_URL = f"https://{HOME_DOMAIN}/liquidity-policy.html"
 TRANSPARENCY_URL = f"https://{HOME_DOMAIN}/transparency.html"
 TRANSPARENCY_DATA_URL = f"https://{HOME_DOMAIN}/data/transparency-log.json"
 STELLAR_EXPERT_ASSET_URL = (
@@ -627,7 +629,9 @@ def build_status() -> dict[str, Any]:
     expert_data, expert_error = http_json(STELLAR_EXPERT_API_URL)
     toml_text, toml_error = http_text(STELLAR_TOML_URL)
     trust_text, trust_error = http_text(TRUST_URL)
+    trustline_text, trustline_error = http_text(TRUSTLINE_URL)
     governance_text, governance_error = http_text(GOVERNANCE_URL)
+    liquidity_policy_text, liquidity_policy_error = http_text(LIQUIDITY_POLICY_URL)
     transparency_text, transparency_error = http_text(TRANSPARENCY_URL)
     transparency_data, transparency_data_error = http_json(TRANSPARENCY_DATA_URL)
 
@@ -687,6 +691,24 @@ def build_status() -> dict[str, Any]:
                 "Issuer, supply, signer, treasury, distribution, and liquidity guardrails are published."
                 if governance_text and "Issuer and Treasury Governance" in governance_text
                 else (governance_error or "Deploy governance.html before broad promotion.")
+            ),
+        },
+        {
+            "title": "Trustline onboarding guide is live",
+            "status": "good" if trustline_text and "Add an OGC Trustline" in trustline_text else "warn",
+            "detail": (
+                "Wallet-specific setup path is published for opt-in recipients."
+                if trustline_text and "Add an OGC Trustline" in trustline_text
+                else (trustline_error or "Deploy trustline.html before the next onboarding campaign.")
+            ),
+        },
+        {
+            "title": "Liquidity policy is live",
+            "status": "good" if liquidity_policy_text and "OGC/XLM Liquidity Policy" in liquidity_policy_text else "warn",
+            "detail": (
+                "Liquidity wallet, exposure, pause, and transparency guardrails are published."
+                if liquidity_policy_text and "OGC/XLM Liquidity Policy" in liquidity_policy_text
+                else (liquidity_policy_error or "Deploy liquidity-policy.html before any market activity.")
             ),
         },
         {

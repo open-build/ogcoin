@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add an OGC Trustline | OGCoin</title>
+    <meta name="description" content="Wallet-specific OGC trustline setup guide for LOBSTR, Freighter, StellarTerm, and Stellar Lab.">
+    <link rel="canonical" href="https://www.opengreencoin.com/trustline.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.opengreencoin.com/trustline.html">
+    <meta property="og:title" content="Add an OGC Trustline">
+    <meta property="og:description" content="Set up an OGC trustline before requesting an opt-in OGC distribution.">
+    <meta property="og:image" content="https://www.opengreencoin.com/assets/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1b5fa3',
+                        secondary: '#144a84',
+                        accent: '#f9943b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/buildly-head.js"></script>
+</head>
+<body class="bg-white text-gray-900">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-primary">OGCoin</a>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="roadmap.html" class="text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                    <a href="trust.html" class="text-gray-700 hover:text-primary transition-colors">Trust</a>
+                    <a href="governance.html" class="text-gray-700 hover:text-primary transition-colors">Governance</a>
+                    <a href="transparency.html" class="text-gray-700 hover:text-primary transition-colors">Transparency</a>
+                    <a href="airdrop.html" class="text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                    <a href="https://github.com/open-build/ogcoin" target="_blank" class="text-gray-700 hover:text-primary transition-colors">GitHub</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary" aria-expanded="false" aria-label="Open navigation menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Home</a>
+                <a href="roadmap.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                <a href="trust.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Trust</a>
+                <a href="governance.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Governance</a>
+                <a href="transparency.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Transparency</a>
+                <a href="airdrop.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Airdrop</a>
+                <a href="https://github.com/open-build/ogcoin" target="_blank" class="block py-2 text-gray-700 hover:text-primary transition-colors">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-gradient text-white py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="inline-flex items-center bg-white/15 border border-white/25 rounded-md px-3 py-1 text-sm font-semibold mb-6">
+                    Recipient setup
+                </p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-5">Add an OGC Trustline</h1>
+                <p class="text-xl text-blue-100 max-w-4xl">
+                    A trustline tells the Stellar network that your wallet is willing to hold OGC. Add the exact asset details below before requesting an opt-in airdrop or reviewed distribution.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6 lg:col-span-2">
+                        <h2 class="text-2xl font-bold mb-4">OGC Asset Details</h2>
+                        <dl class="space-y-4">
+                            <div>
+                                <dt class="font-semibold text-gray-900">Network</dt>
+                                <dd class="text-gray-700">Stellar Public Network</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Asset code</dt>
+                                <dd class="font-mono text-sm text-primary">OGC</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Issuer</dt>
+                                <dd class="font-mono text-sm break-all text-gray-700">GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">SEP-1 metadata</dt>
+                                <dd><a class="text-primary hover:underline" href="https://www.opengreencoin.com/.well-known/stellar.toml">www.opengreencoin.com/.well-known/stellar.toml</a></dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">Safety Rules</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>Submit public Stellar addresses only.</li>
+                            <li>Never share secret keys, recovery phrases, or wallet passwords.</li>
+                            <li>Use the exact issuer address above.</li>
+                            <li>OGC distributions are discretionary and subject to public policy.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-3">Wallet Setup Paths</h2>
+                        <p class="text-gray-600 max-w-3xl">Different wallets use different labels, but the idea is the same: add a custom Stellar asset, enter <code>OGC</code>, paste the issuer account, then confirm the trustline transaction.</p>
+                    </div>
+                    <a href="airdrop.html" class="inline-flex justify-center bg-primary text-white px-5 py-3 rounded-md font-semibold hover:bg-secondary transition-colors">Airdrop Form</a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3">LOBSTR</h3>
+                        <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                            <li>Open Assets or Add Asset.</li>
+                            <li>Search for custom asset if OGC is not listed.</li>
+                            <li>Enter <code>OGC</code> and paste the issuer account.</li>
+                            <li>Confirm the trustline transaction in your wallet.</li>
+                        </ol>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3">Freighter</h3>
+                        <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                            <li>Open Freighter and choose Manage Assets.</li>
+                            <li>Add a custom asset on public network.</li>
+                            <li>Enter <code>OGC</code> and the issuer account.</li>
+                            <li>Approve the trustline transaction.</li>
+                        </ol>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3">StellarTerm</h3>
+                        <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                            <li>Sign in with your preferred Stellar wallet.</li>
+                            <li>Open balances or accept asset controls.</li>
+                            <li>Add <code>OGC</code> using the issuer account above.</li>
+                            <li>Confirm the trustline before submitting your address.</li>
+                        </ol>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-3">Stellar Lab</h3>
+                        <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                            <li>Use the Build Transaction tools on public network.</li>
+                            <li>Create a Change Trust operation for <code>OGC</code> and the issuer.</li>
+                            <li>Set a limit that matches your intended participation.</li>
+                            <li>Sign with your receiving wallet and submit.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">After You Add the Trustline</h2>
+                        <ol class="list-decimal pl-5 space-y-3 text-gray-700">
+                            <li>Submit your public Stellar address through the airdrop pilot form.</li>
+                            <li>Open Build validates account existence and OGC trustline status locally.</li>
+                            <li>Approved batches are signed manually from the published distribution wallet.</li>
+                            <li>Distribution results are added to the public transparency log.</li>
+                        </ol>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">References</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li><a class="text-primary hover:underline" href="https://developers.stellar.org/docs/build/guides/basics/verify-trustlines">Stellar guide to verifying trustlines</a></li>
+                            <li><a class="text-primary hover:underline" href="https://developers.stellar.org/docs/learn/fundamentals/stellar-data-structures/accounts">Stellar account and trustline fundamentals</a></li>
+                            <li><a class="text-primary hover:underline" href="trust.html">OGCoin trust and risk disclosures</a></li>
+                            <li><a class="text-primary hover:underline" href="transparency.html">OGCoin transparency log</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">OGCoin</h3>
+                    <p class="text-gray-400 max-w-md">A Stellar mainnet asset for open source funding experiments and developer education programs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Project</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="trust.html" class="text-gray-400 hover:text-white transition-colors">Trust</a></li>
+                        <li><a href="governance.html" class="text-gray-400 hover:text-white transition-colors">Governance</a></li>
+                        <li><a href="transparency.html" class="text-gray-400 hover:text-white transition-colors">Transparency</a></li>
+                        <li><a href="liquidity-policy.html" class="text-gray-400 hover:text-white transition-colors">Liquidity Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Participate</h4>
+                    <ul class="space-y-2">
+                        <li><a href="trustline.html" class="text-gray-400 hover:text-white transition-colors">Trustline Guide</a></li>
+                        <li><a href="airdrop.html" class="text-gray-400 hover:text-white transition-colors">Airdrop Pilot</a></li>
+                        <li><a href="https://github.com/open-build/ogcoin" class="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
+                <p>&copy; 2026 Open Build. Add only public wallet addresses. Never share wallet secrets.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

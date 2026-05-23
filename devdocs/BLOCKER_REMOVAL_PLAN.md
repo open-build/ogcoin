@@ -75,7 +75,7 @@ Current state:
 
 Next safe step:
 
-- Publish a wallet-specific onboarding guide for LOBSTR, Freighter, StellarTerm, and Stellar Lab.
+- Share the published wallet-specific onboarding guide at `https://www.opengreencoin.com/trustline.html`.
 - Use only utility language: no profit, guaranteed liquidity, redemption, or investment claims.
 - Collect opt-in public Stellar addresses only.
 - Validate every recipient with `tools/ogcoin_console.py` before distribution.
@@ -98,7 +98,7 @@ Next safe step:
 
 - Do not create a public market until treasury limits and legal review are approved.
 - Designate a separate liquidity wallet, not the distribution wallet.
-- Publish maximum starting exposure, spread/range policy, reconciliation cadence, and pause rules.
+- Use the published liquidity policy at `https://www.opengreencoin.com/liquidity-policy.html` to set maximum starting exposure, reconciliation cadence, and pause rules.
 - Start only with a tiny test offer or tiny pool after approval.
 
 Minimum readiness target:
@@ -112,6 +112,5 @@ Minimum readiness target:
 
 1. Run a trustline onboarding campaign.
 2. Designate treasury, grant, and liquidity wallets.
-3. Publish a liquidity policy before any OGC/XLM market activity.
-4. Create one tiny OGC/XLM test path only after liquidity wallet and limits are approved.
-5. Record each approved distribution or liquidity action in the transparency log.
+3. Create one tiny OGC/XLM test path only after liquidity wallet and limits are approved.
+4. Record each approved distribution or liquidity action in the transparency log.

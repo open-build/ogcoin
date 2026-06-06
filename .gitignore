@@ -12,6 +12,7 @@
 **/secret_*
 **/private_*
 .ogcoin-secrets/
+.ogcoin-xdr/
 
 # Python
 __pycache__/

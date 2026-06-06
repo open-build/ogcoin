@@ -32,10 +32,14 @@ This toolkit provides Python scripts and utilities for:
 - **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
 - **`create_issuer_signer_xdr.py`** - Build an unsigned issuer signer and threshold hardening XDR
 - **`create_role_wallets.py`** - Generate public role wallet addresses and a local gitignored seed file
+- **`add_role_trustlines.py`** - Add OGC trustlines to the grant and liquidity wallets from local environment secrets
+- **`lobstr_recovery.py`** - Diagnose Stellar multisig blockers, build role-wallet funding XDRs, and submit fully signed XDRs
 - **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
 - **`ogcoin_next_steps.py`** - Non-custodial helper for trustline campaigns, wallet designation commands, and tiny liquidity readiness checks
 - **`run_next_steps_report.py`** - Run next-step commands and write `devdocs/NEXT_STEPS_OUTCOME.md`
+- **`stellar_secret_inventory.py`** - Inventory local Stellar secret keys by derived public key without printing secrets
 - **`transparency_log.py`** - Validate and append reviewed public records to `data/transparency-log.json`
+- **`vault_phrase_inventory.py`** - Inventory local BIP39 recovery phrase candidates without printing phrase words
 
 ## Setup
 
@@ -165,6 +169,91 @@ Write a full outcome report:
 
 ```bash
 python3 run_next_steps_report.py
+```
+
+### Add Grant and Liquidity Trustlines
+
+After the role wallets are funded, add OGC trustlines from the wallet seeds without putting secrets in command history. From the repository root, first edit the local gitignored file:
+
+```bash
+open .ogcoin-secrets/role-wallets.env
+```
+
+Paste the matching `S...` secret seed values into `OGC_GRANT_SECRET=` and `OGC_LIQUIDITY_SECRET=`, then run:
+
+```bash
+python3 tools/add_role_trustlines.py
+python3 tools/add_role_trustlines.py --submit
+```
+
+The first command signs reviewable XDRs into `.ogcoin-xdr/` without broadcasting them. The second broadcasts only if each loaded secret derives the expected public role wallet:
+
+- grant: `GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV`
+- liquidity: `GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC`
+
+Default trustline limits are `100000` OGC for the grant wallet and `1` OGC for the liquidity wallet. Override them with `--grant-limit` or `--liquidity-limit` only after approval.
+
+### Lobstr Recovery and Funding XDRs
+
+Inspect a stuck Lobstr account and see which signer weight is still required:
+
+```bash
+python3 lobstr_recovery.py inspect \
+  --account GC5PRFNWGGWTKVH5DLIO3QL5DV4FPBFAE26Q77BPSXCPQQWGJQVHSW7U
+```
+
+Build a reviewable XDR to fund the currently designated role wallets from a working source account:
+
+```bash
+python3 lobstr_recovery.py build-role-funding \
+  --source G...SOURCE_ACCOUNT \
+  --grant-amount 3 \
+  --liquidity-amount 5 \
+  --treasury-amount 0
+```
+
+If you have the needed secret key locally, keep it in an environment variable and sign without printing it:
+
+```bash
+export OGC_SIGNER_SECRET='S...'
+python3 lobstr_recovery.py build-role-funding \
+  --source G...SOURCE_ACCOUNT \
+  --grant-amount 3 \
+  --liquidity-amount 5 \
+  --signer-secret-env OGC_SIGNER_SECRET
+```
+
+The helper cannot bypass Stellar multisig. For a custom multisig Lobstr account, the transaction must still be signed by enough signer weight before submission. Generated XDR files are written to `.ogcoin-xdr/`, which is gitignored.
+
+Inventory local Stellar secret keys without exposing the `S...` values:
+
+```bash
+python3 stellar_secret_inventory.py \
+  ~/Projects/me/mytrader \
+  ~/Documents \
+  ~/Desktop \
+  ~/Downloads
+```
+
+The report lists derived public keys, file paths, and whether any key matches the missing custom signer or signer set for the locked accounts.
+
+Inventory possible Lobstr/Vault recovery phrases without exposing the phrase words:
+
+```bash
+python3 vault_phrase_inventory.py \
+  ~/Projects/me/mytrader \
+  ~/Documents \
+  ~/Desktop \
+  ~/Downloads \
+  --index-max 20
+```
+
+The report lists only candidate IDs, file paths, line ranges, derived public keys, and whether a candidate derives to the missing signer.
+
+To check a phrase manually without echoing it to the terminal:
+
+```bash
+python3 vault_phrase_inventory.py --interactive --index-max 100
 ```
 
 ### Transparency Log Helper

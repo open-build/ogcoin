@@ -37,6 +37,7 @@ This toolkit provides Python scripts and utilities for:
 - **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
 - **`ogcoin_next_steps.py`** - Non-custodial helper for trustline campaigns, wallet designation commands, and tiny liquidity readiness checks
 - **`run_next_steps_report.py`** - Run next-step commands and write `devdocs/NEXT_STEPS_OUTCOME.md`
+- **`send_liquidity_inventory.py`** - Send up to 1 OGC from distribution to the liquidity wallet for the first market test
 - **`stellar_secret_inventory.py`** - Inventory local Stellar secret keys by derived public key without printing secrets
 - **`transparency_log.py`** - Validate and append reviewed public records to `data/transparency-log.json`
 - **`vault_phrase_inventory.py`** - Inventory local BIP39 recovery phrase candidates without printing phrase words
@@ -192,6 +193,23 @@ The first command signs reviewable XDRs into `.ogcoin-xdr/` without broadcasting
 - liquidity: `GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC`
 
 Default trustline limits are `100000` OGC for the grant wallet and `1` OGC for the liquidity wallet. Override them with `--grant-limit` or `--liquidity-limit` only after approval.
+
+### Send Liquidity Inventory
+
+Before the first tiny OGC/XLM test, the liquidity wallet needs up to `1 OGC`. From the repository root, first edit the local gitignored distribution signer file:
+
+```bash
+open .ogcoin-secrets/distribution.env
+```
+
+Paste the matching `S...` secret seed into `OGC_DISTRIBUTION_SECRET=`, then run:
+
+```bash
+python3 tools/send_liquidity_inventory.py
+python3 tools/send_liquidity_inventory.py --submit
+```
+
+The helper verifies the secret derives the public distribution wallet, verifies the liquidity wallet trustline limit, refuses to exceed the published `1 OGC` cap, writes a signed XDR into `.ogcoin-xdr/`, and submits only with `--submit`.
 
 ### Lobstr Recovery and Funding XDRs
 

@@ -32,6 +32,7 @@ This toolkit provides Python scripts and utilities for:
 - **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
 - **`create_issuer_signer_xdr.py`** - Build an unsigned issuer signer and threshold hardening XDR
 - **`create_role_wallets.py`** - Generate public role wallet addresses and a local gitignored seed file
+- **`create_tiny_liquidity_offer.py`** - Build and submit one explicitly priced, policy-limited OGC/XLM sell offer
 - **`add_role_trustlines.py`** - Add OGC trustlines to the grant and liquidity wallets from local environment secrets
 - **`lobstr_recovery.py`** - Diagnose Stellar multisig blockers, build role-wallet funding XDRs, and submit fully signed XDRs
 - **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
@@ -210,6 +211,17 @@ python3 tools/send_liquidity_inventory.py --submit
 ```
 
 The helper verifies the secret derives the public distribution wallet, verifies the liquidity wallet trustline limit, refuses to exceed the published `1 OGC` cap, writes a signed XDR into `.ogcoin-xdr/`, and submits only with `--submit`.
+
+### Create The Tiny OGC/XLM Offer
+
+After the liquidity wallet holds its approved OGC inventory, provide an explicit test price in XLM per OGC:
+
+```bash
+python3 tools/create_tiny_liquidity_offer.py --price-xlm PRICE
+python3 tools/create_tiny_liquidity_offer.py --price-xlm PRICE --submit
+```
+
+The helper requires the price rather than implying a valuation. It refuses amounts over `1 OGC`, notional exposure over `1 XLM`, missing OGC inventory, incorrect signer keys, and duplicate open offers from the liquidity wallet.
 
 ### Lobstr Recovery and Funding XDRs
 

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenGreenCoin Impact Policy v0.1 | OGCoin</title>
+    <meta name="description" content="OpenGreenCoin's 5 percent impact contribution policy for official routed OGC payments, including scope, exclusions, safeguards, and treasury use.">
+    <link rel="canonical" href="https://www.opengreencoin.com/impact-policy.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.opengreencoin.com/impact-policy.html">
+    <meta property="og:title" content="OpenGreenCoin Impact Policy v0.1">
+    <meta property="og:description" content="A disclosed 95/5 split for official routed OGC payments supporting open source public goods.">
+    <meta property="og:image" content="https://www.opengreencoin.com/assets/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1b5fa3',
+                        secondary: '#144a84',
+                        accent: '#f9943b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/buildly-head.js"></script>
+</head>
+<body class="bg-white text-gray-900">
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="index.html" class="text-2xl font-bold text-primary">OGCoin</a>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="roadmap.html" class="text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                    <a href="trust.html" class="text-gray-700 hover:text-primary transition-colors">Trust</a>
+                    <a href="governance.html" class="text-gray-700 hover:text-primary transition-colors">Governance</a>
+                    <a href="impact-policy.html" class="text-primary font-semibold">Impact Policy</a>
+                    <a href="transparency.html" class="text-gray-700 hover:text-primary transition-colors">Transparency</a>
+                    <a href="https://github.com/open-build/ogcoin" target="_blank" class="text-gray-700 hover:text-primary transition-colors">GitHub</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary" aria-expanded="false" aria-label="Open navigation menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Home</a>
+                <a href="roadmap.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Roadmap</a>
+                <a href="trust.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Trust</a>
+                <a href="governance.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Governance</a>
+                <a href="impact-policy.html" class="block py-2 text-primary font-semibold">Impact Policy</a>
+                <a href="transparency.html" class="block py-2 text-gray-700 hover:text-primary transition-colors">Transparency</a>
+                <a href="https://github.com/open-build/ogcoin" target="_blank" class="block py-2 text-gray-700 hover:text-primary transition-colors">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-gradient text-white py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p class="inline-flex items-center bg-white/15 border border-white/25 rounded-md px-3 py-1 text-sm font-semibold mb-6">
+                    Pilot policy v0.1, June 23, 2026
+                </p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-5">OpenGreenCoin Impact Policy</h1>
+                <p class="text-xl text-blue-100 max-w-4xl">
+                    Official OpenGreenCoin payment experiences route 5% of the payer-authorized gross OGC amount to the Open Source Impact Treasury and 95% to the recipient.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase">Official Routed Flow</p>
+                        <p class="text-2xl font-bold text-primary mt-2">95% + 5%</p>
+                        <p class="text-sm text-gray-600 mt-3">The disclosed gross amount is split atomically between the recipient and impact treasury.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase">Peer-to-Peer</p>
+                        <p class="text-2xl font-bold text-green-700 mt-2">No Contribution</p>
+                        <p class="text-sm text-gray-600 mt-3">Normal wallet-to-wallet transfers are not modified or taxed by OGC.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase">Pilot Limit</p>
+                        <p class="text-2xl font-bold text-orange-700 mt-2">100 OGC</p>
+                        <p class="text-sm text-gray-600 mt-3">The initial maximum gross routed payment is 100 OGC until treasury security is strengthened.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">Included Official Flows</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>OpenGreenCoin application checkout.</li>
+                            <li>Approved campaign and crowdfunding payments.</li>
+                            <li>Approved marketplace transactions.</li>
+                            <li>Approved sponsorship payments.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">Excluded Flows</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>Direct peer-to-peer and wallet-to-wallet transfers.</li>
+                            <li>DEX trades, liquidity activity, airdrops, and grants.</li>
+                            <li>Payroll, refunds, treasury disbursements, and issuer operations.</li>
+                            <li>Any third-party experience that does not disclose and reference this policy.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-6">How The Split Works</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase mb-2">Step 1</p>
+                        <h3 class="text-xl font-bold mb-3">Disclose</h3>
+                        <p class="text-gray-600">Show the gross amount, 95% recipient amount, 5% contribution, asset, treasury address, reference, and refund terms.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase mb-2">Step 2</p>
+                        <h3 class="text-xl font-bold mb-3">Authorize</h3>
+                        <p class="text-gray-600">The payer signs one Stellar transaction containing both payment operations. Open Build does not need the payer's secret key.</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <p class="text-sm font-semibold text-gray-500 uppercase mb-2">Step 3</p>
+                        <h3 class="text-xl font-bold mb-3">Reconcile</h3>
+                        <p class="text-gray-600">The transaction hash and public-safe flow reference are recorded for treasury and campaign reporting.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold text-blue-950 mb-4">Open Source Impact Treasury</h2>
+                        <p class="font-mono text-sm break-all text-blue-950 mb-4">GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F</p>
+                        <p class="text-blue-900">Eligible uses include climate resilience, community software, public-good infrastructure, education, ethical AI, and aligned open source projects.</p>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">Important Boundaries</h2>
+                        <ul class="space-y-3 text-gray-700">
+                            <li>This is an explicit impact contribution, not an OGC transfer tax.</li>
+                            <li>It is not automatically a tax-deductible charitable donation.</li>
+                            <li>Treasury allocation requires separate review and public records.</li>
+                            <li>Refundable flows need a documented process for returning both portions.</li>
+                            <li>Pilot caps must not increase before treasury multisig and a policy update.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-14 bg-gray-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border border-gray-200 rounded-lg p-6">
+                    <h2 class="text-3xl font-bold mb-4">Verify The Policy</h2>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="data/impact-policy.json" class="text-primary font-semibold hover:underline">Machine-readable policy</a>
+                        <a href="transparency.html" class="text-primary font-semibold hover:underline">Transparency log</a>
+                        <a href="governance.html" class="text-primary font-semibold hover:underline">Treasury governance</a>
+                        <a href="https://stellar.expert/explorer/public/account/GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F" class="text-primary font-semibold hover:underline">Treasury on StellarExpert</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">OGCoin</h3>
+                    <p class="text-gray-400">A Stellar mainnet asset for open source funding experiments and developer education programs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Policies</h4>
+                    <ul class="space-y-2">
+                        <li><a href="governance.html" class="text-gray-400 hover:text-white">Governance</a></li>
+                        <li><a href="impact-policy.html" class="text-gray-400 hover:text-white">Impact Policy</a></li>
+                        <li><a href="liquidity-policy.html" class="text-gray-400 hover:text-white">Liquidity Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Verify</h4>
+                    <ul class="space-y-2">
+                        <li><a href="data/impact-policy.json" class="text-gray-400 hover:text-white">Impact Policy JSON</a></li>
+                        <li><a href="data/transparency-log.json" class="text-gray-400 hover:text-white">Transparency JSON</a></li>
+                        <li><a href="https://github.com/open-build/ogcoin" class="text-gray-400 hover:text-white">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-gray-500 text-sm mt-8">This policy is an operating commitment, not legal, tax, charitable, payroll, or investment advice.</p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -17,7 +17,7 @@ from stellar_manager import StellarManager
 from bulk_payments import BulkPaymentProcessor, quick_validate_csv, create_payment_template
 from transparency_reporter import TransparencyReporter, generate_current_stats, generate_report_for_month
 from formatters import format_account_info, format_transaction_result, format_table
-from open_build_fund import OpenBuildFund, calculate_transaction_with_fund_fee
+from open_build_fund import calculate_transaction_with_fund_fee
 
 def setup_config_command(args):
     """Handle config setup command"""
@@ -244,58 +244,19 @@ def report_command(args):
         generate_report_for_month(prev_year, prev_month)
 
 def fund_command(args):
-    """Handle fund operations"""
-    try:
-        fund = OpenBuildFund()
-        
-        if args.action == "balance":
-            result = fund.get_fund_account_balance()
-            if result['success']:
-                print("Open Build Fund Balance:")
-                for balance in result['balances']:
-                    print(f"  {balance['asset_code']}: {balance['balance']}")
-            else:
-                print(f"❌ Error getting fund balance: {result['error']}")
-        
-        elif args.action == "calculate":
-            if not args.amount:
-                print("Please provide --amount for calculation")
-                return
-            
-            result = calculate_transaction_with_fund_fee(float(args.amount))
-            print(f"Transaction Amount: {args.amount} OGC")
-            print(f"Fund Fee (0.1%): {result['fund_fee']} OGC")
-            print(f"Net Amount: {result['net_amount']} OGC")
-            
-        elif args.action == "send":
-            if not all([args.amount, args.source_secret, args.destination]):
-                print("Please provide --amount, --source-secret, and --destination")
-                return
-            
-            result = fund.send_payment_with_fund_fee(
-                args.source_secret, 
-                args.destination, 
-                float(args.amount),
-                memo=args.memo
-            )
-            
-            if result['success']:
-                print("✅ Payment sent successfully!")
-                print(f"Net amount sent: {result['net_amount']} OGC")
-                print(f"Fund fee: {result['fund_fee']} OGC")
-            else:
-                print(f"❌ Payment failed: {result['error']}")
-        
-        elif args.action == "report":
-            print("Generating fund report...")
-            fund.generate_fund_report()
-            print("✅ Fund report generated")
-        
-        elif args.action == "proposal":
-            print(fund.create_funding_proposal())
-    
-    except Exception as e:
-        print(f"❌ Fund operation failed: {str(e)}")
+    """Handle legacy fund commands without accepting or submitting secrets."""
+    if args.action == "calculate":
+        if not args.amount:
+            print("Please provide --amount for calculation")
+            return
+        result = calculate_transaction_with_fund_fee(args.amount)
+        print(f"Gross amount: {result['original_amount']} OGC")
+        print(f"Recipient amount (95%): {result['recipient_amount']} OGC")
+        print(f"Impact contribution (5%): {result['fund_fee']} OGC")
+        return
+
+    print("This legacy fund action is disabled.")
+    print("Use tools/create_impact_payment_xdr.py to build a reviewable unsigned 95/5 payment.")
 
 def status_command(args):
     """Handle status command"""
@@ -404,11 +365,8 @@ Examples:
   # Calculate transaction fee for 100 OGC
   python cli.py fund calculate --amount 100
 
-  # Send transaction with fund contribution
-  python cli.py fund send --source-secret SXXXXX... --destination GXXXXX... --amount 50
-
-  # Generate fund report
-  python cli.py fund report
+  # Build an official routed payment without exposing a secret key
+  python create_impact_payment_xdr.py --help
         """
     )
     
@@ -466,12 +424,9 @@ Examples:
     report_parser.set_defaults(func=report_command)
     
     # Fund command
-    fund_parser = subparsers.add_parser('fund', help='Open Build fund operations')
-    fund_parser.add_argument('action', choices=['balance', 'calculate', 'send', 'report', 'proposal'], help='Fund action')
-    fund_parser.add_argument('--amount', help='Amount for calculations or transactions')
-    fund_parser.add_argument('--source-secret', help='Source account secret key for fund transactions')
-    fund_parser.add_argument('--destination', help='Destination address for fund transactions')
-    fund_parser.add_argument('--memo', help='Transaction memo')
+    fund_parser = subparsers.add_parser('fund', help='Impact contribution calculations')
+    fund_parser.add_argument('action', choices=['calculate'], help='Fund action')
+    fund_parser.add_argument('--amount', help='Gross OGC amount for the 95/5 calculation')
     fund_parser.set_defaults(func=fund_command)
     
     # Status command

@@ -32,8 +32,6 @@ class Config:
         # Account Configuration - MAINNET DEPLOYMENT
         # SECURITY: Never hardcode secret keys - they must be provided via environment variables
         self.ISSUER_SECRET_KEY = os.getenv('ISSUER_SECRET_KEY')
-        if not self.ISSUER_SECRET_KEY:
-            raise ValueError("ISSUER_SECRET_KEY environment variable is required")
         self.ISSUER_PUBLIC_KEY = os.getenv('ISSUER_PUBLIC_KEY', 'GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57')
         
         # Token Configuration - MAINNET DEPLOYMENT

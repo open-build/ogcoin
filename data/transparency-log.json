@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-06-23T21:04:46Z",
+  "updated_at": "2026-06-23T21:23:07Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -29,7 +29,7 @@
       "role": "treasury",
       "address": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
       "status": "active",
-      "policy": "Cold or low-frequency account for approved OGCoin treasury activity; no routine airdrops, payroll, or liquidity operations."
+      "policy": "Open Source Impact Treasury for approved public-good funding and the disclosed 5 percent contribution from official routed OGC payments; no routine airdrops, payroll, liquidity, or undisclosed fees."
     },
     {
       "role": "grant",
@@ -298,6 +298,24 @@
       ]
     },
     {
+      "id": "2026-06-23-impact-policy-v01",
+      "date": "2026-06-23",
+      "category": "policy",
+      "status": "published",
+      "title": "OpenGreenCoin Impact Policy v0.1 published",
+      "summary": "Published the pilot policy for an explicitly disclosed atomic split of official routed OGC payments: 95 percent to the recipient and 5 percent to the Open Source Impact Treasury. Direct peer-to-peer transfers are excluded.",
+      "account_role": "treasury",
+      "account": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/impact-policy.html",
+        "https://www.opengreencoin.com/data/impact-policy.json"
+      ]
+    },
+    {
       "id": "2026-06-23-liquidity-wallet-ogc-inventory",
       "date": "2026-06-23",
       "category": "liquidity",
@@ -385,12 +403,18 @@
       "priority": "P1",
       "title": "Publish liquidity policy before OGC/XLM market activity",
       "status": "done"
+    },
+    {
+      "priority": "P0",
+      "title": "Harden impact treasury multisig before raising pilot caps",
+      "status": "in_progress"
     }
   ],
   "reporting_rules": [
     "Record every OGC distribution batch with date, purpose, amount, account, transaction hash, and approver.",
     "Record every grant allocation with project name, eligibility basis, amount, account, transaction hash, and public summary.",
     "Record every liquidity action with wallet, amount, counter asset, transaction hash, and policy reference.",
+    "Record every official impact-routing transaction or reviewed batch with gross amount, recipient amount, 5 percent contribution, asset, flow type, public-safe reference, and transaction hash.",
     "Do not publish secret keys, seed phrases, private memos, payroll personal data, or private recipient information."
   ]
 }

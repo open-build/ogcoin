@@ -1,0 +1,63 @@
+{
+  "schema_version": "0.1",
+  "policy_version": "0.1",
+  "status": "pilot",
+  "effective_date": "2026-06-23",
+  "policy_url": "https://www.opengreencoin.com/impact-policy.html",
+  "asset": {
+    "network": "Stellar Public Network",
+    "code": "OGC",
+    "issuer": "GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57"
+  },
+  "routing": {
+    "gross_amount_definition": "The amount shown to and authorized by the payer is split between the recipient and the impact treasury.",
+    "recipient_rate": "0.95",
+    "contribution_rate": "0.05",
+    "treasury": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
+    "atomic_payment_operations": 2,
+    "maximum_gross_per_transaction_ogc": "100",
+    "maximum_pilot_treasury_balance_ogc": "100"
+  },
+  "included_flows": [
+    "official_app_checkout",
+    "official_campaign",
+    "official_marketplace",
+    "official_sponsorship"
+  ],
+  "excluded_flows": [
+    "direct_peer_to_peer",
+    "wallet_to_wallet_transfer",
+    "dex_trade",
+    "liquidity_activity",
+    "airdrop",
+    "grant_disbursement",
+    "payroll",
+    "refund",
+    "treasury_disbursement",
+    "issuer_operation"
+  ],
+  "eligible_uses": [
+    "climate_resilience",
+    "community_software",
+    "public_good_infrastructure",
+    "education",
+    "ethical_ai",
+    "aligned_open_source_projects"
+  ],
+  "required_disclosures": [
+    "gross amount",
+    "recipient amount",
+    "5 percent impact contribution",
+    "asset",
+    "impact treasury public address",
+    "flow reference",
+    "refund terms"
+  ],
+  "restrictions": [
+    "The contribution is not an asset-level transfer tax.",
+    "Direct peer-to-peer transfers are not modified.",
+    "The contribution must not be represented as tax deductible unless a qualified organization separately confirms eligibility.",
+    "Every routed payment must be authorized after the split is disclosed.",
+    "Pilot limits must not be increased before treasury multisig and an updated public policy are approved."
+  ]
+}

@@ -21,7 +21,7 @@ This toolkit provides Python scripts and utilities for:
 - **`token_issuer.py`** - Issue and manage OGC tokens
 - **`transaction_monitor.py`** - Monitor and report on transactions
 - **`transparency_reporter.py`** - Generate reports for website integration
-- **`open_build_fund.py`** - Open Build fund management and transaction fees
+- **`open_build_fund.py`** - Legacy calculation compatibility; direct signing and submission are disabled
 
 ### Utility Scripts
 
@@ -33,7 +33,9 @@ This toolkit provides Python scripts and utilities for:
 - **`create_issuer_signer_xdr.py`** - Build an unsigned issuer signer and threshold hardening XDR
 - **`create_role_wallets.py`** - Generate public role wallet addresses and a local gitignored seed file
 - **`create_tiny_liquidity_offer.py`** - Build and submit one explicitly priced, policy-limited OGC/XLM sell offer
-- **`add_role_trustlines.py`** - Add OGC trustlines to the grant and liquidity wallets from local environment secrets
+- **`create_impact_payment_xdr.py`** - Build an unsigned atomic 95/5 OGC impact payment with a reconciliation manifest
+- **`impact_policy.py`** - Load and validate the machine-readable impact policy and calculate exact Stellar amounts
+- **`add_role_trustlines.py`** - Add bounded OGC trustlines to treasury, grant, and liquidity wallets from local environment secrets
 - **`lobstr_recovery.py`** - Diagnose Stellar multisig blockers, build role-wallet funding XDRs, and submit fully signed XDRs
 - **`ogcoin_console.py`** - Local web console for legitimacy checks, recipient prep, unsigned XDR generation, and promotion copy
 - **`ogcoin_next_steps.py`** - Non-custodial helper for trustline campaigns, wallet designation commands, and tiny liquidity readiness checks
@@ -377,71 +379,51 @@ ogcoin/
 ## Monitoring and Transparency
 
 The toolkit includes built-in transparency features:
-- Monthly transaction reports
-- Real-time balance tracking  
-- Public API endpoints for community verification
-- Integration with website for public display
+- Public account and transaction verification through Horizon
+- Reviewed records in `data/transparency-log.json`
+- Public-safe impact payment manifests for reconciliation
+- Website rendering through `transparency.html`
 
-## Open Build Fund System
+## OpenGreenCoin Impact Routing
 
 ### Overview
 
-OGCoin includes tooling for participating payments to include an explicit contribution to the Open Build fund. This fund supports:
+OpenGreenCoin Impact Policy v0.1 applies only to official routed OGC payments. The payer-authorized gross amount is split atomically:
 
-- **Open Source Projects** (50%) - Direct funding for critical infrastructure and innovative projects
-- **Developer Training** (30%) - Bootcamps, mentorship programs, and educational resources  
-- **Operations** (20%) - Platform maintenance, governance, and community management
+- `95%` to the recipient
+- `5%` to the Open Source Impact Treasury
+- `0%` imposed on direct peer-to-peer transfers
 
-### How It Works
+The machine-readable source of truth is `data/impact-policy.json`. Pilot limits are `100 OGC` gross per transaction and `100 OGC` held by the impact treasury until multisig and an updated policy are approved.
 
-1. **Contribution Collection**: Participating payment tools can route a contribution to the fund
-2. **Community Governance**: OGC holders vote on fund distribution proposals
-3. **Transparent Distribution**: All allocations are publicly tracked and reported
-
-### Fund Commands
+### Build A Routed Payment
 
 ```bash
-# Check current fund balance and allocations
-python cli.py fund balance
-
-# Calculate fund contribution for a participating transaction
-python cli.py fund calculate --amount 100
-
-# Send transaction with an explicit fund contribution
-python cli.py fund send --source-secret SXXXXX... --destination GXXXXX... --amount 50
-
-# Generate comprehensive fund report
-python cli.py fund report
-
-# View community proposal system
-python cli.py fund proposal
+python3 tools/create_impact_payment_xdr.py \
+  --source G...PAYER \
+  --recipient G...RECIPIENT \
+  --gross-amount 100 \
+  --flow-type official_marketplace \
+  --reference order-123
 ```
 
-### Testing the Fund System
+The helper verifies all three OGC trustlines, payer balances, treasury caps, and XLM reserve headroom. It creates:
+
+- an unsigned two-operation XDR in `.ogcoin-xdr/`
+- a JSON manifest showing gross, recipient, and contribution amounts
+- a deterministic transaction hash for reconciliation
+
+It never reads a payer secret, signs, or submits. Review the manifest before importing the XDR into a trusted Stellar signer.
+Regenerate the XDR if its 15-minute time bound expires or the payer account submits another transaction first.
+
+### Test The Policy
 
 ```bash
-# Run comprehensive fund system tests
-python test_fund.py
-
-# Test different transaction scenarios
-python cli.py fund calculate --amount 10
-python cli.py fund calculate --amount 1000
+python3 tools/test_impact_policy.py
+python3 tools/cli.py fund calculate --amount 100
 ```
 
-### Impact Projections
-
-With moderate adoption (1,000 daily transactions averaging 25 OGC):
-- **Daily Fund Collection**: 25 OGC
-- **Annual Impact**: 9,125 OGC allocated to open source support
-- **Projects Funded**: Estimated 10-20 critical projects per year
-- **Developers Trained**: 50-100 developers through funded programs
-
-### Transparency Features
-
-- All fund transactions are publicly visible on Stellar
-- Monthly allocation reports published automatically
-- Community voting records maintained on-chain
-- Real-time fund balance available via API
+`tools/open_build_fund.py` is retained only for calculation compatibility. Its old direct-submit path is disabled because it accepted secrets on the command line and routed to the wrong account.
 
 ## Support
 

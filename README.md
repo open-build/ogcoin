@@ -21,9 +21,11 @@ ogcoin/
 ├── trust.html              # Public verification, risk, and governance page
 ├── trustline.html          # Wallet-specific OGC trustline onboarding guide
 ├── governance.html         # Issuer and treasury governance policy
+├── impact-policy.html      # Official routed-payment impact policy
 ├── liquidity-policy.html   # Public OGC/XLM liquidity readiness policy
 ├── transparency.html       # Public transparency log viewer
 ├── data/
+│   ├── impact-policy.json  # Machine-readable 95/5 routing policy
 │   └── transparency-log.json # Machine-readable transparency records
 ├── roadmap.html            # Development roadmap and progress tracking
 ├── airdrop.html            # Airdrop pilot and trustline instructions
@@ -90,6 +92,19 @@ python3 tools/ogcoin_next_steps.py liquidity-checklist --online
 ```
 
 The helpers print reviewable commands only. They do not fund accounts, sign transactions, or submit anything to Stellar. `create_role_wallets.py` writes public addresses to Markdown and private seeds to a gitignored local file for immediate secure custody. See `devdocs/NEXT_STEPS_RUNBOOK.md`.
+
+Build a reviewable official routed payment using OpenGreenCoin Impact Policy v0.1:
+
+```bash
+python3 tools/create_impact_payment_xdr.py \
+  --source G...PAYER \
+  --recipient G...RECIPIENT \
+  --gross-amount 100 \
+  --flow-type official_marketplace \
+  --reference order-123
+```
+
+The helper creates an unsigned Stellar transaction with `95%` to the recipient and `5%` to the Open Source Impact Treasury. Direct peer-to-peer transfers are unaffected. It also writes a public-safe reconciliation manifest beside the XDR.
 
 To run the full next-step command set and write a Markdown outcome report:
 

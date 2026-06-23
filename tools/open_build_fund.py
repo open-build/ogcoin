@@ -1,6 +1,8 @@
-"""
-Open Build Fund Manager
-Handles automatic collection and distribution of transaction fees to support open source projects
+"""Legacy compatibility helpers for impact contribution calculations.
+
+Direct signing and submission from this module are disabled. Official routed
+payments must use create_impact_payment_xdr.py so the payer can review and sign
+an atomic 95/5 transaction without sharing a secret key.
 """
 
 import logging
@@ -19,9 +21,13 @@ except ImportError:
     print("Warning: stellar-sdk not installed. Install with: pip install stellar-sdk")
 
 from config import Config as OGCConfig
+from impact_policy import calculate_split, load_policy
+
+IMPACT_TREASURY = "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F"
+
 
 class OpenBuildFund:
-    """Manages the Open Build fund that receives transaction fees"""
+    """Legacy read-only interface for the Open Source Impact Treasury."""
     
     def __init__(self, config: OGCConfig):
         """Initialize fund manager with configuration
@@ -36,15 +42,11 @@ class OpenBuildFund:
         self.server = Server(config.get_horizon_url())
         self.network_passphrase = config.get_network_passphrase()
         
-        # Fund allocation percentages
-        self.ALLOCATION = {
-            'open_source_projects': 0.50,  # 50% to open source projects
-            'developer_training': 0.30,    # 30% to developer education
-            'operations': 0.20             # 20% to operations and governance
-        }
+        # Policy v0.1 does not promise fixed allocation percentages.
+        self.ALLOCATION = {}
         
-        # Transaction fee percentage (0.1% of transaction amount)
-        self.TRANSACTION_FEE_RATE = Decimal('0.001')
+        # OpenGreenCoin Impact Policy v0.1 contribution rate.
+        self.TRANSACTION_FEE_RATE = Decimal('0.05')
         
         # Setup logging
         logging.basicConfig(level=logging.INFO)
@@ -60,14 +62,12 @@ class OpenBuildFund:
             Dict with fund_amount and remaining_amount
         """
         try:
-            amount = Decimal(transaction_amount)
-            fund_contribution = amount * self.TRANSACTION_FEE_RATE
-            remaining_amount = amount - fund_contribution
+            split = calculate_split(transaction_amount, load_policy())
             
             return {
-                'fund_amount': str(fund_contribution),
-                'remaining_amount': str(remaining_amount),
-                'fee_rate': str(self.TRANSACTION_FEE_RATE)
+                'fund_amount': split['contribution_amount'],
+                'remaining_amount': split['recipient_amount'],
+                'fee_rate': split['contribution_rate']
             }
         except Exception as e:
             self.logger.error(f"Error calculating fund contribution: {e}")
@@ -75,83 +75,15 @@ class OpenBuildFund:
     
     def create_fund_transaction(self, source_secret: str, recipient: str, 
                               amount: str, memo: str = "") -> Dict[str, Any]:
-        """Create a transaction that includes fund contribution
-        
-        Args:
-            source_secret: Secret key of the sender
-            recipient: Public key of the recipient
-            amount: Amount to send (before fund deduction)
-            memo: Optional memo for the transaction
-            
-        Returns:
-            Transaction result with fund contribution details
-        """
-        try:
-            # Calculate amounts
-            amounts = self.calculate_fund_contribution(amount)
-            fund_amount = amounts['fund_amount']
-            send_amount = amounts['remaining_amount']
-            
-            # Get accounts
-            source_keypair = Keypair.from_secret(source_secret)
-            source_account = self.server.load_account(source_keypair.public_key)
-            
-            # Get fund account (in production, this would be a dedicated fund account)
-            fund_account = self.config.get_issuer_public_key()  # For now, use issuer as fund
-            
-            # Create asset
-            ogc_asset = Asset(self.config.get_token_code(), self.config.get_issuer_public_key())
-            
-            # Build transaction with two payments: one to recipient, one to fund
-            transaction_builder = TransactionBuilder(
-                source_account=source_account,
-                network_passphrase=self.network_passphrase,
-                base_fee=100
-            )
-            
-            # Payment to recipient
-            transaction_builder.append_payment_op(
-                destination=recipient,
-                asset=ogc_asset,
-                amount=send_amount
-            )
-            
-            # Payment to fund (only if fund amount is significant)
-            if Decimal(fund_amount) > Decimal('0.0000001'):
-                transaction_builder.append_payment_op(
-                    destination=fund_account,
-                    asset=ogc_asset,
-                    amount=fund_amount
-                )
-            
-            # Add memo if provided
-            if memo:
-                transaction_builder.add_text_memo(memo)
-            
-            # Build and sign transaction
-            transaction = transaction_builder.set_timeout(300).build()
-            transaction.sign(source_secret)
-            
-            # Submit transaction
-            response = self.server.submit_transaction(transaction)
-            
-            self.logger.info(f"Fund transaction successful: {response['hash']}")
-            
-            return {
-                'success': True,
-                'transaction_hash': response['hash'],
-                'recipient_amount': send_amount,
-                'fund_contribution': fund_amount,
-                'fund_account': fund_account,
-                'fee_rate': amounts['fee_rate']
-            }
-            
-        except Exception as e:
-            self.logger.error(f"Error creating fund transaction: {e}")
-            return {
-                'success': False,
-                'error': str(e)
-            }
+        """Refuse legacy secret-key submission and direct operators to the safe builder."""
+        return {
+            "success": False,
+            "error": (
+                "Direct impact-payment signing is disabled. Use "
+                "tools/create_impact_payment_xdr.py to build an unsigned, "
+                "reviewable 95/5 transaction."
+            ),
+        }
     
     def get_fund_balance(self) -> Dict[str, Any]:
         """Get current balance of the Open Build fund
@@ -160,13 +92,13 @@ class OpenBuildFund:
             Fund balance information
         """
         try:
-            fund_account = self.config.get_issuer_public_key()  # For now, use issuer as fund
-            account_info = self.server.load_account(fund_account).load()
+            fund_account = IMPACT_TREASURY
+            account_info = self.server.accounts().account_id(fund_account).call()
             
             ogc_balance = "0"
             for balance in account_info['balances']:
                 if (balance['asset_type'] != 'native' and 
-                    balance.get('asset_code') == self.config.get_token_code()):
+                    balance.get('asset_code') == self.config.get('token_code', 'OGC')):
                     ogc_balance = balance['balance']
                     break
             
@@ -196,9 +128,7 @@ class OpenBuildFund:
             total = Decimal(total_fund_balance)
             
             return {
-                'open_source_projects': str(total * Decimal(str(self.ALLOCATION['open_source_projects']))),
-                'developer_training': str(total * Decimal(str(self.ALLOCATION['developer_training']))),
-                'operations': str(total * Decimal(str(self.ALLOCATION['operations']))),
+                'unallocated': str(total),
                 'total': str(total)
             }
             
@@ -220,7 +150,7 @@ class OpenBuildFund:
             
             allocations = self.calculate_allocation_amounts(fund_info['ogc_balance'])
             
-            # Get recent transactions (simplified - in production would query fund account)
+            # Contributions are reconciled from Horizon and reviewed manifests.
             recent_contributions = self._get_recent_contributions()
             
             return {
@@ -247,16 +177,8 @@ class OpenBuildFund:
         Returns:
             List of recent contributions
         """
-        # Simplified implementation - in production would query actual transactions
-        # For now, return placeholder data
-        return [
-            {
-                'date': (datetime.now() - timedelta(days=1)).isoformat(),
-                'amount': '10.5000000',
-                'transaction_hash': 'placeholder_hash_1',
-                'contributor': 'Anonymous'
-            }
-        ]
+        # Reporting must be derived from Horizon and reviewed manifests.
+        return []
     
     def create_distribution_proposal(self, proposals: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Create a proposal for fund distribution
@@ -286,9 +208,9 @@ class OpenBuildFund:
                 'proposals': proposals,
                 'total_requested': str(total_requested),
                 'available_balance': str(available_balance),
-                'status': 'pending_community_vote',
+                'status': 'pending_review',
                 'created_at': datetime.now().isoformat(),
-                'voting_deadline': (datetime.now() + timedelta(days=7)).isoformat()
+                'review_deadline': (datetime.now() + timedelta(days=7)).isoformat()
             }
             
             # In production, this would be stored in a database or distributed ledger
@@ -302,7 +224,7 @@ class OpenBuildFund:
                 'error': str(e)
             }
 
-def calculate_transaction_with_fund_fee(amount: str, fee_rate: str = "0.001") -> Dict[str, str]:
+def calculate_transaction_with_fund_fee(amount: str, fee_rate: str = "0.05") -> Dict[str, str]:
     """Utility function to calculate transaction amounts including fund fee
     
     Args:
@@ -313,17 +235,15 @@ def calculate_transaction_with_fund_fee(amount: str, fee_rate: str = "0.001") ->
         Dict with calculated amounts
     """
     try:
-        original = Decimal(amount)
-        rate = Decimal(fee_rate)
-        
-        fund_fee = original * rate
-        recipient_amount = original - fund_fee
+        if Decimal(fee_rate) != Decimal("0.05"):
+            raise ValueError("OpenGreenCoin Impact Policy v0.1 requires a 0.05 contribution rate")
+        split = calculate_split(amount, load_policy())
         
         return {
-            'original_amount': str(original),
-            'fund_fee': str(fund_fee),
-            'recipient_amount': str(recipient_amount),
-            'fee_rate': str(rate)
+            'original_amount': split['gross_amount'],
+            'fund_fee': split['contribution_amount'],
+            'recipient_amount': split['recipient_amount'],
+            'fee_rate': split['contribution_rate']
         }
         
     except Exception as e:

@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-06-23T18:09:21Z",
+  "updated_at": "2026-06-23T19:56:01Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -313,6 +313,24 @@
       "links": [
         "https://www.opengreencoin.com/liquidity-policy.html",
         "https://stellar.expert/explorer/public/tx/026b49b39760343d8f1d9f22745e0cf0a52bb8395ab871f72e4866b747168299"
+      ]
+    },
+    {
+      "id": "2026-06-23-tiny-ogc-xlm-sdex-offer",
+      "date": "2026-06-23",
+      "category": "liquidity",
+      "status": "confirmed_on_chain",
+      "title": "First policy-limited OGC/XLM offer opened",
+      "summary": "Created one public SDEX sell offer for 1 OGC at an explicit limit price of 1 XLM per OGC. This intentionally tiny market test is not a stable price, valuation, redemption, reserve, buyback, or liquidity guarantee.",
+      "account_role": "liquidity",
+      "account": "GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC",
+      "amount_ogc": "1",
+      "counter_asset": "XLM",
+      "transaction_hash": "c6e5055e8ce301b1ec6fcc256fee045e7e50894bcb7b1a04d6bc158f878f9d20",
+      "ledger": 63166368,
+      "links": [
+        "https://www.opengreencoin.com/liquidity-policy.html",
+        "https://stellar.expert/explorer/public/tx/c6e5055e8ce301b1ec6fcc256fee045e7e50894bcb7b1a04d6bc158f878f9d20"
       ]
     }
   ],

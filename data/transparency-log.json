@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-06-06T16:52:06Z",
+  "updated_at": "2026-06-23T18:09:21Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -295,6 +295,24 @@
       "links": [
         "https://www.opengreencoin.com/liquidity-policy.html",
         "https://stellar.expert/explorer/public/tx/9a5a99aa9ec69e6bd728c307e6821c1d61c2eb8e3a456aa9d412b645ce988008"
+      ]
+    },
+    {
+      "id": "2026-06-23-liquidity-wallet-ogc-inventory",
+      "date": "2026-06-23",
+      "category": "liquidity",
+      "status": "confirmed_on_chain",
+      "title": "Liquidity wallet funded with test OGC inventory",
+      "summary": "Transferred 1 OGC from the public distribution wallet to the designated liquidity wallet for the policy-limited first OGC/XLM market test.",
+      "account_role": "liquidity",
+      "account": "GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC",
+      "amount_ogc": "1",
+      "counter_asset": "XLM",
+      "transaction_hash": "026b49b39760343d8f1d9f22745e0cf0a52bb8395ab871f72e4866b747168299",
+      "ledger": 63165264,
+      "links": [
+        "https://www.opengreencoin.com/liquidity-policy.html",
+        "https://stellar.expert/explorer/public/tx/026b49b39760343d8f1d9f22745e0cf0a52bb8395ab871f72e4866b747168299"
       ]
     }
   ],

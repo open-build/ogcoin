@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-06-23T19:56:01Z",
+  "updated_at": "2026-06-23T21:04:46Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -28,7 +28,7 @@
     {
       "role": "treasury",
       "address": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
-      "status": "designated",
+      "status": "active",
       "policy": "Cold or low-frequency account for approved OGCoin treasury activity; no routine airdrops, payroll, or liquidity operations."
     },
     {
@@ -331,6 +331,42 @@
       "links": [
         "https://www.opengreencoin.com/liquidity-policy.html",
         "https://stellar.expert/explorer/public/tx/c6e5055e8ce301b1ec6fcc256fee045e7e50894bcb7b1a04d6bc158f878f9d20"
+      ]
+    },
+    {
+      "id": "2026-06-23-treasury-wallet-funded",
+      "date": "2026-06-23",
+      "category": "treasury",
+      "status": "confirmed_on_chain",
+      "title": "Treasury wallet funded",
+      "summary": "Activated and funded the designated public treasury wallet with 5.1292704 XLM for cold or low-frequency reserves and approved program funding.",
+      "account_role": "treasury",
+      "account": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
+      "amount_ogc": "0",
+      "counter_asset": "XLM",
+      "transaction_hash": "12e30deb9ff04459f1578304cf6ac00b95a8aa825db6220f47f71e5c00066f53",
+      "ledger": 63167043,
+      "links": [
+        "https://www.opengreencoin.com/governance.html",
+        "https://stellar.expert/explorer/public/tx/12e30deb9ff04459f1578304cf6ac00b95a8aa825db6220f47f71e5c00066f53"
+      ]
+    },
+    {
+      "id": "2026-06-23-treasury-wallet-ogc-trustline",
+      "date": "2026-06-23",
+      "category": "treasury",
+      "status": "confirmed_on_chain",
+      "title": "Treasury wallet OGC trustline established",
+      "summary": "Established an authorized OGC trustline for the public treasury wallet with a conservative 100000 OGC receive limit. The wallet currently holds 0 OGC.",
+      "account_role": "treasury",
+      "account": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
+      "amount_ogc": "0",
+      "counter_asset": "OGC",
+      "transaction_hash": "354a8c6f9a9c090eeefead21c109a2e12a0c850badd45df52cb5c9032a405512",
+      "ledger": 63167061,
+      "links": [
+        "https://www.opengreencoin.com/governance.html",
+        "https://stellar.expert/explorer/public/tx/354a8c6f9a9c090eeefead21c109a2e12a0c850badd45df52cb5c9032a405512"
       ]
     }
   ],

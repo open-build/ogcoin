@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create OGC trustlines for the public grant and liquidity role wallets.
+"""Create OGC trustlines for the public treasury, grant, and liquidity wallets.
 
 Secrets are read from a local gitignored env file or environment variables and
 are never printed. By default this writes signed XDR files for review; pass
@@ -28,6 +28,11 @@ ASSET_CODE = "OGC"
 ISSUER = "GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57"
 
 ROLES = {
+    "treasury": {
+        "account": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
+        "env": "OGC_TREASURY_SECRET",
+        "limit": "100000",
+    },
     "grant": {
         "account": "GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV",
         "env": "OGC_GRANT_SECRET",
@@ -172,7 +177,12 @@ def parse_args() -> argparse.Namespace:
         "roles",
         nargs="*",
         default=None,
-        help="Role wallets to process. Defaults to grant and liquidity.",
+        help="Role wallets to process. Defaults to treasury, grant, and liquidity.",
+    )
+    parser.add_argument(
+        "--treasury-limit",
+        default=ROLES["treasury"]["limit"],
+        help="Treasury OGC trustline limit.",
     )
     parser.add_argument("--grant-limit", default=ROLES["grant"]["limit"], help="Grant OGC trustline limit.")
     parser.add_argument(
@@ -183,7 +193,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--env-file",
         default=str(DEFAULT_ENV_FILE),
-        help="Local env file with OGC_GRANT_SECRET and OGC_LIQUIDITY_SECRET.",
+        help="Local env file with OGC_TREASURY_SECRET, OGC_GRANT_SECRET, and OGC_LIQUIDITY_SECRET.",
     )
     parser.add_argument("--base-fee", type=int, default=100, help="Base fee in stroops. Default: 100.")
     parser.add_argument("--output-dir", default=str(DEFAULT_XDR_DIR), help="Directory for signed XDR files.")
@@ -200,6 +210,7 @@ def main() -> int:
         load_env_file(env_file)
 
         limits = {
+            "treasury": decimal_text(args.treasury_limit, "--treasury-limit"),
             "grant": decimal_text(args.grant_limit, "--grant-limit"),
             "liquidity": decimal_text(args.liquidity_limit, "--liquidity-limit"),
         }

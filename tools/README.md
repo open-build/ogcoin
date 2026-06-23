@@ -173,7 +173,7 @@ Write a full outcome report:
 python3 run_next_steps_report.py
 ```
 
-### Add Grant and Liquidity Trustlines
+### Add Treasury, Grant, and Liquidity Trustlines
 
 After the role wallets are funded, add OGC trustlines from the wallet seeds without putting secrets in command history. From the repository root, first edit the local gitignored file:
 
@@ -181,7 +181,7 @@ After the role wallets are funded, add OGC trustlines from the wallet seeds with
 open .ogcoin-secrets/role-wallets.env
 ```
 
-Paste the matching `S...` secret seed values into `OGC_GRANT_SECRET=` and `OGC_LIQUIDITY_SECRET=`, then run:
+Paste the matching `S...` secret seed values into `OGC_TREASURY_SECRET=`, `OGC_GRANT_SECRET=`, and `OGC_LIQUIDITY_SECRET=`, then run:
 
 ```bash
 python3 tools/add_role_trustlines.py
@@ -190,10 +190,11 @@ python3 tools/add_role_trustlines.py --submit
 
 The first command signs reviewable XDRs into `.ogcoin-xdr/` without broadcasting them. The second broadcasts only if each loaded secret derives the expected public role wallet:
 
+- treasury: `GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F`
 - grant: `GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV`
 - liquidity: `GAL3OOPQRNZ3MFX3AUR45M7P2DBF5LWSH3XWFI5CN7SZEMQWLOOOCRRC`
 
-Default trustline limits are `100000` OGC for the grant wallet and `1` OGC for the liquidity wallet. Override them with `--grant-limit` or `--liquidity-limit` only after approval.
+Default trustline limits are `100000` OGC for the treasury and grant wallets and `1` OGC for the liquidity wallet. Override them with `--treasury-limit`, `--grant-limit`, or `--liquidity-limit` only after approval.
 
 ### Send Liquidity Inventory
 

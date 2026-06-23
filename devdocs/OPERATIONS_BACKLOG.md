@@ -17,9 +17,9 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 - Trustline guide: public onboarding page at `https://www.opengreencoin.com/trustline.html`.
 - Liquidity policy: public guardrails page at `https://www.opengreencoin.com/liquidity-policy.html`.
 - Next-step runbook: `devdocs/NEXT_STEPS_RUNBOOK.md` with `tools/create_role_wallets.py`, `tools/ogcoin_next_steps.py`, and `tools/run_next_steps_report.py` for wallet generation, trustline, wallet, liquidity preparation, and outcome reporting.
-- OGC/XLM order book: no bids or asks at last check.
+- OGC/XLM order book: one policy-limited ask for `1 OGC` at `1 XLM`; no bids at last check.
 - Liquidity pools: none at last check.
-- Trustlines: low adoption; build slowly and transparently.
+- Trustlines: 5 authorized accounts; adoption remains low and should grow slowly and transparently.
 - Scheduled follow-up: active daily thread monitor for metadata, issuer state, liquidity, trustlines, and StellarExpert rating.
 
 ## Immediate Actions
@@ -40,10 +40,10 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P1 | Publish liquidity policy before market activity | Codex | `liquidity-policy.html` defines wallet, exposure, pause, and transparency requirements before OGC/XLM activity. |
 | Done | P1 | Add next-step runbook and prep helper | Codex | `devdocs/NEXT_STEPS_RUNBOOK.md`, `tools/create_role_wallets.py`, `tools/ogcoin_next_steps.py`, and `tools/run_next_steps_report.py` turn wallet generation, trustline growth, wallet designation, liquidity readiness, and outcome reporting into repeatable local commands. |
 | Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
-| Next | P1 | Designate treasury, grant, and liquidity wallets | Project lead | Choose public `G...` addresses, custody owners, signer thresholds, and routine movement limits using `devdocs/WALLET_DESIGNATION_WORKSHEET.md`. |
+| Done | P1 | Designate treasury, grant, and liquidity wallets | Project lead + Codex | All three public roles are published; treasury, grant, and liquidity wallets are active with bounded OGC trustlines. |
 | Next | P1 | Grow opt-in trustlines to 10-25 testers | Project lead + Codex | Share `trustline.html`, collect public Stellar addresses only, then validate with the local console. |
 | Next | P2 | Build recipient import workflow into console | Codex | Read Google Sheets CSV and produce validated local CSV for dry-run distribution. |
-| Next | P2 | Add first wallet designation record | Codex + project lead | Use `tools/transparency_log.py designate-account` after a wallet role is approved. |
+| Done | P2 | Add first wallet designation record | Codex + project lead | Treasury, grant, and liquidity designations and activation records are published in `data/transparency-log.json`. |
 
 ## Liquidity Readiness
 

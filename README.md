@@ -22,6 +22,7 @@ ogcoin/
 ├── trustline.html          # Wallet-specific OGC trustline onboarding guide
 ├── governance.html         # Issuer and treasury governance policy
 ├── impact-policy.html      # Official routed-payment impact policy
+├── checkout.html           # Static non-custodial 95/5 impact checkout
 ├── liquidity-policy.html   # Public OGC/XLM liquidity readiness policy
 ├── transparency.html       # Public transparency log viewer
 ├── data/
@@ -33,6 +34,7 @@ ogcoin/
 │   └── style.css          # Custom styles (ForgeWeb compatible)
 ├── js/
 │   ├── buildly-head.js    # ForgeWeb utilities
+│   ├── impact-checkout.js # Committed browser checkout bundle
 │   └── main.js            # Site-specific functionality
 ├── .github/
 │   └── workflows/
@@ -105,6 +107,16 @@ python3 tools/create_impact_payment_xdr.py \
 ```
 
 The helper creates an unsigned Stellar transaction with `95%` to the recipient and `5%` to the Open Source Impact Treasury. Direct peer-to-peer transfers are unaffected. It also writes a public-safe reconciliation manifest beside the XDR.
+
+The public static checkout at `checkout.html` provides the same policy checks in the browser. It supports direct Freighter authorization on Stellar Mainnet and unsigned XDR export for other signing tools. The page never asks for or stores secret keys.
+See `devdocs/IMPACT_CHECKOUT_RUNBOOK.md` for the architecture, operator workflow, supported link parameters, and safeguards.
+
+Build and test the committed checkout bundle after editing files under `src/`:
+
+```bash
+npm install
+npm run check
+```
 
 To run the full next-step command set and write a Markdown outcome report:
 

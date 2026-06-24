@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGCoin Impact Checkout | OpenGreenCoin</title>
+    <meta name="description" content="Prepare and authorize an official OGC payment with a disclosed 95 percent recipient and 5 percent Open Source Impact Treasury split.">
+    <link rel="canonical" href="https://www.opengreencoin.com/checkout.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1b5fa3',
+                        secondary: '#144a84',
+                        accent: '#f9943b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/impact-checkout.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="js/buildly-head.js"></script>
+</head>
+<body class="checkout-page">
+    <nav class="checkout-nav bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="index.html" class="text-2xl font-bold text-primary">OGCoin</a>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-primary">Home</a>
+                    <a href="impact-policy.html" class="text-gray-700 hover:text-primary">Impact Policy</a>
+                    <a href="transparency.html" class="text-gray-700 hover:text-primary">Transparency</a>
+                    <a href="checkout.html" class="text-primary font-semibold">Checkout</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary" aria-expanded="false" aria-label="Open navigation menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-primary">Home</a>
+                <a href="impact-policy.html" class="block py-2 text-gray-700 hover:text-primary">Impact Policy</a>
+                <a href="transparency.html" class="block py-2 text-gray-700 hover:text-primary">Transparency</a>
+                <a href="checkout.html" class="block py-2 text-primary font-semibold">Checkout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="checkout-shell">
+        <header class="checkout-heading">
+            <div>
+                <h1>Impact Checkout</h1>
+                <p>Prepare one atomic OGC transaction: 95% to the approved recipient and 5% to the Open Source Impact Treasury.</p>
+            </div>
+            <span class="network-pill">Stellar Mainnet</span>
+        </header>
+
+        <div class="checkout-layout">
+            <section class="checkout-panel" aria-labelledby="payment-details-heading">
+                <div class="checkout-panel__header">
+                    <h2 id="payment-details-heading">Payment details</h2>
+                </div>
+                <div class="checkout-panel__body">
+                    <div class="mode-switch" aria-label="Signing method">
+                        <button type="button" data-mode="freighter" aria-pressed="true">
+                            <span data-lucide="wallet"></span>
+                            Freighter
+                        </button>
+                        <button type="button" data-mode="manual" aria-pressed="false">
+                            <span data-lucide="file-key"></span>
+                            Manual XDR
+                        </button>
+                    </div>
+
+                    <div id="freighter-panel" class="wallet-panel">
+                        <div class="wallet-row">
+                            <div>
+                                <p class="wallet-label">Payer account</p>
+                                <p id="connected-address" class="wallet-address">Not connected</p>
+                                <p class="field-help">Need the wallet? <a href="https://freighter.app/" target="_blank" rel="noopener">Get Freighter</a>.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="wallet-state" class="status-badge status-badge--draft">Not connected</span>
+                                <button id="connect-wallet" type="button" class="checkout-button checkout-button--secondary">
+                                    Connect Freighter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="manual-panel" class="wallet-panel" hidden>
+                        <div class="form-field">
+                            <label for="manual-source">Payer public address</label>
+                            <input id="manual-source" name="manual_source" type="text" inputmode="text" autocomplete="off" placeholder="G...">
+                            <p class="field-help">Public address only. Never paste a Stellar secret key into this site.</p>
+                        </div>
+                    </div>
+
+                    <form id="impact-checkout-form" data-ogc-checkout novalidate>
+                        <div class="field-grid">
+                            <div class="form-field form-field--wide">
+                                <label for="recipient">Approved recipient address</label>
+                                <input id="recipient" name="recipient" type="text" inputmode="text" autocomplete="off" placeholder="G..." required>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="gross-amount">Gross amount</label>
+                                <input id="gross-amount" name="gross_amount" type="number" min="0.000002" max="100" step="0.0000001" value="10" required>
+                                <p class="field-help">Pilot maximum: 100 OGC.</p>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="flow-type">Official flow</label>
+                                <select id="flow-type" name="flow_type" required>
+                                    <option value="official_app_checkout">Official app checkout</option>
+                                    <option value="official_campaign">Approved campaign</option>
+                                    <option value="official_marketplace">Approved marketplace</option>
+                                    <option value="official_sponsorship">Approved sponsorship</option>
+                                </select>
+                            </div>
+
+                            <div class="form-field form-field--wide">
+                                <label for="flow-reference">Public-safe reference</label>
+                                <input id="flow-reference" name="reference" type="text" maxlength="20" pattern="[A-Za-z0-9._-]{1,20}" placeholder="campaign-001" required>
+                                <p class="field-help">This becomes the public memo. Do not include names, email addresses, or private information.</p>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-row">
+                            <input id="refund-acknowledgement" name="refund_acknowledgement" type="checkbox" required>
+                            <label for="refund-acknowledgement">I understand that refunds are not automatic. An approved refund must separately return both the recipient and treasury portions under the applicable campaign or marketplace terms.</label>
+                        </div>
+
+                        <div class="checkout-form-actions">
+                            <button id="prepare-payment" type="button" class="checkout-button checkout-button--primary checkout-button--full">
+                                Prepare and review
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="checkout-status" class="checkout-status" role="status" aria-live="polite">
+                        Connect Freighter to prepare a payment. The site never receives your secret key.
+                    </div>
+                </div>
+            </section>
+
+            <aside class="checkout-panel checkout-review" aria-labelledby="review-heading">
+                <div class="checkout-panel__header">
+                    <h2 id="review-heading">Transaction review</h2>
+                    <span id="review-badge" class="status-badge status-badge--draft">Draft</span>
+                </div>
+                <div class="checkout-panel__body">
+                    <div class="review-split">
+                        <div class="review-split__row">
+                            <span>Gross authorization</span>
+                            <strong id="review-gross">10 OGC</strong>
+                        </div>
+                        <div class="review-split__row">
+                            <span>Recipient, 95%</span>
+                            <strong id="review-recipient-amount">9.5 OGC</strong>
+                        </div>
+                        <div class="review-split__row review-split__row--impact">
+                            <span>Impact treasury, 5%</span>
+                            <strong id="review-contribution">0.5 OGC</strong>
+                        </div>
+                    </div>
+
+                    <dl class="review-details">
+                        <div><dt>Payer</dt><dd id="review-source">Not connected</dd></div>
+                        <div><dt>Recipient</dt><dd id="review-recipient">Not set</dd></div>
+                        <div><dt>Flow</dt><dd id="review-flow">Official app checkout</dd></div>
+                        <div><dt>Reference</dt><dd id="review-reference">Not set</dd></div>
+                        <div><dt>Asset</dt><dd>OGC on Stellar Mainnet</dd></div>
+                    </dl>
+
+                    <div class="atomic-note">
+                        <span data-lucide="shield-check"></span>
+                        <span>Both payments are operations in one transaction. Stellar applies both or neither.</span>
+                    </div>
+
+                    <div id="review-actions" class="checkout-form-actions" hidden>
+                        <button id="sign-submit" type="button" class="checkout-button checkout-button--primary checkout-button--full">
+                            Sign and submit
+                        </button>
+                        <div id="manual-actions" hidden></div>
+                    </div>
+
+                    <div id="xdr-panel" class="xdr-panel" hidden>
+                        <h3>Unsigned transaction XDR</h3>
+                        <p class="field-help">Sign within 15 minutes. Preparing another transaction from the same payer account will invalidate this sequence number.</p>
+                        <textarea id="xdr-output" class="xdr-output" readonly aria-label="Unsigned transaction XDR"></textarea>
+                        <div class="inline-actions">
+                            <button id="copy-xdr" type="button" class="checkout-button checkout-button--secondary">Copy XDR</button>
+                            <button id="download-xdr" type="button" class="checkout-button checkout-button--secondary">Download XDR</button>
+                        </div>
+                    </div>
+
+                    <div id="receipt-panel" class="receipt-panel" hidden>
+                        <h3>Payment receipt</h3>
+                        <div class="receipt-line"><span>Hash</span><code id="receipt-hash"></code></div>
+                        <div class="receipt-line"><span>Ledger</span><code id="receipt-ledger"></code></div>
+                        <div class="inline-actions">
+                            <a id="receipt-link" class="checkout-button checkout-button--secondary" href="#" target="_blank" rel="noopener">View transaction</a>
+                            <button id="download-receipt" type="button" class="checkout-button checkout-button--secondary">Download receipt</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="policy-strip">
+            <p>Direct peer-to-peer transfers are not taxed. This split applies only to official OpenGreenCoin flows that disclose and reference Impact Policy v0.1.</p>
+            <a href="impact-policy.html">Read the policy</a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-gray-400">
+            <p>Non-custodial static checkout. Secret keys stay in the payer's wallet or signing tool.</p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script src="js/impact-checkout.js"></script>
+</body>
+</html>

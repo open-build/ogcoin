@@ -185,6 +185,10 @@
             const forms = document.querySelectorAll('form');
             
             forms.forEach(form => {
+                if (form.matches('[data-ogc-checkout]')) {
+                    return;
+                }
+
                 form.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     

@@ -27,6 +27,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Test and build checkout
+        run: |
+          npm ci
+          npm run check
+          git diff --exit-code -- js/impact-checkout.js
         
       - name: Validate site structure
         run: |
@@ -36,6 +48,9 @@ jobs:
           test -f css/style.css || (echo "Missing CSS file" && exit 1)
           test -f js/main.js || (echo "Missing main JavaScript file" && exit 1)
           test -f js/buildly-head.js || (echo "Missing ForgeWeb head JavaScript" && exit 1)
+          test -f checkout.html || (echo "Missing impact checkout" && exit 1)
+          test -f js/impact-checkout.js || (echo "Missing impact checkout bundle" && exit 1)
+          test -f data/impact-policy.json || (echo "Missing impact policy data" && exit 1)
           echo "Site structure validation passed!"
           
       - name: Setup Pages

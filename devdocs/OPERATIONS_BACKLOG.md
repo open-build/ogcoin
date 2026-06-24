@@ -1,6 +1,6 @@
 # OGCoin Operations Backlog
 
-Last updated: 2026-05-23
+Last updated: 2026-06-24
 
 This is the working list for getting OGCoin from "asset exists" to "credible, distributable, and responsibly tradable." Keep transaction signing, treasury movement, payroll decisions, and liquidity commitments behind explicit human approval.
 
@@ -16,6 +16,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 - Transparency log: public page at `https://www.opengreencoin.com/transparency.html` with machine-readable records in `data/transparency-log.json`.
 - Trustline guide: public onboarding page at `https://www.opengreencoin.com/trustline.html`.
 - Liquidity policy: public guardrails page at `https://www.opengreencoin.com/liquidity-policy.html`.
+- Impact checkout: static non-custodial checkout at `https://www.opengreencoin.com/checkout.html` with Freighter authorization and manual unsigned-XDR export.
 - Next-step runbook: `devdocs/NEXT_STEPS_RUNBOOK.md` with `tools/create_role_wallets.py`, `tools/ogcoin_next_steps.py`, and `tools/run_next_steps_report.py` for wallet generation, trustline, wallet, liquidity preparation, and outcome reporting.
 - OGC/XLM order book: one policy-limited ask for `1 OGC` at `1 XLM`; no bids at last check.
 - Liquidity pools: none at last check.
@@ -43,7 +44,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P1 | Add next-step runbook and prep helper | Codex | `devdocs/NEXT_STEPS_RUNBOOK.md`, `tools/create_role_wallets.py`, `tools/ogcoin_next_steps.py`, and `tools/run_next_steps_report.py` turn wallet generation, trustline growth, wallet designation, liquidity readiness, and outcome reporting into repeatable local commands. |
 | Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
 | Next | P0 | Add impact treasury multisig before raising pilot caps | Project lead + signer | The treasury is currently single-key. Keep the 100 OGC transaction and treasury-balance caps until recovery and approval signers are tested. |
-| Next | P1 | Integrate impact split into ForgeWeb checkout | Codex + ForgeWeb maintainers | Display gross, recipient, contribution, treasury, reference, and refund terms before requesting a wallet signature. |
+| Done | P1 | Publish static impact checkout alongside ForgeWeb output | Codex | `checkout.html` displays the gross, recipient, contribution, treasury, reference, and refund terms; validates mainnet accounts and caps; and supports Freighter or unsigned-XDR authorization without a server. |
 | Next | P1 | Add reviewed impact receipt import | Codex | Import signed transaction hashes and manifests into a public-safe reconciliation report without payer secrets or private customer data. |
 | Done | P1 | Designate treasury, grant, and liquidity wallets | Project lead + Codex | All three public roles are published; treasury, grant, and liquidity wallets are active with bounded OGC trustlines. |
 | Next | P1 | Grow opt-in trustlines to 10-25 testers | Project lead + Codex | Share `trustline.html`, collect public Stellar addresses only, then validate with the local console. |

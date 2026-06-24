@@ -31,6 +31,7 @@ This toolkit provides Python scripts and utilities for:
 - **`test_fund.py`** - Test and demonstrate Open Build fund functionality
 - **`create_home_domain_xdr.py`** - Build an unsigned issuer `home_domain` XDR for SEP-1 verification
 - **`create_issuer_signer_xdr.py`** - Build an unsigned issuer signer and threshold hardening XDR
+- **`treasury_multisig.py`** - Generate, Testnet-rehearse, backup-check, and prepare an unsigned 2-of-3 impact treasury policy
 - **`create_role_wallets.py`** - Generate public role wallet addresses and a local gitignored seed file
 - **`create_tiny_liquidity_offer.py`** - Build and submit one explicitly priced, policy-limited OGC/XLM sell offer
 - **`create_impact_payment_xdr.py`** - Build an unsigned atomic 95/5 OGC impact payment with a reconciliation manifest
@@ -137,6 +138,40 @@ python create_issuer_signer_xdr.py \
 ```
 
 This creates a 2-of-3 issuer-control pattern after signing and submission. It does not lock the issuer or create a fixed-supply guarantee.
+
+### Harden The Impact Treasury
+
+Generate independent approval and recovery signer keys into a gitignored,
+owner-readable file:
+
+```bash
+python3 treasury_multisig.py generate
+```
+
+Rehearse the complete 2-of-3 policy on Testnet. The rehearsal proves a single
+signer is rejected and all three possible two-signer pairs succeed:
+
+```bash
+python3 treasury_multisig.py rehearse-testnet
+```
+
+After separately securing the approval and recovery seeds, re-enter the backup
+copies through hidden terminal prompts:
+
+```bash
+python3 treasury_multisig.py verify-backups
+```
+
+Only after that local restore-check can the tool create an unsigned Mainnet
+XDR:
+
+```bash
+python3 treasury_multisig.py create-mainnet-xdr --confirm-separate-backups
+```
+
+The tool never signs or submits Mainnet activity. Review the three Set Options
+operations in Stellar Lab, sign with the current treasury master key, and
+verify the resulting on-chain signer policy before using the treasury.
 
 ### Local Console
 

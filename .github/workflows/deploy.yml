@@ -34,6 +34,17 @@ jobs:
           node-version: "22"
           cache: npm
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: Test treasury multisig safeguards
+        run: |
+          python -m pip install -r requirements.txt
+          python tools/test_treasury_multisig.py
+
       - name: Test and build checkout
         run: |
           npm ci

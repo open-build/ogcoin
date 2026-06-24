@@ -111,6 +111,19 @@ The helper creates an unsigned Stellar transaction with `95%` to the recipient a
 The public static checkout at `checkout.html` provides the same policy checks in the browser. It supports direct Freighter authorization on Stellar Mainnet and unsigned XDR export for other signing tools. The page never asks for or stores secret keys.
 See `devdocs/IMPACT_CHECKOUT_RUNBOOK.md` for the architecture, operator workflow, supported link parameters, and safeguards.
 
+### Impact Treasury Multisig
+
+Use the guarded treasury workflow to generate independent approval and recovery signers, rehearse the complete 2-of-3 policy on Testnet, verify separate backup copies, and create an unsigned Mainnet XDR:
+
+```bash
+python3 tools/treasury_multisig.py generate
+python3 tools/treasury_multisig.py rehearse-testnet
+python3 tools/treasury_multisig.py verify-backups
+python3 tools/treasury_multisig.py create-mainnet-xdr --confirm-separate-backups
+```
+
+The generated seeds and backup marker stay under `.ogcoin-secrets/`; unsigned XDR artifacts stay under `.ogcoin-xdr/`. Both directories are gitignored. The workflow never signs or submits Mainnet activity.
+
 Build and test the committed checkout bundle after editing files under `src/`:
 
 ```bash

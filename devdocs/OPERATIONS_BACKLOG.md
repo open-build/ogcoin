@@ -1,12 +1,13 @@
 # OGCoin Operations Backlog
 
-Last updated: 2026-06-24
+Last updated: 2026-06-27
 
 This is the working list for getting OGCoin from "asset exists" to "credible, distributable, and responsibly tradable." Keep transaction signing, treasury movement, payroll decisions, and liquidity commitments behind explicit human approval.
 
 ## Current Status
 
 - Public site: live at `https://www.opengreencoin.com/`.
+- Sponsor: Open.Build, a nonprofit supporting open source projects and developer education.
 - SEP-1 metadata: live at `https://www.opengreencoin.com/.well-known/stellar.toml`.
 - Asset: `OGC:GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57`.
 - Issuer `home_domain`: set to `www.opengreencoin.com` on-chain in ledger `62686761`.
@@ -17,6 +18,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 - Trustline guide: public onboarding page at `https://www.opengreencoin.com/trustline.html`.
 - Liquidity policy: public guardrails page at `https://www.opengreencoin.com/liquidity-policy.html`.
 - Impact checkout: static non-custodial checkout at `https://www.opengreencoin.com/checkout.html` with Freighter authorization and manual unsigned-XDR export.
+- Sponsor disclosure: published in SEP-1 metadata, public trust/governance pages, and the transparency log.
 - Treasury multisig preparation: guarded 2-of-3 workflow is implemented; Testnet rejected one signer and accepted all three two-signer combinations. Mainnet remains unchanged pending separate backup verification.
 - Next-step runbook: `devdocs/NEXT_STEPS_RUNBOOK.md` with `tools/create_role_wallets.py`, `tools/ogcoin_next_steps.py`, and `tools/run_next_steps_report.py` for wallet generation, trustline, wallet, liquidity preparation, and outcome reporting.
 - OGC/XLM order book: one policy-limited ask for `1 OGC` at `1 XLM`; no bids at last check.

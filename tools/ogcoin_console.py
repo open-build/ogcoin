@@ -645,6 +645,25 @@ def build_status() -> dict[str, Any]:
     pool_count = int(asset_record.get("num_liquidity_pools") or 0)
     contains_issuer = bool(toml_text and ISSUER in toml_text)
     contains_asset = bool(toml_text and f'code="{ASSET_CODE}"' in toml_text and f'issuer="{ISSUER}"' in toml_text)
+    contains_sponsor_disclosure = bool(
+        (
+            toml_text
+            and "Open.Build" in toml_text
+            and "nonprofit sponsor" in toml_text
+        )
+        or (
+            trust_text
+            and "Open.Build" in trust_text
+            and "nonprofit" in trust_text
+            and "sponsor" in trust_text
+        )
+        or (
+            governance_text
+            and "Open.Build" in governance_text
+            and "nonprofit" in governance_text
+            and "sponsor" in governance_text
+        )
+    )
     home_domain = issuer_data.get("home_domain") if issuer_data else None
     thresholds = issuer_data.get("thresholds", {}) if issuer_data else {}
     signers = issuer_data.get("signers", []) if issuer_data else []
@@ -682,6 +701,15 @@ def build_status() -> dict[str, Any]:
                 "Verification, risk, governance, liquidity, and payroll disclosures are published."
                 if trust_text and "Trust, Risk, and Governance" in trust_text
                 else (trust_error or "Deploy trust.html before broad promotion.")
+            ),
+        },
+        {
+            "title": "Open.Build sponsor disclosure is published",
+            "status": "good" if contains_sponsor_disclosure else "warn",
+            "detail": (
+                "Open.Build nonprofit sponsor and maintainer language is present in public metadata or policy pages."
+                if contains_sponsor_disclosure
+                else "Publish Open.Build sponsor language in SEP-1 metadata and public trust/governance pages."
             ),
         },
         {
@@ -786,18 +814,35 @@ def build_status() -> dict[str, Any]:
             "reachable": bool(toml_text),
             "contains_issuer": contains_issuer,
             "contains_asset": contains_asset,
+            "contains_sponsor_disclosure": bool(
+                toml_text
+                and "Open.Build" in toml_text
+                and "nonprofit sponsor" in toml_text
+            ),
             "error": toml_error,
         },
         "trust_page": {
             "url": TRUST_URL,
             "reachable": bool(trust_text),
             "contains_disclosures": bool(trust_text and "Trust, Risk, and Governance" in trust_text),
+            "contains_sponsor_disclosure": bool(
+                trust_text
+                and "Open.Build" in trust_text
+                and "nonprofit" in trust_text
+                and "sponsor" in trust_text
+            ),
             "error": trust_error,
         },
         "governance_page": {
             "url": GOVERNANCE_URL,
             "reachable": bool(governance_text),
             "contains_policy": bool(governance_text and "Issuer and Treasury Governance" in governance_text),
+            "contains_sponsor_disclosure": bool(
+                governance_text
+                and "Open.Build" in governance_text
+                and "nonprofit" in governance_text
+                and "sponsor" in governance_text
+            ),
             "error": governance_error,
         },
         "transparency_page": {
@@ -1014,7 +1059,7 @@ def promo_items() -> dict[str, list[dict[str, str]]]:
             {
                 "title": "Short Launch Copy",
                 "body": (
-                    "OGCoin (OGC) is a Stellar mainnet asset from Open Build for open source funding, "
+                    "OGCoin (OGC) is a Stellar mainnet asset sponsored and maintained by Open.Build for open source funding, "
                     "developer education, and transparent community grants. Add the OGC trustline and follow the public ledger."
                 ),
             },

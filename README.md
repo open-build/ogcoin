@@ -1,6 +1,6 @@
 # OGCoin - Open Build Project
 
-A modern cryptocurrency project built with open-source principles and powered by community innovation.
+A modern cryptocurrency project sponsored and maintained by Open.Build, a nonprofit supporting open source projects and developer education.
 
 ## 🌐 Live Site
 

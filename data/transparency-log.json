@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-06-23T21:23:07Z",
+  "updated_at": "2026-06-27T16:50:16Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -385,6 +385,25 @@
       "links": [
         "https://www.opengreencoin.com/governance.html",
         "https://stellar.expert/explorer/public/tx/354a8c6f9a9c090eeefead21c109a2e12a0c850badd45df52cb5c9032a405512"
+      ]
+    },
+    {
+      "id": "2026-06-27-open-build-sponsor-disclosure",
+      "date": "2026-06-27",
+      "category": "policy",
+      "status": "published",
+      "title": "Open.Build sponsor disclosure published",
+      "summary": "Documented Open.Build as the nonprofit sponsor and maintainer of OGCoin for open source project funding and developer education. This sponsor disclosure does not create equity, debt, redemption, voting, dividend, buyback, or profit rights.",
+      "account_role": null,
+      "account": null,
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": null,
+      "ledger": null,
+      "links": [
+        "https://www.opengreencoin.com/trust.html",
+        "https://www.opengreencoin.com/governance.html",
+        "https://open.build"
       ]
     }
   ],

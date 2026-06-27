@@ -39,6 +39,9 @@ ASSET_CODE = "OGC"
 ISSUER = "GDSIFZE6L35WW2VMI2GDEA44HO34QNAAXTC473ZQDQZEUM2HGCC6GY57"
 DISTRIBUTION_ACCOUNT = "GDD6IVZJVY3ZFWJ5T5BCZDURLF64ZTQJDDR5X5A7XEDJYTEC6ISDGWZB"
 OPERATIONS_ACCOUNT = "GBZAC66WWHFU2FEOG5KECSEVR6EJO7BYK63UGB52SENDN4JEJTJEVK5L"
+TREASURY_ACCOUNT = "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F"
+TREASURY_APPROVAL_SIGNER = "GAPBRE2R7EQXWA5DXTI2DNPFFL24DXJ7UQ5AL453CV7M3E2V2B64E473"
+TREASURY_RECOVERY_SIGNER = "GBBFU6277F7XXRI3IF3J4FUE4YZTE5EO4KDNHAWAFSOGKXT6LJKQHVF5"
 HOME_DOMAIN = "www.opengreencoin.com"
 HORIZON_URL = "https://horizon.stellar.org"
 STELLAR_TOML_URL = f"https://{HOME_DOMAIN}/.well-known/stellar.toml"
@@ -618,6 +621,7 @@ def account_trustline_status(address: str) -> dict[str, Any]:
 
 def build_status() -> dict[str, Any]:
     issuer_data, issuer_error = http_json(f"{HORIZON_URL}/accounts/{ISSUER}")
+    treasury_data, treasury_error = http_json(f"{HORIZON_URL}/accounts/{TREASURY_ACCOUNT}")
     asset_data, asset_error = http_json(
         f"{HORIZON_URL}/assets?asset_code={ASSET_CODE}&asset_issuer={ISSUER}"
     )
@@ -677,6 +681,21 @@ def build_status() -> dict[str, Any]:
         and high_threshold > master_weight
         and total_signer_weight >= high_threshold
     )
+    treasury_thresholds = treasury_data.get("thresholds", {}) if treasury_data else {}
+    treasury_signers = treasury_data.get("signers", []) if treasury_data else []
+    treasury_weights = {
+        signer.get("key"): int(signer.get("weight") or 0)
+        for signer in treasury_signers
+        if signer.get("key")
+    }
+    treasury_multisig_active = (
+        treasury_weights.get(TREASURY_ACCOUNT) == 1
+        and treasury_weights.get(TREASURY_APPROVAL_SIGNER) == 1
+        and treasury_weights.get(TREASURY_RECOVERY_SIGNER) == 1
+        and int(treasury_thresholds.get("low_threshold") or 0) == 1
+        and int(treasury_thresholds.get("med_threshold") or 0) == 2
+        and int(treasury_thresholds.get("high_threshold") or 0) == 2
+    )
 
     readiness = [
         {
@@ -719,6 +738,15 @@ def build_status() -> dict[str, Any]:
                 "Issuer, supply, signer, treasury, distribution, and liquidity guardrails are published."
                 if governance_text and "Issuer and Treasury Governance" in governance_text
                 else (governance_error or "Deploy governance.html before broad promotion.")
+            ),
+        },
+        {
+            "title": "Impact treasury multisig is active",
+            "status": "good" if treasury_multisig_active else "warn",
+            "detail": (
+                "Treasury uses the approved 2-of-3 policy: master, approval, and recovery signers each weight 1; medium/high thresholds are 2."
+                if treasury_multisig_active
+                else (treasury_error or "Activate the approved 2-of-3 treasury policy before raising pilot caps.")
             ),
         },
         {
@@ -801,6 +829,13 @@ def build_status() -> dict[str, Any]:
             "total_signer_weight": total_signer_weight,
             "active_signer_count": active_signer_count,
             "error": issuer_error,
+        },
+        "treasury": {
+            "exists": bool(treasury_data),
+            "thresholds": treasury_thresholds,
+            "signers": treasury_weights,
+            "multisig_active": treasury_multisig_active,
+            "error": treasury_error,
         },
         "asset": {
             "exists": bool(asset_record),

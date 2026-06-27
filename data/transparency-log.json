@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "updated_at": "2026-06-27T16:50:16Z",
+  "updated_at": "2026-06-27T17:10:10Z",
   "network": {
     "name": "Stellar Public Network",
     "passphrase": "Public Global Stellar Network ; September 2015"
@@ -405,6 +405,24 @@
         "https://www.opengreencoin.com/governance.html",
         "https://open.build"
       ]
+    },
+    {
+      "id": "2026-06-27-treasury-multisig-activated",
+      "date": "2026-06-27",
+      "category": "governance",
+      "status": "confirmed_on_chain",
+      "title": "Impact treasury multisig activated",
+      "summary": "Activated the public impact treasury 2-of-3 signer policy. The treasury master, approval signer, and recovery signer each have weight 1; medium and high threshold actions now require two signer weights.",
+      "account_role": "treasury",
+      "account": "GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F",
+      "amount_ogc": "0",
+      "counter_asset": null,
+      "transaction_hash": "e89ac511c4a0ad764d8e2703b372f556c204a873c35f29f9969f9d1e84f4c493",
+      "ledger": 63223971,
+      "links": [
+        "https://www.opengreencoin.com/governance.html",
+        "https://stellar.expert/explorer/public/tx/e89ac511c4a0ad764d8e2703b372f556c204a873c35f29f9969f9d1e84f4c493"
+      ]
     }
   ],
   "open_items": [
@@ -426,7 +444,7 @@
     {
       "priority": "P0",
       "title": "Harden impact treasury multisig before raising pilot caps",
-      "status": "in_progress"
+      "status": "done"
     }
   ],
   "reporting_rules": [

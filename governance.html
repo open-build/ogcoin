@@ -128,6 +128,14 @@
                                 <dd class="font-mono text-sm break-all text-gray-700">GDMAMIC6SBYCF4NUQ6RBTUIFB5WWWS3TTDHXNCOUOLDFEPK5XOOU525F</dd>
                             </div>
                             <div>
+                                <dt class="font-semibold text-gray-900">Treasury approval signer</dt>
+                                <dd class="font-mono text-sm break-all text-gray-700">GAPBRE2R7EQXWA5DXTI2DNPFFL24DXJ7UQ5AL453CV7M3E2V2B64E473</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-gray-900">Treasury recovery signer</dt>
+                                <dd class="font-mono text-sm break-all text-gray-700">GBBFU6277F7XXRI3IF3J4FUE4YZTE5EO4KDNHAWAFSOGKXT6LJKQHVF5</dd>
+                            </div>
+                            <div>
                                 <dt class="font-semibold text-gray-900">Grant account</dt>
                                 <dd class="font-mono text-sm break-all text-gray-700">GAY2LYDC2YSAQ4VBQTG64LFZZHUB52UP3ACBTWLBWBDFBNH3ZCIWYFQV</dd>
                             </div>
@@ -142,7 +150,7 @@
                         <ul class="space-y-3 text-blue-950">
                             <li>Secret keys, seed phrases, and hardware-wallet recovery material must never be committed, emailed, posted to chat, or stored in project docs.</li>
                             <li>Every signer-changing transaction should be generated as unsigned XDR, reviewed by a human, signed in a trusted wallet or hardware signer, and submitted manually.</li>
-                            <li>Before meaningful treasury or liquidity activity, Open Build should add multisig and thresholds appropriate to the amount at risk.</li>
+                            <li>The impact treasury uses a 2-of-3 signer policy: treasury master, approval signer, and recovery signer each have weight 1; medium and high threshold actions require 2 signer weights.</li>
                             <li>Emergency signer recovery and key rotation should be rehearsed on Stellar testnet before mainnet changes.</li>
                         </ul>
                     </div>
@@ -204,7 +212,7 @@
                     <ol class="list-decimal pl-6 space-y-3 text-gray-700">
                         <li>Keep the public transparency log current after every distribution, grant, treasury, or liquidity action.</li>
                         <li>Require official routed-payment integrations to use the published impact policy and machine-readable configuration.</li>
-                        <li>Verify separate treasury signer backups, create the unsigned Mainnet multisig XDR, and publish the resulting on-chain record before increasing pilot limits.</li>
+                        <li>Review pilot limits before any increase and require public approval before expanding treasury, grant, or liquidity exposure.</li>
                         <li>Review impact, liquidity, and treasury policies at least monthly while OGC remains in pilot mode.</li>
                     </ol>
                 </div>

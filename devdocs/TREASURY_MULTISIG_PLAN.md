@@ -2,7 +2,9 @@
 
 Generated: `2026-06-24T15:20:07Z`
 
-Status: **Testnet rehearsal passed; Mainnet not changed.**
+Status: **Active on Mainnet.**
+
+Mainnet activation transaction: `e89ac511c4a0ad764d8e2703b372f556c204a873c35f29f9969f9d1e84f4c493`, ledger `63223971`.
 
 ## Proposed 2-of-3 Policy
 
@@ -28,12 +30,12 @@ Any two of the three signers can authorize treasury payments or signer-policy ch
 The generated secrets are in the gitignored owner-readable file `.ogcoin-secrets/treasury-multisig.env`.
 Move the approval and recovery seeds into their separate durable custody locations. Delete the plaintext file only after the Mainnet transition and recovery materials have been independently verified.
 
-## Required Sequence
+## Activation Sequence
 
-1. Run the Testnet rehearsal and confirm all three signer pairs succeed.
-2. Back up and restore-check the approval and recovery seeds separately.
-3. Create the unsigned Mainnet XDR with the explicit backup acknowledgement.
-4. Review the exact signer addresses and thresholds in Stellar Lab.
-5. Sign with the current treasury master key and submit once.
-6. Verify the on-chain signer policy before receiving meaningful OGC.
-7. Publish the transaction hash and updated policy in the transparency log.
+1. Testnet rehearsal confirmed all three signer pairs succeed.
+2. Approval and recovery seeds were restore-checked separately.
+3. Unsigned Mainnet XDR was created with the explicit backup acknowledgement.
+4. Exact signer addresses and thresholds were reviewed before signing.
+5. Transaction was signed with the current treasury master key and submitted once.
+6. On-chain signer policy was verified.
+7. Transaction hash and updated policy are published in the transparency log.

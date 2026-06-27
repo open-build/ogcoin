@@ -19,7 +19,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 - Liquidity policy: public guardrails page at `https://www.opengreencoin.com/liquidity-policy.html`.
 - Impact checkout: static non-custodial checkout at `https://www.opengreencoin.com/checkout.html` with Freighter authorization and manual unsigned-XDR export.
 - Sponsor disclosure: published in SEP-1 metadata, public trust/governance pages, and the transparency log.
-- Treasury multisig preparation: guarded 2-of-3 workflow is implemented; Testnet rejected one signer and accepted all three two-signer combinations. Mainnet remains unchanged pending separate backup verification.
+- Impact treasury multisig: active on Mainnet in transaction `e89ac511c4a0ad764d8e2703b372f556c204a873c35f29f9969f9d1e84f4c493`, ledger `63223971`; treasury master, approval signer, and recovery signer each have weight `1`, with medium/high thresholds set to `2`.
 - Next-step runbook: `devdocs/NEXT_STEPS_RUNBOOK.md` with `tools/create_role_wallets.py`, `tools/ogcoin_next_steps.py`, and `tools/run_next_steps_report.py` for wallet generation, trustline, wallet, liquidity preparation, and outcome reporting.
 - OGC/XLM order book: one policy-limited ask for `1 OGC` at `1 XLM`; no bids at last check.
 - Liquidity pools: none at last check.
@@ -48,7 +48,7 @@ This is the working list for getting OGCoin from "asset exists" to "credible, di
 | Done | P0 | Build guarded impact treasury multisig workflow | Codex | `tools/treasury_multisig.py` generates independent signers, enforces a local restore-check marker, and creates only unsigned Mainnet XDR artifacts. |
 | Done | P0 | Rehearse treasury 2-of-3 recovery on Testnet | Codex | One signer was rejected with `op_bad_auth`; master+approval, master+recovery, and approval+recovery all succeeded. See `devdocs/TREASURY_MULTISIG_TESTNET_REPORT.md`. |
 | Next | P0 | Review governance policy with counsel and project leadership | Project lead + counsel | Current issuer master signer is active. Avoid fixed-supply claims until signer hardening or stronger signed policy is complete. |
-| Next | P0 | Back up and activate impact treasury multisig | Project lead + signer | Separately secure and restore-check the approval and recovery seeds, create the unsigned XDR, review it, then sign once with the current treasury key. Keep the 100 OGC caps until on-chain verification is published. |
+| Done | P0 | Back up and activate impact treasury multisig | Project lead + signer | Transaction `e89ac511c4a0ad764d8e2703b372f556c204a873c35f29f9969f9d1e84f4c493`, ledger `63223971`; treasury is now 2-of-3. Keep current pilot caps until a separate policy update approves higher exposure. |
 | Done | P1 | Publish static impact checkout alongside ForgeWeb output | Codex | `checkout.html` displays the gross, recipient, contribution, treasury, reference, and refund terms; validates mainnet accounts and caps; and supports Freighter or unsigned-XDR authorization without a server. |
 | Next | P1 | Add reviewed impact receipt import | Codex | Import signed transaction hashes and manifests into a public-safe reconciliation report without payer secrets or private customer data. |
 | Done | P1 | Designate treasury, grant, and liquidity wallets | Project lead + Codex | All three public roles are published; treasury, grant, and liquidity wallets are active with bounded OGC trustlines. |
